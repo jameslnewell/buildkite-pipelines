@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pipeline build 1`] = `
+Object {
+  "steps": Array [
+    Object {
+      "commands": Array [
+        "yarn run lint",
+      ],
+      "plugins": Array [],
+    },
+    Object {
+      "commands": Array [
+        "cd dir",
+        "yarn run build",
+      ],
+      "plugins": Array [],
+    },
+    Object {
+      "commands": Array [
+        "",
+      ],
+      "plugins": Array [],
+    },
+  ],
+}
+`;
+
+exports[`Pipeline checks 1`] = `
+Object {
+  "steps": Array [
+    Object {
+      "commands": Array [
+        "set -e",
+        "cd back-end",
+        "yarn install --frozen-lockfile --development",
+        "yarn run setup",
+        "yarn run check:workspaces",
+      ],
+      "plugins": Array [],
+    },
+    Object {
+      "commands": Array [
+        "cd dir",
+        "yarn run build",
+      ],
+      "plugins": Array [],
+    },
+    Object {
+      "commands": Array [
+        "",
+      ],
+      "plugins": Array [],
+    },
+  ],
+}
+`;
