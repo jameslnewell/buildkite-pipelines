@@ -1,4 +1,4 @@
-import { PipelineBuilder } from "./PipelineBuilder";
+import { PipelineBuilder } from "./pipeline/PipelineBuilder";
 import { validate } from "./validate";
 import { stringify } from "./stringify";
 import fs from 'fs';

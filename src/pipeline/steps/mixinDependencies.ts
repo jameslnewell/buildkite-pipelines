@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor"
+import { Constructor } from "../../Constructor"
 
 export interface DependenciesMixin {
   dependsOn: null | Array<string | {step: string; allow_failure?: boolean;}> | undefined
@@ -39,8 +39,12 @@ export function configureDependency(object: DependenciesMixin, options: Dependen
 }
 
 export function buildDependency(object: DependenciesMixin) {
-  return {
-    depends_on: object.dependsOn,
-    allow_dependency_failure: object.allowDependencyFailure
+  const output: {depends_on?: null | Array<string | {step: string; allow_failure?: boolean;}>; allow_dependency_failure?: boolean;}  = {}
+  if (object.dependsOn) {
+    output.depends_on = object.dependsOn
   }
+  if (object.dependsOn) {
+    output.allow_dependency_failure  = object.allowDependencyFailure
+  }
+  return output;
 }

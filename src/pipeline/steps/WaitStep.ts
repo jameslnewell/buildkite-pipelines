@@ -27,7 +27,6 @@ export class WaitStep extends mixinDependencies(mixinConditional(class {})) impl
 
   build(): WaitStepObject {
     return {
-      //  null when other values are defined, undefined when other values are undefined
       wait: null,
       ...buildDependency(this),
       ...buildConditional(this),

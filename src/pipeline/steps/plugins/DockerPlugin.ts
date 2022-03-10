@@ -1,5 +1,5 @@
-import { PluginObject } from "./PluginObject";
-import { PluginBuilder } from "./PluginBuilder";
+import { PluginObject } from "../PluginObject";
+import { PluginBuilder } from "../PluginBuilder";
 
 export interface DockerPluginOptions {
   alwaysPull?: boolean;

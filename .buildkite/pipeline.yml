@@ -2,4 +2,4 @@
 steps:
   - command: |
     yarn install --immutable
-    node -r '@swc/register' ./.buildkite/pipeline.js
+    yarn node -r '@swc/register' ./.buildkite/pipeline.ts

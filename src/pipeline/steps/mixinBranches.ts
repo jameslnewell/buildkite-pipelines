@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor"
+import { Constructor } from "../../Constructor"
 
 export interface BranchesMixin {
   branches: string[] | undefined
@@ -27,7 +27,9 @@ export function configureBranches(object: BranchesMixin, options: BranchesMixinO
 }
 
 export function buildBranches(object: BranchesMixin) {
-  return {
-    branches: object.branches
+  const output: {branches?: string[]}  = {}
+  if  (object.branches) {
+    output.branches  = object.branches
   }
+  return output;
 }

@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor"
+import { Constructor } from "../../Constructor"
 
 export interface KeyMixin {
   key: string | undefined
@@ -27,7 +27,9 @@ export function configureKey(object: KeyMixin, options: KeyMixinOptions | undefi
 }
 
 export function buildKey(object: KeyMixin) {
-  return {
-    key: object.key
+  const output: {key?: string}  = {}
+  if  (object.key) {
+    output.key  = object.key
   }
+  return output;
 }

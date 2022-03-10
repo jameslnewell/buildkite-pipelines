@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor"
+import { Constructor } from "../../Constructor"
 
 export interface ConditionalMixin {
   if: string | undefined
@@ -27,7 +27,9 @@ export function configureConditional(object: ConditionalMixin, options: Conditio
 }
 
 export function buildConditional(object: ConditionalMixin) {
-  return {
-    if: object.if
+  const output: {if?: string}  = {}
+  if  (object.if) {
+    output.if  = object.if
   }
+  return output;
 }

@@ -1,4 +1,4 @@
-import { PipelineObject } from "./PipelineObject";
+import { PipelineObject } from "./pipeline/PipelineObject";
 import yaml from 'js-yaml';
 import prettier from 'prettier'
 

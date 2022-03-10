@@ -1,4 +1,4 @@
-import { Constructor } from "../Constructor"
+import { Constructor } from "../../Constructor"
 
 export interface LabelMixin {
   label: string | undefined
@@ -27,7 +27,9 @@ export function configureLabel(object: LabelMixin, options: LabelMixinOptions | 
 }
 
 export function buildLabel(object: LabelMixin) {
-  return {
-    label: object.label
+  const output: {label?: string}  = {}
+  if  (object.label) {
+    output.label  = object.label
   }
+  return output;
 }

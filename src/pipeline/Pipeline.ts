@@ -1,6 +1,6 @@
 import { PipelineObject } from "./PipelineObject";
-import { StepBuilder } from "../steps/StepBuilder";
-import { StepObject } from "../steps/StepObject";
+import { StepBuilder } from "./steps/StepBuilder";
+import { StepObject } from "./steps/StepObject";
 
 function isBuilder(step: StepObject|StepBuilder): step is StepBuilder {
   return typeof (step as any).build == 'function'

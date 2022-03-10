@@ -1,7 +1,5 @@
 import {Pipeline} from './Pipeline'
-import { CommandStep } from '../steps/CommandStep'
-import { DockerPlugin } from '../contrib/index'
-import { WaitStep } from '../steps/WaitStep'
+import { CommandStep, WaitStep, DockerPlugin } from './steps'
 
 describe('Pipeline', () => {
   test('build', () => {
@@ -11,13 +9,10 @@ describe('Pipeline', () => {
         new CommandStep('yarn run lint'),
 
         new CommandStep([
-          'cd dir',
-          'yarn run build'
-        ]),
+            'cd dir',
+            'yarn run build'
+          ]),
 
-        new CommandStep({
-          command: ['']
-        })
       ]
     })
     
@@ -53,11 +48,11 @@ describe('Pipeline', () => {
         new CommandStep([
           'cd dir',
           'yarn run build'
-        ]),
+          ]),
 
-        new CommandStep({
-          command: ['']
-        })
+        new CommandStep(
+          ''
+        )
       ]
     })
 
@@ -71,3 +66,9 @@ describe('Pipeline', () => {
     expect(p.build()).toMatchSnapshot() 
   })
 })
+
+
+// const command = new CommandStep()
+//   .withKey('')
+//   .withLabel('')
+  
