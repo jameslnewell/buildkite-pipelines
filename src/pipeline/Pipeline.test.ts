@@ -1,11 +1,12 @@
 import {Pipeline} from './Pipeline'
-import { CommandStep } from './CommandStep'
-import { DockerPlugin } from '.'
+import { CommandStep } from '../steps/CommandStep'
+import { DockerPlugin } from '../contrib/index'
+import { WaitStep } from '../steps/WaitStep'
 
 describe('Pipeline', () => {
   test('build', () => {
 
-    const pipeline = new Pipeline({
+    const p = new Pipeline({
       steps: [
         new CommandStep('yarn run lint'),
 
@@ -20,7 +21,7 @@ describe('Pipeline', () => {
       ]
     })
     
-    expect(pipeline.build()).toMatchSnapshot()
+    expect(p.build()).toMatchSnapshot()
   })
 
 
@@ -36,7 +37,7 @@ describe('Pipeline', () => {
       command: [
         "set -e",
         "cd back-end",
-        "yarn install --frozen-lockfile --development",
+        "yarn install --frozen-lockfile",
         "yarn run setup",
         "yarn run check:workspaces"
       ],
@@ -59,7 +60,14 @@ describe('Pipeline', () => {
         })
       ]
     })
-    
-    expect(pipeline.build()).toMatchSnapshot() 
+
+    const p = new Pipeline({
+      steps: [
+        new CommandStep({}),
+        new WaitStep()
+      ]
+    })
+
+    expect(p.build()).toMatchSnapshot() 
   })
 })

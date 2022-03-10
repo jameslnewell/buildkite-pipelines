@@ -1,16 +1,10 @@
 import { PluginObject } from ".";
+import { Key, Label, Skippable, Branches, Conditional, Dependencies } from "./step-objects";
 
-
-export interface CommandStepObject {
+export interface CommandStepObject extends Key, Label, Dependencies, Conditional, Branches, Skippable {
   command?: string;
   commands?: string[];
 
-  key?: string;
-  depends_on?: (string | {step: string; allow_failure?: boolean;})[];
-
-  label?: string;
-  if?: string;
-  branches?: string[];
   env?: Record<string, string>;
 
   priority?: number;
@@ -18,7 +12,6 @@ export interface CommandStepObject {
   concurrency_group?: string;
   parallelism?: number;
 
-  skip?: boolean | string;
   retry?: 'automatic' | 'manual';
   soft_fail?: boolean | number[];
   timeout_in_minutes?: number;
@@ -29,4 +22,9 @@ export interface CommandStepObject {
 
   plugins?: PluginObject[]
 
+  notify?: {
+    github_commit_status: {
+      context: string
+    }
+  }
 }

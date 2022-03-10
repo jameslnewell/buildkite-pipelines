@@ -1,4 +1,4 @@
-import { PluginObject, PluginOptionsObject } from ".";
+import { PluginObject, PluginOptionsObject } from "./PluginObject";
 import { PluginBuilder } from "./PluginBuilder";
 
 export class Plugin implements PluginBuilder {

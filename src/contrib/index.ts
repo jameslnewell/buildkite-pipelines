@@ -1,6 +1,6 @@
 import { CommandStep, StepObject } from "..";
-import { StepBuilder } from "../StepBuilder";
-import { DockerPlugin } from "../DockerPlugin";
+import { StepBuilder } from "../steps/StepBuilder";
+import { DockerPlugin } from "../steps/DockerPlugin";
 
 export class DockerCommandStep implements StepBuilder {
 

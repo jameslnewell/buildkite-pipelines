@@ -1,4 +1,4 @@
-import { PluginObject } from "./CommandStepObject";
+import { PluginObject } from "./PluginObject";
 
 export interface PluginBuilder {
   build(): PluginObject

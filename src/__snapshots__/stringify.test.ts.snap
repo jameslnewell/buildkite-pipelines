@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`stringify() outputs a yaml string 1`] = `
+"steps:
+  - label: lint
+    command: yarn run lint
+"
+`;
