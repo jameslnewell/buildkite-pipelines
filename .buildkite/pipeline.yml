@@ -7,4 +7,14 @@ steps:
       - docker#v3.11.0:
           image: node:16-alpine
           volumes:
-            - "/var/run/docker.sock:/var/run/docker.sock"
+            - /var/run/docker.sock:/var/run/docker.sock
+      - gencer/cache#v2.4.10:
+          backend: rsync
+          id: node
+          key: "v2-cache-{{ id }}-{{ runner.os }}-{{ checksum 'yarn.lock' }}"
+          restore-keys:
+            - 'v2-cache-{{ id }}-{{ runner.os }}-'
+            - 'v2-cache-{{ id }}-'
+          paths:
+            - .yarn/cache
+          continue_on_error: true
