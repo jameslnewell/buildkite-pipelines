@@ -1,4 +1,4 @@
-import { CommandStep, StepBuilder, DockerPlugin } from "../pipeline";
+import { CommandStep, StepBuilder, DockerPlugin, StepObject } from "../pipeline";
 
 export class DockerCommandStep implements StepBuilder {
 
@@ -9,8 +9,15 @@ export class DockerCommandStep implements StepBuilder {
     // this.#secret = new SecretManagerPlugin()
     // this.#login = new DockerLoginPlugin()
     this.#docker = new DockerPlugin()
-    this.#command = new CommandStep({})
-    this.#command.addPlugin(this.#docker)
+    this.#command = new CommandStep('')
+    this.#command.plugins = [this.#docker]
+  }
+
+  env(env: Record<string, string>)  {
+    this.#command = new CommandStep('').env({
+      ...this.#command.build().env,
+      ...env
+    })
   }
 
   build(): StepObject {

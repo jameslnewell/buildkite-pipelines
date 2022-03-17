@@ -1,4 +1,4 @@
-import { PluginObject } from ".";
+import { PluginObject } from "./plugins";
 import { Key, Label, Skippable, Branches, Conditional, Dependencies } from "./step-objects";
 
 export interface CommandStepObject extends Key, Label, Dependencies, Conditional, Branches, Skippable {

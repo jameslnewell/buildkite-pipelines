@@ -1,5 +1,5 @@
 
 steps:
-  - command: |
-    yarn install --immutable
-    yarn node -r '@swc/register' ./.buildkite/pipeline.ts
+  - commands:
+      - yarn install --immutable
+      - yarn node -r '@swc/register' ./.buildkite/pipeline.ts

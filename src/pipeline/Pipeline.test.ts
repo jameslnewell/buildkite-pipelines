@@ -1,74 +1,91 @@
+import { stringify } from '../stringify'
 import {Pipeline} from './Pipeline'
-import { CommandStep, WaitStep, DockerPlugin } from './steps'
+import { CommandStep, DockerPlugin } from './steps'
+import fs from 'fs'
+import { SecretsManagerPlugin } from './steps/plugins/SecretsManagerPlugin'
+import { DockerLoginPlugin } from './steps/plugins/DockerLoginPlugin'
 
 describe('Pipeline', () => {
-  test('build', () => {
+  // test('build', () => {
 
-    const p = new Pipeline({
-      steps: [
-        new CommandStep('yarn run lint'),
+  //   const p = new Pipeline({
+  //     steps: [
+  //       new CommandStep('yarn run lint'),
 
-        new CommandStep([
-            'cd dir',
-            'yarn run build'
-          ]),
+  //       new CommandStep([
+  //           'cd dir',
+  //           'yarn run build'
+  //         ]),
 
-      ]
-    })
+  //     ]
+  //   })
     
-    expect(p.build()).toMatchSnapshot()
-  })
+  //   expect(p.build()).toMatchSnapshot()
+  // })
 
 
-  test('checks', () => {
+  // test('checks', () => {
 
-    const typecheck = new CommandStep({
-      label: ':typescript: check:workspaces (back-end)',
-      branches: [
-        'master',
-        'preview',
-        'production',
-      ],
-      command: [
-        "set -e",
-        "cd back-end",
-        "yarn install --frozen-lockfile",
-        "yarn run setup",
-        "yarn run check:workspaces"
-      ],
-      plugins: [
-        new DockerPlugin()
-      ]
-    })
+  //   const typecheck = new CommandStep()
+  //   .label(':typescript: check:workspaces (back-end)')
+  //   .command([
+  //     "set -e",
+  //     "cd back-end",
+  //     "yarn install --frozen-lockfile --development",
+  //     "yarn run setup",
+  //     "yarn run check:workspaces"
+  //   ])
+  //   .branches([ 'master', 'preview', 'production'])
+  //   .plugins([new DockerPlugin()])
+      
+  //   const pipeline = new Pipeline({
+  //     steps: [
+  //       typecheck,
 
-    const pipeline = new Pipeline({
-      steps: [
-        typecheck,
+  //       new CommandStep([
+  //         'cd dir',
+  //         'yarn run build'
+  //       ]),
 
-        new CommandStep([
-          'cd dir',
-          'yarn run build'
-          ]),
+  //     ]
+  //   })
 
-        new CommandStep(
-          ''
-        )
-      ]
-    })
+  //   expect(pipeline.build()).toMatchSnapshot() 
+  // })
 
-    const p = new Pipeline({
-      steps: [
-        new CommandStep({}),
-        new WaitStep()
-      ]
-    })
 
-    expect(p.build()).toMatchSnapshot() 
+  test.only('secrets-docker-login-docker-cache', () => {
+    const pipeline = new Pipeline().steps([
+      new CommandStep()
+        .label(':typescript: check:workspaces (back-end)')
+        .command([
+          'set -e',
+          'cd back-end',
+          'yarn install --frozen-lockfile --development',
+          'yarn run setup',
+          'yarn run check:workspaces'
+        ])
+        .branches([
+          'master',
+          'preview',
+          'production'
+        ])
+        .plugins([
+          new SecretsManagerPlugin().env({
+            GITHUB_TOKEN: {
+              secretId: 'global/buildkite/github',
+              jsonKey: '.TOKEN'
+            }
+          }),
+          new DockerLoginPlugin()
+            .server('ghcr.io')
+            .username('jameslnewell')
+            .passwordEnv('GITHUB_TOKEN'),
+          new DockerPlugin()
+          .image('ghcr.io/mr-yum/ci:2.4.0')
+        ])
+    ])
+    expect(stringify(pipeline.build())).toEqual(fs.readFileSync('./fixtures/secrets-docker-login-docker-cache.yml').toString())
   })
 })
 
-
-// const command = new CommandStep()
-//   .withKey('')
-//   .withLabel('')
-  

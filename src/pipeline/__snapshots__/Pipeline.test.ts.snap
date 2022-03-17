@@ -20,7 +20,11 @@ exports[`Pipeline checks 1`] = `
 Object {
   "steps": Array [
     Object {
-      "command": "set -e",
+      "branches": Array [
+        "master",
+        "preview",
+        "production",
+      ],
       "commands": Array [
         "set -e",
         "cd back-end",
@@ -28,33 +32,22 @@ Object {
         "yarn run setup",
         "yarn run check:workspaces",
       ],
-      "depends_on": undefined,
-      "key": undefined,
       "label": ":typescript: check:workspaces (back-end)",
       "plugins": Array [
         Object {
-          "docker#v3.10.0": Object {},
+          "docker#v3.10.0": Object {
+            "always-pull": undefined,
+            "environment": undefined,
+            "image": undefined,
+          },
         },
       ],
     },
     Object {
-      "command": "cd dir",
       "commands": Array [
         "cd dir",
         "yarn run build",
       ],
-      "depends_on": undefined,
-      "key": undefined,
-      "label": undefined,
-      "plugins": undefined,
-    },
-    Object {
-      "command": undefined,
-      "commands": undefined,
-      "depends_on": undefined,
-      "key": undefined,
-      "label": undefined,
-      "plugins": undefined,
     },
   ],
 }

@@ -13,8 +13,13 @@ export interface PipelineOptions {
 export class Pipeline {
   #steps: Array<StepObject | StepBuilder>;
 
-  constructor(options: PipelineOptions) {
+  constructor(options: PipelineOptions = {}) {
     this.#steps = options.steps ?? []
+  }
+
+  steps(steps: Array<StepObject | StepBuilder>): this {
+    this.#steps = steps;
+    return this;
   }
 
   build(): PipelineObject {
