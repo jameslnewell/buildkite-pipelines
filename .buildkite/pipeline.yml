@@ -3,3 +3,6 @@ steps:
   - commands:
       - yarn install --immutable
       - yarn node -r '@swc/register' ./.buildkite/pipeline.ts
+    plugins:
+      - docker#v3.11.0:
+          image: node:16-alpine
