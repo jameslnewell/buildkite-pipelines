@@ -6,3 +6,5 @@ steps:
     plugins:
       - docker#v3.11.0:
           image: node:16-alpine
+          volumes:
+            - "/var/run/docker.sock:/var/run/docker.sock"
