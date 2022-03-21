@@ -2,7 +2,7 @@ import {stringify, validate, Pipeline, CommandStep} from '../src'
 
 const pipeline = new Pipeline({
   steps: [
-    new CommandStep().command('echo "test"')
+    CommandStep.builder().command('echo "test"')
   ]
 })
 

@@ -1,108 +1,142 @@
 import { CommandStepObject } from "./CommandStepObject";
 import { PluginBuilder } from "./plugins/PluginBuilder";
-import { buildKey, configureKey, KeyMixinOptions, mixinKey } from "./mixinKey";
+import { KeyMixin, KeyMixinMethods } from "./KeyMixin";
+import { LabelMixin, LabelMixinMethods } from "./LabelMixin";
 import { StepBuilder } from "./StepBuilder";
-import { buildLabel, configureLabel, LabelMixinOptions, mixinLabel } from "./mixinLabel";
-import { buildDependency, configureDependency, DependenciesMixinOptions, mixinDependencies } from "./mixinDependencies";
-import { BranchesMixinOptions, buildBranches, configureBranches, mixinBranches } from "./mixinBranches";
-import { buildConditional, ConditionalMixinOptions, configureConditional, mixinConditional } from "./mixinConditional";
 import { PluginObject } from "./plugins/PluginObject";
+import { BranchesMixin, BranchesMixinMethods } from "./BranchesMixin";
+import { ConditionalMixin, ConditionalMixinMethods } from "./ConditionalMixin";
+import { DependenciesMixin, DependenciesMixinMethods } from "./DependenciesMixin";
 
 function isBuilder(step: PluginObject|PluginBuilder): step is PluginBuilder {
   return typeof (step as any).build == 'function'
 }
 
-export interface CommandStepOptions extends KeyMixinOptions, LabelMixinOptions, DependenciesMixinOptions, ConditionalMixinOptions, BranchesMixinOptions {
-  command: string | string[]
-  env?: Record<string, string>;
-  plugins?: PluginBuilder[]
+interface CommandStepBuilder extends StepBuilder, KeyMixinMethods, LabelMixinMethods, ConditionalMixinMethods, BranchesMixinMethods, DependenciesMixinMethods {
+  command(command: string | string[]): this;
+  env(env: Record<string, string | number>): this
+  addEnv(name: string, value: string): this
+  plugins(plugins: Array<PluginObject | PluginBuilder>): this;
+  addPlugin(plugin: PluginObject | PluginBuilder): this
+  concurrency(jobs: number, group: string): this
+  artifactPaths(paths: string[]): this
+  addArtifactPath(path: string): this
+  timeout(minutes: number): this
+  softFail(fail: boolean): this
 }
 
-export class CommandStep extends mixinKey(mixinLabel(mixinDependencies(mixinConditional(mixinBranches(class {}))))) implements StepBuilder {
-  #command: string | string[] = []
-  #env: Record<string, string> = {};
-  #plugins: Array<PluginObject | PluginBuilder> = [];
-  #concurrency?: number;
-  #concurrency_group?: string
+export class CommandStep {
+  static builder(): CommandStepBuilder {
+    let _command: string | string[] = []
+    let _env: Record<string, string> = {};
+    let _plugins: Array<PluginObject | PluginBuilder> = [];
+    let _concurrency: number | undefined;
+    let _concurrencyGroup: string | undefined
+    let _artifactPaths: string[] = []
+    let _timeoutInMinutes: number | undefined
+    let _softFail: boolean | undefined;
+    const keyMixin = KeyMixin.builder()
+    const labelMixin = LabelMixin.builder()
+    const conditionalMixin = ConditionalMixin.builder()
+    const branchesMixin = BranchesMixin.builder()
+    const dependenciesMixin = DependenciesMixin.builder()
+    return {
+      ...keyMixin as any,
+      ...labelMixin,
+      ...conditionalMixin,
+      ...branchesMixin,
+      ...dependenciesMixin,
 
-  command(): string  | string[];
-  command(command: string | string[]): this;
-  command(command?: string | string[]): string | string[] | this {
-    if (command) {
-      this.#command = command
-      return this
-    } else {
-      return this.#command;
-    }
-  }
-
-  env(): Record<string, string>;
-  env(env: Record<string, string>): this;
-  env(env?: Record<string, string>): Record<string, string> | this {
-    if (env) {
-      this.#env = env
-      return this
-    } else {
-      return this.#env;
-    }
-  }
-
-  addEnv(name: string, value: string): this {
-    this.#env[name] = value
-    return this;
-  }
-
-  plugins(): Array<PluginObject | PluginBuilder>;
-  plugins(plugins: Array<PluginObject | PluginBuilder>): this;
-  plugins(plugins?: Array<PluginObject | PluginBuilder>): Array<PluginObject | PluginBuilder> | this {
-    if (plugins) {
-      this.#plugins = plugins
-      return this
-    } else {
-      return this.#plugins;
-    }
-  }
-
-  addPlugin(plugin: PluginObject | PluginBuilder): this {
-    this.#plugins.push(plugin)
-    return this;
-  }
-
-  withConcurrency(jobs: number, group: string) {
-    this.#concurrency = jobs;
-    this.#concurrency_group = group
-    return this;
-  }
-
-  build(): CommandStepObject {
-    const step: CommandStepObject = {
-      ...buildKey(this),
-      ...buildLabel(this),
-      ...buildDependency(this),
-      ...buildConditional(this),
-      ...buildBranches(this),
-    }
-
-    if (Array.isArray(this.#command)) {
-      if (this.#command.length > 1) {
-        step.commands = this.#command
-      } else if (this.#command.length === 1) {
-        step.command = this.#command[0]
-      } else {
-        throw new Error('Invalid command')
-      } 
-    } else {
-      step.command = this.#command
-    }
-
-    if (Object.keys(this.#env).length) {
-      step.env = this.#env
-    }
-
-    if  (this.#plugins.length) {
-      step.plugins = this.#plugins.map(plugin => isBuilder(plugin) ? plugin.build() : plugin)
-    }
+      command(command) {
+        _command = command
+        return this;
+      },
     
-    return step
+      env(env) {
+        _env = env
+        return this;
+      },
+    
+      addEnv(name, value) {
+        _env[name] = value
+        return this;
+      },
+    
+      plugins(plugins) {
+        _plugins = plugins
+        return this
+      },
+    
+      addPlugin(plugin) {
+        _plugins.push(plugin)
+        return this;
+      },
+    
+      concurrency(jobs, group) {
+        _concurrency = jobs;
+        _concurrencyGroup = group
+        return this;
+      },
+
+      artifactPaths(paths) {
+        _artifactPaths = paths
+        return this
+      },
+
+      addArtifactPath(path) {
+        _artifactPaths.push(path)
+        return this
+      },
+
+      timeout(minutes: number) {
+        _timeoutInMinutes = minutes;
+        return this;
+      },
+
+      softFail(fail) {
+        _softFail = fail
+        return this;
+      },
+    
+      build() {
+        const step: CommandStepObject = {
+          ...keyMixin.build(),
+          ...labelMixin.build(),
+          ...conditionalMixin.build(),
+          ...branchesMixin.build(),
+          ...dependenciesMixin.build(),
+        }
+    
+        if (Array.isArray(_command) && _command.length > 1) {
+          step.commands = _command
+        } else if (Array.isArray(_command) && _command.length === 1) {
+          step.command = _command[0]
+        } else if (typeof _command === 'string') {
+          step.command = _command
+        }
+    
+        if (Object.keys(_env).length) {
+          step.env = _env
+        }
+    
+        if  (_plugins.length) {
+          step.plugins = _plugins.map(plugin => isBuilder(plugin) ? plugin.build() : plugin)
+        }
+
+        if (_artifactPaths.length) {
+          step.artifact_paths = _artifactPaths
+        }
+
+        if (_timeoutInMinutes) {
+          step.timeout_in_minutes = _timeoutInMinutes
+        }
+
+        if (_softFail) {
+          step.soft_fail = _softFail
+        }
+        
+        return step
+      }
+    }
   }
 }

@@ -1,36 +1,34 @@
+import { ConditionalMixin, ConditionalMixinMethods } from "./ConditionalMixin";
+import { DependenciesMixin, DependenciesMixinMethods } from "./DependenciesMixin";
 import { StepBuilder } from "./StepBuilder";
 import { WaitStepObject } from "./WaitStepObject";
-import {buildDependency, configureDependency, DependenciesMixinOptions, mixinDependencies} from './mixinDependencies'
-import { buildConditional, ConditionalMixinOptions, configureConditional, mixinConditional } from "./mixinConditional";
 
-export interface WaitStepOptions extends DependenciesMixinOptions, ConditionalMixinOptions {
-  continueOnFailure?: boolean
+export interface WaitStepBuilder extends StepBuilder, ConditionalMixinMethods, DependenciesMixinMethods {
+  continueOnFailure(value: boolean): this
 }
 
-export class WaitStep extends mixinDependencies(mixinConditional(class {})) implements StepBuilder {
-  #continueOnFailure?: boolean;
+export class WaitStep {
 
-  constructor(options: WaitStepOptions = {}) {
-    super()
-    configureDependency(this, options)
-    configureConditional(this, options)
-    this.#continueOnFailure = options.continueOnFailure
-  }
-
-  get continueOnFailure() {
-    return this.#continueOnFailure
-  }
-
-  set continueOnFailure(value: boolean | undefined) {
-    this.#continueOnFailure  = value
-  }
-
-  build(): WaitStepObject {
+  static builder(): WaitStepBuilder {
+    let _continueOnFailure: boolean | undefined
+    const conditionalMixin = ConditionalMixin.builder()
+    const dependenciesMixin = DependenciesMixin.builder()
     return {
-      wait: null,
-      ...buildDependency(this),
-      ...buildConditional(this),
-      continue_on_failure: this.#continueOnFailure
+      ...conditionalMixin.methods,
+      ...dependenciesMixin.methods,
+      continueOnFailure(value) {
+        _continueOnFailure = value;
+        return this
+      },
+      build(): WaitStepObject {
+        return {
+          ...conditionalMixin.build(),
+          ...dependenciesMixin.build(),
+          wait: null,
+          continue_on_failure: _continueOnFailure
+        }
+      }
     }
   }
 }
+  
