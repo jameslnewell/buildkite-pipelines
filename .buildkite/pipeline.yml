@@ -4,14 +4,12 @@ steps:
       - set -eux
       - yarn install --immutable
       - chown root /var/run/docker.sock
-      - yarn node -r '@swc/register' ./.buildkite/pipeline.ts | buildkite-agent pipeline upload
+      - buildkite-pipelines ./.buildkite/pipeline.js | buildkite-agent pipeline upload
     plugins:
       - docker#v3.11.0:
-          image: node:16-alpine
+          image: jameslnewell/buildkite-pipelines
           volumes:
             - /var/run/docker.sock:/var/run/docker.sock
-            # - /var/lib/buildkite/builds:/var/lib/buildkite/builds
-            # - /usr/local/bin/buildkite-agent:/usr/local/bin/buildkite-agent
           environment:
             - "BUILDKITE_BUILD_PATH=/var/lib/buildkite/builds"
           propagate-environment: true
