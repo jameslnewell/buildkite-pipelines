@@ -20,24 +20,23 @@ yarn add --dev @jameslnewell/buildkite-pipelines
 ```ts
 import {Pipeline, CommandStep, stringify} from '@jameslnewell/buildkite-pipelines';
 
-const pipeline = Pipeline.builder()
+export const pipeline = Pipeline.builder()
   .steps([
     CommandStep.builder()
       .label('👋 Greeting')
       .command('echo "Hello World!"')
   ])
 
-console.log(stringify(pipeline))
 ```
 
 `./buildkite/pipeline.yml`
 ```yaml
 steps:
   - commands:
-      - node ./.buildkite/pipeline.ts | buildkite-agent pipeline upload
+      - buildkite-pipeline ./.buildkite/pipeline.js | buildkite-agent pipeline upload
     plugins:
       - docker#v3.11.0:
-          image: node:16-alpine
+          image: jameslnewell/buildkite-pipelines
 ```
 
 ## Why?
