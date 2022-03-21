@@ -36,7 +36,7 @@
   "scripts": {
     "check": "yarn run check:types",
     "check:types": "tsc --noEmit",
-    "build": "swc --filename src/index.ts --out-file dist/index.js --source-maps",
+    "build": "yarn swc src --out-dir dist --source-maps",
     "test": "jest --maxWorkers=1"
   }
 }
