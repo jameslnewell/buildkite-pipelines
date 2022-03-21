@@ -6,7 +6,7 @@ Generate buildkite pipelines with code.
 
 ```bash
 docker run \
-  -v "$(PWD)/pipeline.js:/workdir/pipeline.js" \
+  --volume $(PWD)/pipeline.js:/workdir/pipeline.js \
   jameslnewell/buildkite-pipelines \
-  pipeline.js
+  buildkite-pipelines pipeline.js
 ```
