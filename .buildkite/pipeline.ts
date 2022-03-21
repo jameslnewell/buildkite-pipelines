@@ -1,4 +1,4 @@
-import {stringify, validate, Pipeline, CommandStep} from '../src'
+import {stringify, validate, Pipeline, CommandStep} from '@jameslnewell/buildkite-pipeline'
 
 const pipeline = new Pipeline({
   steps: [

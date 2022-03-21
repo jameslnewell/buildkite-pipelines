@@ -1,7 +1,8 @@
 {
   "name": "@jameslnewell/buildkite-pipelines",
-  "version": "1.0.1",
-  "main": "dist/index.js",
+  "version": "1.0.2",
+  "bin": "dist/cli.js",
+  "main": "dist/api.js",
   "files": [
     "dist"
   ],
@@ -24,6 +25,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^17.0.14",
     "@types/prettier": "^2.4.4",
+    "chokidar": "^3.5.3",
     "eslint": "^8.8.0",
     "jest": "^27.5.1",
     "jest-pnp-resolver": "^1.2.2",
@@ -37,6 +39,7 @@
     "check": "yarn run check:types",
     "check:types": "tsc --noEmit",
     "build": "yarn swc src --out-dir dist --source-maps",
+    "build:watch": "yarn swc src --out-dir dist --source-maps --watch",
     "test": "jest --maxWorkers=1"
   }
 }
