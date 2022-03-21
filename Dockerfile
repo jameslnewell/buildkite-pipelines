@@ -1,3 +1,4 @@
 FROM node:alpine
+WORKDIR /workdir
 
-RUN yarn install
+RUN yarn global add @jameslnewell/buildkite-pipelines

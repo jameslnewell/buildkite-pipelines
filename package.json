@@ -1,24 +1,28 @@
 {
-  "name": "buildkite",
+  "name": "@jameslnewell/buildkite-pipelines",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "author": "James Newell <james@jameslnewell.dev>",
   "license": "MIT",
   "packageManager": "yarn@3.2.0",
   "dependencies": {
-    "@types/node": "^17.0.14",
     "js-yaml": "^4.1.0",
     "prettier": "^2.5.1"
   },
   "devDependencies": {
     "@jameslnewell/jest-preset": "^3.0.0",
     "@jest/types": "^27.5.1",
-    "@swc/core": "^1.2.154",
+    "@swc/cli": "^0.1.55",
+    "@swc/core": "^1.2.159",
     "@swc/jest": "^0.2.20",
     "@swc/register": "^0.1.10",
     "@types/eslint": "^8.4.1",
     "@types/jest": "^27.4.1",
     "@types/js-yaml": "^4.0.5",
+    "@types/node": "^17.0.14",
     "@types/prettier": "^2.4.4",
     "eslint": "^8.8.0",
     "jest": "^27.5.1",
@@ -32,6 +36,7 @@
   "scripts": {
     "check": "yarn run check:types",
     "check:types": "tsc --noEmit",
+    "build": "swc --filename src/index.ts --out-file dist/index.js --source-maps",
     "test": "jest --maxWorkers=1"
   }
 }
