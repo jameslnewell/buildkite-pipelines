@@ -5,7 +5,7 @@ export interface CommandStepObject extends Key, Label, Dependencies, Conditional
   command?: string;
   commands?: string[];
 
-  env?: Record<string, string>;
+  env?: Record<string, string | number>;
 
   priority?: number;
   concurrency?: number;

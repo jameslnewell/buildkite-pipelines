@@ -28,7 +28,7 @@ interface CommandStepBuilder extends StepBuilder, KeyMixinMethods, LabelMixinMet
 export class CommandStep {
   static builder(): CommandStepBuilder {
     let _command: string | string[] = []
-    let _env: Record<string, string> = {};
+    let _env: Record<string, string | number> = {};
     let _plugins: Array<PluginObject | PluginBuilder> = [];
     let _concurrency: number | undefined;
     let _concurrencyGroup: string | undefined
@@ -133,6 +133,13 @@ export class CommandStep {
 
         if (_softFail) {
           step.soft_fail = _softFail
+        }
+
+        if (_concurrency) {
+          step.concurrency = _concurrency
+        }
+        if (_concurrencyGroup) {
+          step.concurrency_group = _concurrencyGroup
         }
         
         return step

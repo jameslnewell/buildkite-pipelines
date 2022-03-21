@@ -14,8 +14,8 @@ export class WaitStep {
     const conditionalMixin = ConditionalMixin.builder()
     const dependenciesMixin = DependenciesMixin.builder()
     return {
-      ...conditionalMixin.methods,
-      ...dependenciesMixin.methods,
+      ...conditionalMixin as any,
+      ...dependenciesMixin,
       continueOnFailure(value) {
         _continueOnFailure = value;
         return this
