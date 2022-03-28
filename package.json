@@ -1,6 +1,6 @@
 {
   "name": "@jameslnewell/buildkite-pipelines",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "bin": "dist/cli.js",
   "main": "dist/api.js",
   "files": [
@@ -38,8 +38,10 @@
   "scripts": {
     "check": "yarn run check:types",
     "check:types": "tsc --noEmit",
-    "build": "yarn swc src --out-dir dist --source-maps",
-    "build:watch": "yarn swc src --out-dir dist --source-maps --watch",
+    "develop": "yarn run build:transpile --watch",
+    "build": "yarn run build:types && yarn run build:transpile",
+    "build:types": "tsc --declaration --emitDeclarationOnly",
+    "build:transpile": "yarn swc src --out-dir dist --source-maps",
     "test": "jest --maxWorkers=1"
   }
 }
