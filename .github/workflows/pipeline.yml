@@ -67,6 +67,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: 
       - build
+    outputs:
+      published: ${{ steps.changesets.outputs.published }}
     steps: 
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
@@ -85,6 +87,7 @@ jobs:
           name: dist
           path: dist
       - uses: changesets/action@v1
+        id: changesets
         with:
           version: yarn run version
           publish: yarn run release
@@ -97,6 +100,7 @@ jobs:
     needs: 
       - build
       - npm-publish
+    if: needs.npm-publish.outputs.published == 'true'
     steps: 
       - uses: actions/checkout@v3
       - uses: docker/setup-buildx-action@v1
