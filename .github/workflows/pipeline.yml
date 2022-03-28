@@ -86,14 +86,18 @@ jobs:
         with:
           name: dist
           path: dist
-      - uses: changesets/action@v1
-        id: changesets
-        with:
-          version: yarn run version
-          publish: yarn run release
+      - run: yarn changeset version
+      - run: git config --global user.email "github-actions[bot]"
+      - run: git config --global user.name github-actions[bot]@users.noreply.github.com
+      - run: git commit -am "Bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
+        shell: bash {0} # opt-out of exit on error
+      - run: git push
+      - run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: yarn changeset publish
+      - run: git pull
+      - run: git push --follow-tags
 
   docker-push:
     runs-on: ubuntu-latest
