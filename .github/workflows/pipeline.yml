@@ -77,9 +77,13 @@ jobs:
         with:
           name: dist
           path: dist
-      - run: npm publish --access public
+      - uses: changesets/action@v1
+        with:
+          version: yarn run version
+          publish: yarn run release
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   docker-push:
     runs-on: ubuntu-latest

@@ -43,6 +43,8 @@
     "build": "yarn run build:types && yarn run build:transpile",
     "build:types": "tsc --declaration --emitDeclarationOnly",
     "build:transpile": "yarn swc src --out-dir dist --source-maps",
-    "test": "jest --maxWorkers=1"
+    "test": "jest --maxWorkers=1",
+    "version": "changeset version",
+    "release": "changeset publish"
   }
 }
