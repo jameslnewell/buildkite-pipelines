@@ -16,11 +16,13 @@ yarn add --dev @jameslnewell/buildkite-pipelines
 
 ## Usage
 
+Define your pipeline in code.
+
 `./buildkite/pipeline.js`
 ```ts
-import {Pipeline, CommandStep, stringify} from '@jameslnewell/buildkite-pipelines';
+const {Pipeline, CommandStep, stringify} = require('@jameslnewell/buildkite-pipelines');
 
-export const pipeline = Pipeline.builder()
+module.exports = Pipeline.builder()
   .steps([
     CommandStep.builder()
       .label('👋 Greeting')
@@ -29,15 +31,48 @@ export const pipeline = Pipeline.builder()
 
 ```
 
+Generate and upload your pipeline in a Buildkite step.
+
 `./buildkite/pipeline.yml`
 ```yaml
 steps:
   - commands:
-      - buildkite-pipeline ./.buildkite/pipeline.js | buildkite-agent pipeline upload
+      - buildkite-pipeline .buildkite/pipeline.js | buildkite-agent pipeline upload
     plugins:
       - docker#v3.11.0:
           image: jameslnewell/buildkite-pipelines
 ```
+
+### Transpiling Typescript
+
+Define your pipeline in code.
+
+`./buildkite/pipeline.ts`
+```ts
+import {Pipeline, CommandStep, stringify} from '@jameslnewell/buildkite-pipelines';
+
+export default Pipeline.builder()
+  .steps([
+    CommandStep.builder()
+      .label('👋 Greeting')
+      .command('echo "Hello World!"')
+  ])
+
+```
+
+Generate and upload your pipeline in a Buildkite step.
+
+`./buildkite/pipeline.yml`
+```yaml
+steps:
+  - commands:
+      - yarn global add ts-node
+      - buildkite-pipeline .buildkite/pipeline.ts -r ts-node/register | buildkite-agent pipeline upload
+    plugins:
+      - docker#v3.11.0:
+          image: jameslnewell/buildkite-pipelines
+```
+
 
 ## Why?
 

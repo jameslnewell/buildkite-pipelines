@@ -8,5 +8,5 @@ Generate buildkite pipelines with code.
 docker run \
   --volume $(PWD)/pipeline.js:/workdir/pipeline.js \
   jameslnewell/buildkite-pipelines \
-  buildkite-pipelines pipeline.js
+  buildkite-pipelines ./pipeline.js
 ```
