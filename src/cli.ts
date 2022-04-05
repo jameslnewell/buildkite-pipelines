@@ -62,8 +62,11 @@ const resolve = (id: string) =>
       let pipeline = await import(m);
 
       // use default property
-      if (pipeline.default) {
-        log("using default property");
+      if (pipeline.pipeline) {
+        log("using .pipeline property");
+        pipeline = pipeline.pipeline;
+      } else if (pipeline.default) {
+        log("using .default property");
         pipeline = pipeline.default;
       }
 
