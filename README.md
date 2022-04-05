@@ -66,6 +66,7 @@ Generate and upload your pipeline in a Buildkite step.
 ```yaml
 steps:
   - commands:
+      - yarn global add ts-node
       - buildkite-pipeline .buildkite/pipeline.ts -r ts-node/register | buildkite-agent pipeline upload
     plugins:
       - docker#v3.11.0:
