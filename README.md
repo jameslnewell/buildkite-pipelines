@@ -1,5 +1,10 @@
 # @jameslnewell/buildkite-pipelines
 
+![checks](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/checks.yml/badge.svg)
+
+![release](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/release.yml/badge.svg)
+
+
 Generate buildkite pipelines with code.
 
 ## Installation
