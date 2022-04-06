@@ -60,6 +60,7 @@ jobs:
       - run: git push
       - run: echo "//registry.npmjs.org/:_authToken=\$NPM_TOKEN" > .npmrc
       - run: yarn changeset publish
+        id: changesets
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: git pull
