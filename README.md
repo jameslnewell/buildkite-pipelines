@@ -40,7 +40,7 @@ Generate and upload your pipeline in a Buildkite step.
 ```yaml
 steps:
   - commands:
-      - buildkite-pipeline .buildkite/pipeline.js | buildkite-agent pipeline upload
+      - buildkite-pipelines .buildkite/pipeline.js | buildkite-agent pipeline upload
     plugins:
       - docker#v3.11.0:
           image: jameslnewell/buildkite-pipelines
@@ -70,7 +70,7 @@ Generate and upload your pipeline in a Buildkite step.
 steps:
   - commands:
       - yarn global add ts-node
-      - buildkite-pipeline .buildkite/pipeline.ts -r ts-node/register | buildkite-agent pipeline upload
+      - buildkite-pipelines .buildkite/pipeline.ts -r ts-node/register | buildkite-agent pipeline upload
     plugins:
       - docker#v3.11.0:
           image: jameslnewell/buildkite-pipelines
