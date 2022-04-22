@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.1.5
+
+### Patch Changes
+
+- da9ac24: fix release script version
+
 ## 1.1.4
 
 ### Patch Changes
