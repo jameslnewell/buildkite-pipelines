@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.1.6
+
+### Patch Changes
+
+- ce56e99: Use builder
+
 ## 1.1.5
 
 ### Patch Changes
