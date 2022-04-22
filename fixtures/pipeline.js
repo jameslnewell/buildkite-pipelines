@@ -1,7 +1,3 @@
 const {Pipeline, CommandStep} = require('@jameslnewell/buildkite-pipelines')
 
-module.exports = new Pipeline({
-  steps: [
-    CommandStep.builder().command('echo "test"')
-  ]
-})
+module.exports = Pipeline.builder().steps([CommandStep.builder().command('echo "test"')]);
