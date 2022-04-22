@@ -5,5 +5,5 @@
     "target": "es2018",
     "outDir": "./dist"
   },
-  "exclude": ["fixtures"]
+  "exclude": ["fixtures", "dist"]
 }
