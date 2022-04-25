@@ -44,7 +44,6 @@ steps:
     plugins:
       - docker#v3.11.0:
           image: jameslnewell/buildkite-pipelines
-          shell: false
 ```
 
 ### Transpiling Typescript
@@ -75,7 +74,6 @@ steps:
     plugins:
       - docker#v3.11.0:
           image: jameslnewell/buildkite-pipelines
-          shell: false
 ```
 
 
