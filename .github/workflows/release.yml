@@ -79,7 +79,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - id: pushed
-        run: echo "::set-output name=pushed::$(docker manifest inspect jameslnewell/buildkite-pipelines:${{ steps.version.outputs.version }} > /dev/null)"
+        run: echo "::set-output name=pushed::$(docker manifest inspect jameslnewell/buildkite-pipelines:${{ steps.npm-publish.outputs.version }} > /dev/null)"
       - uses: docker/build-push-action@v2
         if: ${{ steps.version.outputs.pushed }} == 1
         with:
