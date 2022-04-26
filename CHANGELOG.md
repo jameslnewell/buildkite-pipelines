@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.1.8
+
+### Patch Changes
+
+- af0db8c: Fixed bin path in docker image
+
 ## 1.1.6
 
 ### Patch Changes
