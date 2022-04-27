@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.1.9
+
+### Patch Changes
+
+- 1b3ab15: Only install production dependencies
+
 ## 1.1.8
 
 ### Patch Changes
