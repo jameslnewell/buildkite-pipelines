@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.2.0
+
+### Minor Changes
+
+- db6a51f: Nest builder interfaces within namespaces
+
 ## 1.1.9
 
 ### Patch Changes
