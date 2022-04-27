@@ -6,7 +6,7 @@ import {
 import { StepBuilder } from "./StepBuilder";
 import { WaitStepObject } from "./WaitStepObject";
 
-namespace WaitStep {
+export namespace WaitStep {
   export interface Builder
     extends StepBuilder,
       ConditionalMixinMethods,

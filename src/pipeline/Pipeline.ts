@@ -6,7 +6,7 @@ function isBuilder(step: StepObject | StepBuilder): step is StepBuilder {
   return typeof (step as any).build == "function";
 }
 
-namespace Pipeline {
+export namespace Pipeline {
   export interface Builder extends PipelineBuilder {
     steps(steps: Array<StepObject | StepBuilder>): this;
     addStep(step: StepObject | StepBuilder): this;

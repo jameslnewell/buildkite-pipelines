@@ -15,7 +15,7 @@ function isBuilder(step: PluginObject | PluginBuilder): step is PluginBuilder {
   return typeof (step as any).build == "function";
 }
 
-namespace CommandStep {
+export namespace CommandStep {
   export interface Builder
     extends StepBuilder,
       KeyMixinMethods,
