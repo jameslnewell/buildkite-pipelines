@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.2.1
+
+### Patch Changes
+
+- 73eea9c: export namespaces
+
 ## 1.2.0
 
 ### Minor Changes
