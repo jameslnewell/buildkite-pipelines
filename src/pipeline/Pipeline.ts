@@ -6,13 +6,15 @@ function isBuilder(step: StepObject | StepBuilder): step is StepBuilder {
   return typeof (step as any).build == "function";
 }
 
-interface Builder extends PipelineBuilder {
-  steps(steps: Array<StepObject | StepBuilder>): this;
-  addStep(step: StepObject | StepBuilder): this;
+namespace Pipeline {
+  export interface Builder extends PipelineBuilder {
+    steps(steps: Array<StepObject | StepBuilder>): this;
+    addStep(step: StepObject | StepBuilder): this;
+  }
 }
 
 export class Pipeline {
-  static builder(): Builder {
+  static builder(): Pipeline.Builder {
     let _steps: Array<StepObject | StepBuilder> = [];
     return {
       steps(steps) {
