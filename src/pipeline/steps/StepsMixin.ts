@@ -8,6 +8,7 @@ function isBuilder(step: StepObject | StepBuilder): step is StepBuilder {
 export interface StepsMixinMethods {
   steps(steps: Array<StepObject | StepBuilder>): this;
   addStep(step: StepObject | StepBuilder): this;
+  addSteps(steps: Array<StepObject | StepBuilder>): this;
 }
 
 export interface StepsMixinBuilder extends StepsMixinMethods {
@@ -24,6 +25,10 @@ export class StepsMixin {
       },
       addStep(step) {
         _steps.push(step);
+        return this;
+      },
+      addSteps(steps) {
+        _steps.push(...steps);
         return this;
       },
       build() {

@@ -9,6 +9,20 @@ import {
 import fs from "fs";
 
 describe("Pipeline", () => {
+  test("appends steps", () => {
+    const step1 = CommandStep.builder().command('echo "hello"');
+    const step2 = CommandStep.builder().command('echo "world"');
+    const pipeline = Pipeline.builder().addSteps([step1, step2]);
+
+    expect(pipeline.build()).toHaveProperty(
+      "steps",
+      expect.arrayContaining([
+        expect.objectContaining(step1.build()),
+        expect.objectContaining(step1.build()),
+      ])
+    );
+  });
+
   // test('build', () => {
 
   //   const p = new Pipeline({

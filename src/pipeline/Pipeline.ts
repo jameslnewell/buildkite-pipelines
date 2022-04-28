@@ -1,39 +1,18 @@
 import { PipelineBuilder } from "./PipelineBuilder";
-import { StepBuilder } from "./steps/StepBuilder";
-import { StepObject } from "./steps/StepObject";
-
-function isBuilder(step: StepObject | StepBuilder): step is StepBuilder {
-  return typeof (step as any).build == "function";
-}
+import { StepsMixin, StepsMixinMethods } from "./steps/StepsMixin";
 
 export namespace Pipeline {
-  export interface Builder extends PipelineBuilder {
-    steps(steps: Array<StepObject | StepBuilder>): this;
-    addStep(step: StepObject | StepBuilder): this;
-  }
+  export interface Builder extends PipelineBuilder, StepsMixinMethods {}
 }
 
 export class Pipeline {
   static builder(): Pipeline.Builder {
-    let _steps: Array<StepObject | StepBuilder> = [];
+    const stepsMixin = StepsMixin.builder();
     return {
-      steps(steps) {
-        _steps = steps;
-        return this;
-      },
-      addStep(step) {
-        _steps.push(step);
-        return this;
-      },
+      ...(stepsMixin as any),
       build() {
         return {
-          steps: _steps.map((step) => {
-            if (isBuilder(step)) {
-              return step.build();
-            } else {
-              return step;
-            }
-          }),
+          ...stepsMixin.build(),
         };
       },
     };
