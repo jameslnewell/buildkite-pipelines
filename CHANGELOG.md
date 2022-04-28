@@ -1,5 +1,15 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.3.0
+
+### Minor Changes
+
+- 6b35d38: Added GroupStep
+
+### Patch Changes
+
+- 6b35d38: Clear yarn cache after install on docker image
+
 ## 1.2.1
 
 ### Patch Changes
