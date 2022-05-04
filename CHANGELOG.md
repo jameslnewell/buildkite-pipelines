@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.4.0
+
+### Minor Changes
+
+- 4de8150: append steps
+
 ## 1.3.0
 
 ### Minor Changes
