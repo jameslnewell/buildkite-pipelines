@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.4.1
+
+### Patch Changes
+
+- c0e142c: export namespaces better
+
 ## 1.4.0
 
 ### Minor Changes
