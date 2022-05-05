@@ -2,63 +2,66 @@ import { PluginBuilder } from "../pipeline";
 
 export interface SecretsManagerPluginObject {
   env?: Record<
-    string, 
-    string | {
-      'secret-id': string;
-      'json-key': string
-    }
-  >
+    string,
+    | string
+    | {
+        "secret-id": string;
+        "json-key": string;
+      }
+  >;
 }
 
 type Env = Record<
-  string, 
-  string | {
-    secretId: string;
-    jsonKey: string
-  }
->
+  string,
+  | string
+  | {
+      secretId: string;
+      jsonKey: string;
+    }
+>;
 
-function maptoObjectEnv(env: Env): SecretsManagerPluginObject['env'] {
+function maptoObjectEnv(env: Env): SecretsManagerPluginObject["env"] {
   if (!env) {
     return undefined;
   }
-  const objectEnv: NonNullable<SecretsManagerPluginObject['env']> = {}
+  const objectEnv: NonNullable<SecretsManagerPluginObject["env"]> = {};
   for (const key in env) {
-    const value = env[key]
-    if (typeof value === 'string') {
-      objectEnv[key] = value
+    const value = env[key];
+    if (typeof value === "string") {
+      objectEnv[key] = value;
     } else {
       objectEnv[key] = {
         "secret-id": value.secretId,
         "json-key": value.jsonKey,
-      }
+      };
     }
   }
-  return objectEnv
+  return objectEnv;
 }
 
-interface Builder extends PluginBuilder<SecretsManagerPluginObject> {
-  env(env: Env): Builder
+export namespace SecretsManagerPlugin {
+  export interface Builder extends PluginBuilder<SecretsManagerPluginObject> {
+    env(env: Env): Builder;
+  }
 }
 
 export class SecretsManagerPlugin {
-  static builder(): Builder {
+  static builder(): SecretsManagerPlugin.Builder {
     let _env: Env | undefined;
     return {
-      
       env(env) {
-        _env = env
+        _env = env;
         return this;
       },
-  
+
       build() {
         return {
-          'seek-oss/aws-sm#v2.3.1': {
-            env: _env && maptoObjectEnv(_env)
-          }
-        }
-      }
-    }
+          "seek-oss/aws-sm#v2.3.1": {
+            env: _env && maptoObjectEnv(_env),
+          },
+        };
+      },
+    };
   }
 }
 

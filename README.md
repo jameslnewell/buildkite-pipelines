@@ -87,6 +87,11 @@ Consider using this library when:
 - your pipeline is split across multiple `yaml` files and you're unable to use `yaml` anchors and aliases for composition across them
 - you can't possibly live without typings
 
+## Related projects
+
+- https://hasura.io/blog/what-we-learnt-by-migrating-from-circleci-to-buildkite/
+
+
 ### Development
 
 1. Setup a pipeline - use the command for setting up a docker agent [here](https://buildkite.com/organizations/jameslnewell/agents?return_to_pipeline=buildkite-pipelines&welcome=true#setup-docker)

@@ -7,21 +7,23 @@ export interface DockerLoginPluginObject {
   retries?: number;
 }
 
-interface UsernameBuilder {
-  username(username: string): PasswordBuilder;
-}
+export namespace DockerLoginPlugin {
+  export interface UsernameBuilder {
+    username(username: string): PasswordBuilder;
+  }
 
-interface PasswordBuilder {
-  passwordEnv(passwordEnv: string): Builder;
-}
+  export interface PasswordBuilder {
+    passwordEnv(passwordEnv: string): Builder;
+  }
 
-interface Builder extends PluginBuilder<DockerLoginPluginObject> {
-  server(server: string): Builder;
-  retries(number: number): Builder;
+  export interface Builder extends PluginBuilder<DockerLoginPluginObject> {
+    server(server: string): Builder;
+    retries(number: number): Builder;
+  }
 }
 
 export class DockerLoginPlugin {
-  static builder(): UsernameBuilder {
+  static builder(): DockerLoginPlugin.UsernameBuilder {
     let _username: string;
     let _password: string;
     let _server: string | undefined;
