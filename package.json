@@ -1,6 +1,6 @@
 {
   "name": "@jameslnewell/buildkite-pipelines",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "bin": "dist/cli.js",
   "main": "dist/api.js",
   "files": [

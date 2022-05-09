@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.5.0
+
+### Minor Changes
+
+- ef9280d: Add parallelism and docker-login properties
+
 ## 1.4.1
 
 ### Patch Changes
