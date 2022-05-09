@@ -19,26 +19,24 @@ const dockerPlugin = "docker#v3.11.0";
 describe(CommandStep.name, () => {
   describe("command", () => {
     test("string when string", () => {
-      const step = CommandStep.builder().command(installCommand).build()
-      expect(step
-      ).toHaveProperty("command", installCommand);
+      const step = CommandStep.builder().command(installCommand).build();
+      expect(step).toHaveProperty("command", installCommand);
     });
     test("array when array length == 1", () => {
-      const step = CommandStep.builder().command([installCommand]).build()
-      expect(
-        step
-      ).toHaveProperty("command", installCommand);
+      const step = CommandStep.builder().command([installCommand]).build();
+      expect(step).toHaveProperty("command", installCommand);
     });
     test("array when array length > 1", () => {
-      const step = CommandStep.builder().command([installCommand, buildCommand]).build()
-      expect(step
-      ).toHaveProperty("commands", [installCommand, buildCommand]);
+      const step = CommandStep.builder()
+        .command([installCommand, buildCommand])
+        .build();
+      expect(step).toHaveProperty("commands", [installCommand, buildCommand]);
     });
   });
 
   describe("env", () => {
     test("undefined when undefined", () => {
-      const step = CommandStep.builder().build()
+      const step = CommandStep.builder().build();
       expect(step).not.toHaveProperty("env");
     });
     test("defined when object", () => {
@@ -46,9 +44,8 @@ describe(CommandStep.name, () => {
         .env({
           FOO: "bar",
         })
-        .build()
-      expect(step
-      ).toHaveProperty("env.FOO", "bar");
+        .build();
+      expect(step).toHaveProperty("env.FOO", "bar");
     });
   });
 
@@ -68,6 +65,16 @@ describe(CommandStep.name, () => {
       expect(step.build()).toHaveProperty("plugins.0", {
         [dockerPlugin]: null,
       });
+    });
+  });
+  describe("parallelism", () => {
+    test("undefined by default", () => {
+      const step = CommandStep.builder().build();
+      expect(step).not.toHaveProperty("parallelism");
+    });
+    test("defined when 3", () => {
+      const step = CommandStep.builder().parallelism(3).build();
+      expect(step).toHaveProperty("parallelism", 3);
     });
   });
 });

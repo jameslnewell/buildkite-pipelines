@@ -33,6 +33,7 @@ export namespace CommandStep {
     addArtifactPath(path: string): this;
     timeout(minutes: number): this;
     softFail(fail: boolean): this;
+    parallelism(count: number): this;
   }
 }
 
@@ -46,6 +47,7 @@ export class CommandStep {
     let _artifactPaths: string[] = [];
     let _timeoutInMinutes: number | undefined;
     let _softFail: boolean | undefined;
+    let _parallelism: number | undefined;
     const keyMixin = KeyMixin.builder();
     const labelMixin = LabelMixin.builder();
     const conditionalMixin = ConditionalMixin.builder();
@@ -109,6 +111,11 @@ export class CommandStep {
         return this;
       },
 
+      parallelism(count) {
+        _parallelism = count;
+        return this;
+      },
+
       build() {
         const step: CommandStepObject = {
           ...keyMixin.build(),
@@ -153,6 +160,10 @@ export class CommandStep {
         }
         if (_concurrencyGroup) {
           step.concurrency_group = _concurrencyGroup;
+        }
+
+        if (_parallelism) {
+          step.parallelism = _parallelism;
         }
 
         return step;
