@@ -10,6 +10,7 @@ import {
   DependenciesMixin,
   DependenciesMixinMethods,
 } from "./DependenciesMixin";
+import { SkippableMixin, SkippableMixinMethods } from "./SkippableMixin";
 
 function isBuilder(step: PluginObject | PluginBuilder): step is PluginBuilder {
   return typeof (step as any).build == "function";
@@ -22,7 +23,8 @@ export namespace CommandStep {
       LabelMixinMethods,
       ConditionalMixinMethods,
       BranchesMixinMethods,
-      DependenciesMixinMethods {
+      DependenciesMixinMethods,
+      SkippableMixinMethods {
     command(command: string | string[]): this;
     env(env: Record<string, string | number>): this;
     addEnv(name: string, value: string): this;
@@ -53,12 +55,14 @@ export class CommandStep {
     const conditionalMixin = ConditionalMixin.builder();
     const branchesMixin = BranchesMixin.builder();
     const dependenciesMixin = DependenciesMixin.builder();
+    const skippableMixin = SkippableMixin.builder();
     return {
       ...(keyMixin as any),
       ...labelMixin,
       ...conditionalMixin,
       ...branchesMixin,
       ...dependenciesMixin,
+      ...skippableMixin,
 
       command(command) {
         _command = command;
@@ -123,6 +127,7 @@ export class CommandStep {
           ...conditionalMixin.build(),
           ...branchesMixin.build(),
           ...dependenciesMixin.build(),
+          ...skippableMixin.build(),
         };
 
         if (Array.isArray(_command) && _command.length > 1) {

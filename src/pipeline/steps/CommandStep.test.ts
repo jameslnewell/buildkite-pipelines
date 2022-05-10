@@ -77,4 +77,18 @@ describe(CommandStep.name, () => {
       expect(step).toHaveProperty("parallelism", 3);
     });
   });
+  describe("skip", () => {
+    test("undefined by default", () => {
+      const step = CommandStep.builder().build();
+      expect(step).not.toHaveProperty("skip");
+    });
+    test("defined when true", () => {
+      const step = CommandStep.builder().skip(true).build();
+      expect(step).toHaveProperty("skip", true);
+    });
+    test("defined when false", () => {
+      const step = CommandStep.builder().skip(false).build();
+      expect(step).toHaveProperty("skip", false);
+    });
+  });
 });
