@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 1.6.0
+
+### Minor Changes
+
+- bf5acaa: added skip
+
 ## 1.5.0
 
 ### Minor Changes
