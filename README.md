@@ -23,7 +23,7 @@ Define your pipeline in code.
 
 `./buildkite/pipeline.js`
 ```ts
-const {Pipeline, CommandStep, stringify} = require('@jameslnewell/buildkite-pipelines');
+const {Pipeline, CommandStep} = require('@jameslnewell/buildkite-pipelines');
 
 module.exports = Pipeline.builder()
   .steps([
@@ -52,7 +52,7 @@ Define your pipeline in code.
 
 `./buildkite/pipeline.ts`
 ```ts
-import {Pipeline, CommandStep, stringify} from '@jameslnewell/buildkite-pipelines';
+import {Pipeline, CommandStep} from '@jameslnewell/buildkite-pipelines';
 
 export default Pipeline.builder()
   .steps([
