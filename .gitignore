@@ -1,9 +1,2 @@
 dist
-
-.yarn/cache
-.yarn/install-state.gz
-.yarn/unplugged
-.yarn/sdks
-.pnp.cjs
-.pnp.loader.mjs
 node_modules
