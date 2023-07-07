@@ -15,15 +15,21 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          registry-url: https://registry.npmjs.org/
+      - uses: pnpm/action-setup@v2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       - uses: actions/cache@v3
+        name: Setup pnpm cache
         with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn install
-      - run: yarn run build
+            ${{ runner.os }}-pnpm-store-
+      - run: pnpm install
+      - run: pnpm run build
       - uses: actions/upload-artifact@v3
         with:
           name: dist
@@ -40,19 +46,26 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 16
-          registry-url: https://registry.npmjs.org/
+      - uses: pnpm/action-setup@v2
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
       - uses: actions/cache@v3
+        name: Setup pnpm cache
         with:
-          path: .yarn/cache
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
-      - run: yarn install
+            ${{ runner.os }}-pnpm-store-
+      - run: pnpm install
       - uses: actions/download-artifact@v3
         with:
           name: dist
           path: dist
-      - run: yarn changeset version
+      - run: pnpm run changeset version
       - id: version
         run: echo "::set-output name=version::$(jq -r .version package.json)"
       - run: git config --global user.email "github-actions[bot]"
@@ -61,7 +74,7 @@ jobs:
         shell: bash {0} # opt-out of exit on error
       - run: git push
       - run: git push --follow-tags
-      - run: yarn dlx publish-if-not-published
+      - run: pnpm dlx publish-if-not-published
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

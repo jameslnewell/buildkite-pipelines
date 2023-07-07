@@ -6,3 +6,4 @@ dist
 .yarn/sdks
 .pnp.cjs
 .pnp.loader.mjs
+node_modules
