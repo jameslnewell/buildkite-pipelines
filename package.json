@@ -8,6 +8,14 @@
   ],
   "author": "James Newell <james@jameslnewell.dev>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jameslnewell/buildkite-pipelines.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jameslnewell/buildkite-pipelines/issues"
+  },
+  "homepage": "https://github.com/jameslnewell/buildkite-pipelines",
   "packageManager": "pnpm@8.6.6",
   "dependencies": {
     "debug": "^4.3.4",
