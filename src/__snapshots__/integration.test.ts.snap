@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`integration matches snapshot 1`] = `
+"steps:
+  - command: npm run lint
+    label: \\":eslint: Lint\\"
+  - command: npm run test
+    key: unit-test
+    label: \\":jest: Test\\"
+  - command: npm run upload:coverage
+    label: \\":upload: Upload coverage\\"
+    depends_on:
+      - unit-test
+    plugins:
+      - dockerthis.#v3.11.0:
+          image: codeclimate/codeclimate
+  - wait: null
+  - block: 🚀 Release
+    key: release
+"
+`;

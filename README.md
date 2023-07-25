@@ -25,12 +25,12 @@ Define your pipeline in code.
 ```ts
 const {Pipeline, CommandStep} = require('@jameslnewell/buildkite-pipelines');
 
-module.exports = Pipeline.builder()
-  .steps([
-    CommandStep.builder()
+module.exports = new Pipeline()
+  .step(
+    new CommandStep()
       .label('👋 Greeting')
       .command('echo "Hello World!"')
-  ])
+  )
 
 ```
 
@@ -54,12 +54,12 @@ Define your pipeline in code.
 ```ts
 import {Pipeline, CommandStep} from '@jameslnewell/buildkite-pipelines';
 
-export default Pipeline.builder()
-  .steps([
-    CommandStep.builder()
+export default new Pipeline()
+  .step(
+    new CommandStep()
       .label('👋 Greeting')
       .command('echo "Hello World!"')
-  ])
+  )
 
 ```
 
