@@ -26,7 +26,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   #env?: Record<string, string | number>
   #soft_fail?: boolean;
   #timeout_in_minutes?: number;
-  #artifact_paths?: string[];
 
   command(command: string | string[]): this {
     this.#command = command
@@ -107,14 +106,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     return this
   }
 
-  artifactPath(path: string): this {
-    if (!this.#artifact_paths) {
-      this.#artifact_paths = []
-    }
-    this.#artifact_paths.push(path)
-    return this
-  }
-
   build(): CommandStepSchema {
     const commandKey = this.#command && Array.isArray(this.#command) && this.#command.length > 1 ? 'commands' : 'command'
     const object: CommandStepSchema = {
@@ -131,7 +122,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
       ...(this.#env ? {env: this.#env} : {}),
       ...(this.#soft_fail ? {soft_fail: this.#soft_fail} : {}),
       ...(this.#timeout_in_minutes ? {timeout_in_minutes: this.#timeout_in_minutes} : {}),
-      ...(this.#artifact_paths ? {artifact_paths: this.#artifact_paths} : {}),
     }
 
     if (!this.#command || (Array.isArray(this.#command) && this.#command.length === 0)) {
