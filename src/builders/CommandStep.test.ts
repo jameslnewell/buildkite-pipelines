@@ -40,12 +40,7 @@ describe(CommandStep.name, () => {
       expect(step).not.toHaveProperty("env");
     });
     test("defined when object", () => {
-      const step = new CommandStep()
-        .command(":")
-        .env({
-          FOO: "bar",
-        })
-        .build();
+      const step = new CommandStep().command(":").env("FOO", "bar").build();
       expect(step).toHaveProperty("env.FOO", "bar");
     });
   });
@@ -131,10 +126,7 @@ describe(CommandStep.name, () => {
     });
 
     test("defined when true", () => {
-      const step = new CommandStep()
-        .command(":")
-        .softFail()
-        .build();
+      const step = new CommandStep().command(":").softFail().build();
       expect(step).toHaveProperty("soft_fail", true);
     });
   });
@@ -146,10 +138,7 @@ describe(CommandStep.name, () => {
     });
 
     test("defined when 2", () => {
-      const step = new CommandStep()
-        .command(":")
-        .timeout(2)
-        .build();
+      const step = new CommandStep().command(":").timeout(2).build();
       expect(step).toHaveProperty("timeout_in_minutes", 2);
     });
   });

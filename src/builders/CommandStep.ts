@@ -77,12 +77,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     return this
   }
   
-  env(env: Record<string, string | number>): this {
-    this.#env = env
-    return this
-  }
-
-  addEnv(key: string, value: string | number): this {
+  env(key: string, value: string | number): this {
     if (!this.#env) {
       this.#env = {}
     }
