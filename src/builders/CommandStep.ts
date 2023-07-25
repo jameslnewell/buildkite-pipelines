@@ -9,13 +9,10 @@ import { SkipBuilder, SkipHelper } from "./partials/skip";
 import { PluginBuilder } from "./PluginBuilder";
 import {CommandStepSchema, PluginSchema, StepDependsOn } from "../schema";
 import { isPluginBuilder } from "./isPluginBuilder";
-import { ParallelismBuilder, ParallelismHelper } from "./partials/parrallelism";
-import { EnvBuilder, EnvHelper } from "./partials/env";
 import { CommandBuilder, CommandHelper } from "./partials/command";
-import { ConcurrencyBuilder, ConcurrencyHelper } from "./partials/concurrency";
 
-export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder, CommandBuilder, ParallelismBuilder, EnvBuilder, ConcurrencyBuilder {
-  #commandHelper = new CommandHelper()
+export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder {
+  #command?: string | string[]
   #plugins: Array<PluginSchema | PluginBuilder> = []
   #keyHelper = new KeyHelper()
   #labelHelper = new LabelHelper()
@@ -23,12 +20,14 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   #branchesHelper = new BranchesHelper()
   #dependenciesHelper = new DependenciesHelper()
   #skipHelper = new SkipHelper()
-  #parallelismHelper = new ParallelismHelper() 
-  #envHelper = new EnvHelper()
-  #concurrencyHelper = new ConcurrencyHelper()
+
+  #concurrency?: number
+  #concurrency_group?: string
+  #parallelism?: number
+  #env?: Record<string, string | number>
 
   command(command: string | string[]): this {
-    this.#commandHelper.command(command)
+    this.#command = command
     return this
   }
 
@@ -73,38 +72,47 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   }
   
   parallelism(parallelism: number): this {
-    this.#parallelismHelper.parallelism(parallelism)
+    this.#parallelism = parallelism
     return this
   }
   
   env(env: Record<string, string | number>): this {
-    this.#envHelper.env(env)
+    this.#env = env
+    return this
+  }
+  addEnv(key: string, value: string | number): this {
+    if (!this.#env) {
+      this.#env = {}
+    }
+    this.#env[key] = value
     return this
   }
 
-  addEnv(name: string, value: string): this {
-    this.#envHelper.addEnv(name, value)
-    return this
-  }
-  
-  concurrency(concurrency?: number, group?: string): this {
-    this.#concurrencyHelper.concurrency(concurrency, group)
+  concurrency(jobs?: number, group?: string): this {
+    this.#concurrency = jobs
+    this.#concurrency_group = group
     return this
   }
 
 
   build(): CommandStepSchema {
+    const commandKey = this.#command && Array.isArray(this.#command) && this.#command.length > 1 ? 'commands' : 'command'
     const object: CommandStepSchema = {
-      ...this.#commandHelper.build(),
+      ...{ [commandKey]: this.#command },
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       ...this.#conditionHelper.build(),
       ...this.#branchesHelper.build(),
       ...this.#dependenciesHelper.build(),
       ...this.#skipHelper.build(),
-      ...this.#parallelismHelper.build(),
-      ...this.#envHelper.build(),
-      ...this.#concurrencyHelper.build(),
+      ...(this.#parallelism ? { parallelism: this.#parallelism } : {}),
+      ...(this.#concurrency ? {concurrency: this.#concurrency} : {}),
+      ...(this.#concurrency_group ? {concurrency_group: this.#concurrency_group} : {}),
+      ...(this.#env ? {env: this.#env} : {})
+    }
+
+    if (!this.#command || (Array.isArray(this.#command) && this.#command.length === 0)) {
+      throw new Error('CommandStep requires a command.')
     }
 
     if (this.#plugins.length > 0) {
@@ -120,7 +128,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   // addArtifactPath(path: string): this;
   // timeout(minutes: number): this;
   // softFail(fail: boolean): this;
-
 }
 
 
