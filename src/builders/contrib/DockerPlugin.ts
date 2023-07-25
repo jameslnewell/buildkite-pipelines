@@ -12,10 +12,15 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
-  // environment(environment: string) {
-  //   this.#environment = environment;
-  //   return this;
-  // }
+  environment(environment: string) {
+    if (!this.#environment) {
+      this.#environment = [];
+    }
+
+    this.#environment.push(environment);
+
+    return this;
+  }
 
   cpus(limit: string) {
     this.#cpus = limit;
