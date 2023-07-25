@@ -11,11 +11,11 @@ import {CommandStepSchema, PluginSchema, StepDependsOn } from "../schema";
 import { isPluginBuilder } from "./isPluginBuilder";
 import { ParallelismHelper } from "./partials/parrallelism";
 import { EnvHelper } from "./partials/env";
+import { CommandHelper } from "./partials/command";
 
 export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder {
-  #command?: string | string[]
+  #commandHelper = new CommandHelper()
   #plugins: Array<PluginSchema | PluginBuilder> = []
-
   #keyHelper = new KeyHelper()
   #labelHelper = new LabelHelper()
   #conditionHelper = new ConditionHelper()
@@ -26,7 +26,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   #envHelper = new EnvHelper()
 
   command(command: string | string[]): this {
-    this.#command = command
+    this.#commandHelper.command(command)
     return this
   }
 
@@ -86,11 +86,8 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   }
 
   build(): CommandStepSchema {
-    if (!this.#command) {
-      throw new Error('CommandStep requires a command.')
-    }
     const object: CommandStepSchema = {
-      command: this.#command,
+      ...this.#commandHelper.build(),
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       ...this.#conditionHelper.build(),
