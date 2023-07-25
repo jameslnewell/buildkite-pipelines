@@ -2,7 +2,6 @@
 
 ![checks](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/checks.yml/badge.svg) ![release](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/release.yml/badge.svg)
 
-
 Generate buildkite pipelines with code.
 
 ## Installation
@@ -21,7 +20,7 @@ yarn add --dev @jameslnewell/buildkite-pipelines
 
 Define your pipeline in code.
 
-`./buildkite/pipeline.js`
+`./.buildkite/pipeline.js`
 ```ts
 const {Pipeline, CommandStep} = require('@jameslnewell/buildkite-pipelines');
 
@@ -36,7 +35,7 @@ module.exports = new Pipeline()
 
 Generate and upload your pipeline in a Buildkite step.
 
-`./buildkite/pipeline.yml`
+`./.buildkite/pipeline.yml`
 ```yaml
 steps:
   - commands:
@@ -50,7 +49,7 @@ steps:
 
 Define your pipeline in code.
 
-`./buildkite/pipeline.ts`
+`./.buildkite/pipeline.ts`
 ```ts
 import {Pipeline, CommandStep} from '@jameslnewell/buildkite-pipelines';
 
@@ -65,7 +64,7 @@ export default new Pipeline()
 
 Generate and upload your pipeline in a Buildkite step.
 
-`./buildkite/pipeline.yml`
+`./.buildkite/pipeline.yml`
 ```yaml
 steps:
   - commands:
