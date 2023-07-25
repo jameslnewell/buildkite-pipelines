@@ -86,7 +86,7 @@ describe(CommandStep.name, () => {
 
   describe("skip", () => {
     test("undefined by default", () => {
-      const step = new CommandStep().command(":").command(":").build();
+      const step = new CommandStep().command(":").build();
       expect(step).not.toHaveProperty("skip");
     });
     test("defined when true", () => {
@@ -96,6 +96,31 @@ describe(CommandStep.name, () => {
     test("defined when false", () => {
       const step = new CommandStep().command(":").skip(false).build();
       expect(step).toHaveProperty("skip", false);
+    });
+  });
+
+  describe("concurrency", () => {
+    test("undefined by default", () => {
+      const step = new CommandStep().command(":").build();
+      expect(step).not.toHaveProperty("concurrency");
+    });
+    test("defined when 1", () => {
+      const step = new CommandStep().command(":").concurrency(1).build();
+      expect(step).toHaveProperty("concurrency", 1);
+    });
+  });
+
+  describe("concurrency_group", () => {
+    test("undefined by default", () => {
+      const step = new CommandStep().command(":").build();
+      expect(step).not.toHaveProperty("concurrency_group");
+    });
+    test("defined when 1", () => {
+      const step = new CommandStep()
+        .command(":")
+        .concurrency(1, "test")
+        .build();
+      expect(step).toHaveProperty("concurrency_group", "test");
     });
   });
 });

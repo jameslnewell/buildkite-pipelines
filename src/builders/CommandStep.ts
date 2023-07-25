@@ -9,11 +9,12 @@ import { SkipBuilder, SkipHelper } from "./partials/skip";
 import { PluginBuilder } from "./PluginBuilder";
 import {CommandStepSchema, PluginSchema, StepDependsOn } from "../schema";
 import { isPluginBuilder } from "./isPluginBuilder";
-import { ParallelismHelper } from "./partials/parrallelism";
-import { EnvHelper } from "./partials/env";
-import { CommandHelper } from "./partials/command";
+import { ParallelismBuilder, ParallelismHelper } from "./partials/parrallelism";
+import { EnvBuilder, EnvHelper } from "./partials/env";
+import { CommandBuilder, CommandHelper } from "./partials/command";
+import { ConcurrencyBuilder, ConcurrencyHelper } from "./partials/concurrency";
 
-export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder {
+export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder, CommandBuilder, ParallelismBuilder, EnvBuilder, ConcurrencyBuilder {
   #commandHelper = new CommandHelper()
   #plugins: Array<PluginSchema | PluginBuilder> = []
   #keyHelper = new KeyHelper()
@@ -24,6 +25,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   #skipHelper = new SkipHelper()
   #parallelismHelper = new ParallelismHelper() 
   #envHelper = new EnvHelper()
+  #concurrencyHelper = new ConcurrencyHelper()
 
   command(command: string | string[]): this {
     this.#commandHelper.command(command)
@@ -84,6 +86,12 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     this.#envHelper.addEnv(name, value)
     return this
   }
+  
+  concurrency(concurrency?: number, group?: string): this {
+    this.#concurrencyHelper.concurrency(concurrency, group)
+    return this
+  }
+
 
   build(): CommandStepSchema {
     const object: CommandStepSchema = {
@@ -96,6 +104,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
       ...this.#skipHelper.build(),
       ...this.#parallelismHelper.build(),
       ...this.#envHelper.build(),
+      ...this.#concurrencyHelper.build(),
     }
 
     if (this.#plugins.length > 0) {
@@ -107,7 +116,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
 
   // plugins(plugins: Array<PluginSchema | PluginBuilder>): this;
   // addPlugin(plugin: PluginSchema | PluginBuilder): this;
-  // concurrency(jobs: number, group: string): this;
   // artifactPaths(paths: string[]): this;
   // addArtifactPath(path: string): this;
   // timeout(minutes: number): this;
