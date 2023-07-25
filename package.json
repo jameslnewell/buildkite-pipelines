@@ -53,7 +53,7 @@
     "develop": "yarn run build:transpile --watch",
     "build": "yarn run build:types && yarn run build:transpile",
     "build:types": "tsc --declaration --emitDeclarationOnly",
-    "build:transpile": "yarn swc src --out-dir dist --source-maps",
+    "build:transpile": "yarn swc src --out-dir dist --source-maps --copy-files",
     "test": "jest --maxWorkers=1",
     "changeset": "changeset",
     "version": "changeset version",
