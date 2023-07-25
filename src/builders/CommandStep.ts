@@ -10,6 +10,7 @@ import { PluginBuilder } from "./PluginBuilder";
 import {CommandStepSchema, PluginSchema, StepDependsOn } from "../schema";
 import { isPluginBuilder } from "./isPluginBuilder";
 import { ParallelismHelper } from "./partials/parrallelism";
+import { EnvHelper } from "./partials/env";
 
 export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder {
   #command?: string | string[]
@@ -22,6 +23,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   #dependenciesHelper = new DependenciesHelper()
   #skipHelper = new SkipHelper()
   #parallelismHelper = new ParallelismHelper() 
+  #envHelper = new EnvHelper()
 
   command(command: string | string[]): this {
     this.#command = command
@@ -72,6 +74,16 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     this.#parallelismHelper.parallelism(parallelism)
     return this
   }
+  
+  env(env: Record<string, string | number>): this {
+    this.#envHelper.env(env)
+    return this
+  }
+
+  addEnv(name: string, value: string): this {
+    this.#envHelper.addEnv(name, value)
+    return this
+  }
 
   build(): CommandStepSchema {
     if (!this.#command) {
@@ -86,6 +98,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
       ...this.#dependenciesHelper.build(),
       ...this.#skipHelper.build(),
       ...this.#parallelismHelper.build(),
+      ...this.#envHelper.build(),
     }
 
     if (this.#plugins.length > 0) {
@@ -95,8 +108,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     return object
   }
 
-  // env(env: Record<string, string | number>): this;
-  // addEnv(name: string, value: string): this;
   // plugins(plugins: Array<PluginSchema | PluginBuilder>): this;
   // addPlugin(plugin: PluginSchema | PluginBuilder): this;
   // concurrency(jobs: number, group: string): this;

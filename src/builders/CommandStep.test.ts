@@ -34,34 +34,39 @@ describe(CommandStep.name, () => {
     });
   });
 
-  // describe("env", () => {
-  //   test("undefined when undefined", () => {
-  //     const step = new CommandStep().build();
-  //     expect(step).not.toHaveProperty("env");
-  //   });
-  //   test("defined when object", () => {
-  //     const step = new CommandStep()
-  //       .env({
-  //         FOO: "bar",
-  //       })
-  //       .build();
-  //     expect(step).toHaveProperty("env.FOO", "bar");
-  //   });
-  // });
+  describe("env", () => {
+    test("undefined when undefined", () => {
+      const step = new CommandStep().command(":").build();
+      expect(step).not.toHaveProperty("env");
+    });
+    test("defined when object", () => {
+      const step = new CommandStep()
+        .command(":")
+        .env({
+          FOO: "bar",
+        })
+        .build();
+      expect(step).toHaveProperty("env.FOO", "bar");
+    });
+  });
 
   describe("plugins", () => {
     test("undefined when not defined", () => {
-      const step = new CommandStep().command(':');
+      const step = new CommandStep().command(":");
       expect(step.build()).not.toHaveProperty("plugins");
     });
     test("defined when object", () => {
-      const step = new CommandStep().command(':').plugin({ [dockerPlugin]: null });
+      const step = new CommandStep()
+        .command(":")
+        .plugin({ [dockerPlugin]: null });
       expect(step.build()).toHaveProperty("plugins.0", {
         [dockerPlugin]: null,
       });
     });
     test("defined when builder", () => {
-      const step = new CommandStep().command(':').plugin(new Plugin(dockerPlugin));
+      const step = new CommandStep()
+        .command(":")
+        .plugin(new Plugin(dockerPlugin));
       expect(step.build()).toHaveProperty("plugins.0", {
         [dockerPlugin]: null,
       });
@@ -70,26 +75,26 @@ describe(CommandStep.name, () => {
 
   describe("parallelism", () => {
     test("undefined by default", () => {
-      const step = new CommandStep().command(':').build();
+      const step = new CommandStep().command(":").build();
       expect(step).not.toHaveProperty("parallelism");
     });
     test("defined when 3", () => {
-      const step = new CommandStep().command(':').parallelism(3).build();
+      const step = new CommandStep().command(":").parallelism(3).build();
       expect(step).toHaveProperty("parallelism", 3);
     });
   });
 
   describe("skip", () => {
     test("undefined by default", () => {
-      const step = new CommandStep().command(':').command(':').build();
+      const step = new CommandStep().command(":").command(":").build();
       expect(step).not.toHaveProperty("skip");
     });
     test("defined when true", () => {
-      const step = new CommandStep().command(':').skip(true).build();
+      const step = new CommandStep().command(":").skip(true).build();
       expect(step).toHaveProperty("skip", true);
     });
     test("defined when false", () => {
-      const step = new CommandStep().command(':').skip(false).build();
+      const step = new CommandStep().command(":").skip(false).build();
       expect(step).toHaveProperty("skip", false);
     });
   });
