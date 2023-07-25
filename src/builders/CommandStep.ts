@@ -25,6 +25,9 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   #concurrency_group?: string
   #parallelism?: number
   #env?: Record<string, string | number>
+  #soft_fail?: boolean;
+  #timeout_in_minutes?: number;
+  #artifact_paths?: string[];
 
   command(command: string | string[]): this {
     this.#command = command
@@ -80,6 +83,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     this.#env = env
     return this
   }
+
   addEnv(key: string, value: string | number): this {
     if (!this.#env) {
       this.#env = {}
@@ -94,6 +98,23 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     return this
   }
 
+  softFail(fail: boolean = true): this {
+    this.#soft_fail = fail
+    return this
+  }
+
+  timeout(minutes: number): this {
+    this.#timeout_in_minutes = minutes
+    return this
+  }
+
+  artifactPath(path: string): this {
+    if (!this.#artifact_paths) {
+      this.#artifact_paths = []
+    }
+    this.#artifact_paths.push(path)
+    return this
+  }
 
   build(): CommandStepSchema {
     const commandKey = this.#command && Array.isArray(this.#command) && this.#command.length > 1 ? 'commands' : 'command'
@@ -108,7 +129,10 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
       ...(this.#parallelism ? { parallelism: this.#parallelism } : {}),
       ...(this.#concurrency ? {concurrency: this.#concurrency} : {}),
       ...(this.#concurrency_group ? {concurrency_group: this.#concurrency_group} : {}),
-      ...(this.#env ? {env: this.#env} : {})
+      ...(this.#env ? {env: this.#env} : {}),
+      ...(this.#soft_fail ? {soft_fail: this.#soft_fail} : {}),
+      ...(this.#timeout_in_minutes ? {timeout_in_minutes: this.#timeout_in_minutes} : {}),
+      ...(this.#artifact_paths ? {artifact_paths: this.#artifact_paths} : {}),
     }
 
     if (!this.#command || (Array.isArray(this.#command) && this.#command.length === 0)) {
@@ -121,13 +145,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
 
     return object
   }
-
-  // plugins(plugins: Array<PluginSchema | PluginBuilder>): this;
-  // addPlugin(plugin: PluginSchema | PluginBuilder): this;
-  // artifactPaths(paths: string[]): this;
-  // addArtifactPath(path: string): this;
-  // timeout(minutes: number): this;
-  // softFail(fail: boolean): this;
 }
 
 

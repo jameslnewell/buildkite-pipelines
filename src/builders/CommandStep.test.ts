@@ -123,4 +123,59 @@ describe(CommandStep.name, () => {
       expect(step).toHaveProperty("concurrency_group", "test");
     });
   });
+
+  describe("soft_fail", () => {
+    test("undefined by default", () => {
+      const step = new CommandStep().command(":").build();
+      expect(step).not.toHaveProperty("soft_fail");
+    });
+
+    test("defined when true", () => {
+      const step = new CommandStep()
+        .command(":")
+        .softFail()
+        .build();
+      expect(step).toHaveProperty("soft_fail", true);
+    });
+  });
+
+  describe("timeout_in_minutes", () => {
+    test("undefined by default", () => {
+      const step = new CommandStep().command(":").build();
+      expect(step).not.toHaveProperty("timeout_in_minutes");
+    });
+
+    test("defined when 2", () => {
+      const step = new CommandStep()
+        .command(":")
+        .timeout(2)
+        .build();
+      expect(step).toHaveProperty("timeout_in_minutes", 2);
+    });
+  });
+
+  describe("artifact_paths", () => {
+    test("undefined by default", () => {
+      const step = new CommandStep().command(":").build();
+      expect(step).not.toHaveProperty("artifact_paths");
+    });
+
+    test("defined when one path set", () => {
+      const step = new CommandStep()
+        .command(":")
+        .artifactPath('./foo')
+        .build();
+      expect(step).toHaveProperty("artifact_paths", ['./foo']);
+    });
+
+    test("defined when ultiple path set", () => {
+      const step = new CommandStep()
+        .command(":")
+        .artifactPath('./foo')
+        .artifactPath('./bar')
+        .build();
+      expect(step).toHaveProperty("artifact_paths", ['./foo', './bar']);
+    });
+  });
+
 });
