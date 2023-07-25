@@ -119,10 +119,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
       ...(this.#timeout_in_minutes ? {timeout_in_minutes: this.#timeout_in_minutes} : {}),
     }
 
-    if (!this.#command || (Array.isArray(this.#command) && this.#command.length === 0)) {
-      throw new Error('CommandStep requires a command.')
-    }
-
     if (this.#plugins.length > 0) {
       object.plugins = this.#plugins.map(plugin => isPluginBuilder(plugin) ? plugin.build() : plugin)
     }
