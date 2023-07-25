@@ -9,7 +9,6 @@ import { SkipBuilder, SkipHelper } from "./partials/skip";
 import { PluginBuilder } from "./PluginBuilder";
 import {CommandStepSchema, PluginSchema, StepDependsOn } from "../schema";
 import { isPluginBuilder } from "./isPluginBuilder";
-import { CommandBuilder, CommandHelper } from "./partials/command";
 
 export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder {
   #command?: string | string[]
