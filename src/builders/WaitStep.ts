@@ -1,5 +1,4 @@
-import { WaitStepSchema } from "../schema";
-import { StepDependency } from "../schema/partials";
+import { StepDependsOn, WaitStepSchema } from "../schema";
 import { StepBuilder } from "./StepBuilder";
 import { ConditionBuilder, ConditionHelper } from "./partials/conition";
 import { DependenciesBuilder, DependenciesHelper } from "./partials/dependencies";
@@ -19,7 +18,7 @@ export class WaitStep implements StepBuilder, ConditionBuilder, DependenciesBuil
     return this
   }
 
-  dependOn(dependency: null | StepDependency): this {
+  dependOn(dependency: null | StepDependsOn): this {
     this.#dependenciesHelper.dependOn(dependency)
     return this
   }

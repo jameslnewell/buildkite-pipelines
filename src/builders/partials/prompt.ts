@@ -1,24 +1,25 @@
-import { Prompt, SelectInput, TextInput } from "../../schema/partials"
+import { Field } from "../../schema";
+import { InputStep } from "../../schema/schema";
 
 export interface PromptBuilder {
   prompt(prompt: string): this;
-  field(field: SelectInput | TextInput): this
+  field(field: Field): this
 }
 
 export class PromptHelper {
   #prompt?: string
-  #fields: Array<SelectInput | TextInput> = []
+  #fields: Array<Field> = []
 
   prompt(prompt: string): void {
     this.#prompt = prompt
   }
 
-  field(field: SelectInput | TextInput): void {
+  field(field: Field): void {
     this.#fields.push(field)
   }
 
   build() {
-    const object: Prompt = {}
+    const object: Pick<InputStep, 'prompt' |'fields'> = {}
 
     if (this.#prompt) {
       object.prompt = this.#prompt

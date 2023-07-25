@@ -1,14 +1,12 @@
-import { GroupStepSchema, StepSchema } from "../schema"
-import { StepDependency } from "../schema/partials"
+import { GroupStepSchema, StepDependsOn, StepSchema } from "../schema"
 import { StepBuilder } from "./StepBuilder"
 import { DependenciesBuilder, DependenciesHelper } from "./partials/dependencies"
 import { KeyBuilder, KeyHelper } from "./partials/key"
 import { LabelBuilder, LabelHelper } from "./partials/label"
-import { NotifyBuilder } from "./partials/notify"
 import { SkipBuilder, SkipHelper } from "./partials/skip"
-import { StepsHelper } from "./partials/steps"
+import { StepsBuilder, StepsHelper } from "./partials/steps"
 
-export class GroupStep implements StepBuilder, KeyBuilder, LabelBuilder, DependenciesBuilder, SkipBuilder/*, NotifyBuilder*/ {
+export class GroupStep implements StepBuilder, KeyBuilder, LabelBuilder, DependenciesBuilder, SkipBuilder, StepsBuilder/*, NotifyBuilder*/ {
   #labelHelper = new LabelHelper()
   #stepsHelper = new StepsHelper()
   #keyHelper = new KeyHelper()
@@ -47,7 +45,7 @@ export class GroupStep implements StepBuilder, KeyBuilder, LabelBuilder, Depende
     return this
   }
 
-  dependOn(dependency: null | StepDependency): this {
+  dependOn(dependency: null | StepDependsOn): this {
     this.dependenciesHelper.dependOn(dependency)
     return this
   }
@@ -62,7 +60,8 @@ export class GroupStep implements StepBuilder, KeyBuilder, LabelBuilder, Depende
       group: "",
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
-      ...this.#stepsHelper.build(),
+      // TODO: cannot have group steps nested within groups so refactor steps helper to take a generic arg
+      ...this.#stepsHelper.build() as any,
       ...this.skipHelper.build(),
       ...this.dependenciesHelper.build(),
     }

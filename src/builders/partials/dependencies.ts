@@ -1,4 +1,4 @@
-import { CommandStepSchema, StepDependsOn, StepSchema } from "../../schema";
+import { CommandStepSchema, StepDependsOn } from "../../schema";
 
 export interface DependenciesBuilder {
   dependOn(dependency: null | StepDependsOn | Array<StepDependsOn>): this
@@ -6,10 +6,10 @@ export interface DependenciesBuilder {
 }
 
 export class DependenciesHelper {
-  #dependsOn: null | Array<string | {step: string; allow_failure?: boolean;}> = []
+  #dependsOn: null | Array<StepDependsOn> = []
   #allowDependencyFailure?: boolean
 
-  dependOn(dependency: null | string | {step: string; allow_failure?: boolean;}): void {
+  dependOn(dependency: null | StepDependsOn): void {
     if (this.#dependsOn === null) {
     } else if (dependency === null) {
       // TODO:

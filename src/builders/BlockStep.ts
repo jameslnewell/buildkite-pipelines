@@ -1,6 +1,5 @@
 
-import { BlockStepSchema } from "../schema";
-import { SelectInput, StepDependency, TextInput } from "../schema/partials";
+import { BlockStepSchema, Field, StepDependsOn } from "../schema";
 import { StepBuilder } from "./StepBuilder";
 import { BranchesBuilder, BranchesHelper } from "./partials/branches";
 import { DependenciesBuilder, DependenciesHelper } from "./partials/dependencies";
@@ -36,7 +35,7 @@ export class BlockStep implements StepBuilder, LabelBuilder, KeyBuilder, Branche
     return this
   }
 
-  dependOn(dependency: null | StepDependency): this {
+  dependOn(dependency: null | StepDependsOn): this {
     this.#dependenciesHelper.dependOn(dependency)
     return this
   }
@@ -51,7 +50,7 @@ export class BlockStep implements StepBuilder, LabelBuilder, KeyBuilder, Branche
     return this
   }
 
-  field(field: SelectInput | TextInput): this {
+  field(field: Field): this {
     this.#promptHelper.field(field)
     return this
   }

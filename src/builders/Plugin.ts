@@ -1,7 +1,7 @@
-import { PluginSchema, PluginOptionsConstraint } from "../schema/plugins";
+import { PluginSchema } from "../schema";
 import { PluginBuilder } from "./PluginBuilder";
 
-export class Plugin<Options extends PluginOptionsConstraint> implements PluginBuilder {
+export class Plugin<Options extends {}> implements PluginBuilder {
   #name: string;
   #options: Options | null = null; 
 
@@ -21,7 +21,7 @@ export class Plugin<Options extends PluginOptionsConstraint> implements PluginBu
     }
   }
 
-  build(): PluginSchema<Options> {
+  build(): PluginSchema {
     return {
       [this.#name]: this.#options ?? null
     }

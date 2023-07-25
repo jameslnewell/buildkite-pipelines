@@ -1,5 +1,5 @@
+import { Field } from '../schema'
 import {BlockStep} from './BlockStep'
-import { TextInput } from './partials'
 
 describe(BlockStep.name, () => {
   const label = 'Release'
@@ -40,7 +40,7 @@ describe(BlockStep.name, () => {
   })
 
   test('has field', () => {
-    const field: TextInput = {
+    const field: Field = {
       text: 'ReleaseName',
       key: 'release-name',
     }

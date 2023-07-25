@@ -12,7 +12,7 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
-  // environment(environment) {
+  // environment(environment: string) {
   //   this.#environment = environment;
   //   return this;
   // }

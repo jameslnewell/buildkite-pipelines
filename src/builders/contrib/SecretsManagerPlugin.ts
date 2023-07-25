@@ -1,4 +1,4 @@
-import { PluginBuilder } from "../pipeline";
+import { PluginBuilder } from "../PluginBuilder";
 
 export interface SecretsManagerPluginSchema {
   env?: Record<
@@ -39,30 +39,22 @@ function maptoObjectEnv(env: Env): SecretsManagerPluginSchema["env"] {
   return objectEnv;
 }
 
-export namespace SecretsManagerPlugin {
-  export interface Builder extends PluginBuilder<SecretsManagerPluginSchema> {
-    env(env: Env): Builder;
+export class SecretsManagerPlugin implements PluginBuilder {
+  #env: Env | undefined;
+
+  env(env: Env): this {
+    this.#env = env;
+    return this;
   }
-}
 
-export class SecretsManagerPlugin {
-  static builder(): SecretsManagerPlugin.Builder {
-    let _env: Env | undefined;
+  build() {
     return {
-      env(env) {
-        _env = env;
-        return this;
-      },
-
-      build() {
-        return {
-          "seek-oss/aws-sm#v2.3.1": {
-            env: _env && maptoObjectEnv(_env),
-          },
-        };
+      "seek-oss/aws-sm#v2.3.1": {
+        env: this.#env && maptoObjectEnv(this.#env),
       },
     };
   }
+
 }
 
 // TODO:
