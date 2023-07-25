@@ -51,17 +51,17 @@ describe(CommandStep.name, () => {
 
   describe("plugins", () => {
     test("undefined when not defined", () => {
-      const step = new CommandStep();
+      const step = new CommandStep().command(':');
       expect(step.build()).not.toHaveProperty("plugins");
     });
     test("defined when object", () => {
-      const step = new CommandStep().plugin({ [dockerPlugin]: null });
+      const step = new CommandStep().command(':').plugin({ [dockerPlugin]: null });
       expect(step.build()).toHaveProperty("plugins.0", {
         [dockerPlugin]: null,
       });
     });
     test("defined when builder", () => {
-      const step = new CommandStep().plugin(new Plugin(dockerPlugin));
+      const step = new CommandStep().command(':').plugin(new Plugin(dockerPlugin));
       expect(step.build()).toHaveProperty("plugins.0", {
         [dockerPlugin]: null,
       });
