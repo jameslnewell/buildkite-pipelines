@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.0.0
+
+### Major Changes
+
+- a8e47e0: Refactor Buildkite primative builder syntax
+
 ## 1.6.0
 
 ### Minor Changes
