@@ -100,7 +100,7 @@ describe(CommandStep.name, () => {
       expect(step).not.toHaveProperty("concurrency");
     });
     test("defined when 1", () => {
-      const step = new CommandStep().command(":").concurrency(1).build();
+      const step = new CommandStep().command(":").concurrency('test', 1).build();
       expect(step).toHaveProperty("concurrency", 1);
     });
   });
@@ -113,7 +113,7 @@ describe(CommandStep.name, () => {
     test("defined when 1", () => {
       const step = new CommandStep()
         .command(":")
-        .concurrency(1, "test")
+        .concurrency("test", 1)
         .build();
       expect(step).toHaveProperty("concurrency_group", "test");
     });
