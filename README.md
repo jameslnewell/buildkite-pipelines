@@ -90,6 +90,7 @@ Consider using this library when:
 ## Related projects
 
 - https://hasura.io/blog/what-we-learnt-by-migrating-from-circleci-to-buildkite/
+- https://docs.sourcegraph.com/dev/background-information/ci/development
 
 
 ### Development
