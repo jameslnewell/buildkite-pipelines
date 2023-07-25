@@ -48,6 +48,7 @@
   "scripts": {
     "check": "yarn run check:types",
     "check:types": "tsc --noEmit",
+    "prepare": "yarn run codegen",
     "codegen": "json2ts src/schema/schema.json src/schema/schema.ts",
     "develop": "yarn run build:transpile --watch",
     "build": "yarn run build:types && yarn run build:transpile",
