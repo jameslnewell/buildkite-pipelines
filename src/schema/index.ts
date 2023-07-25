@@ -8,5 +8,3 @@ export type PluginSchema = Extract<NonNullable<CommandStep['plugins']>, any[]> e
 
 export type StepDependsOn = (Extract<NonNullable<CommandStep['depends_on']>, any[]> extends  (infer U)[] ? U : never)
 export type Field = Fields extends (infer U)[] ? U : never
-
-export type ConcurrencySchema = (Extract<NonNullable<CommandStep['concurrency']>, any[]> extends  (infer U)[] ? U : never)
