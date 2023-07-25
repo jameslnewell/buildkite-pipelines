@@ -67,19 +67,21 @@ describe(CommandStep.name, () => {
       });
     });
   });
-  // describe("parallelism", () => {
-  //   test("undefined by default", () => {
-  //     const step = new CommandStep().build();
-  //     expect(step).not.toHaveProperty("parallelism");
-  //   });
-  //   test("defined when 3", () => {
-  //     const step = new CommandStep().parallelism(3).build();
-  //     expect(step).toHaveProperty("parallelism", 3);
-  //   });
-  // });
-  describe("skip", () => {
+
+  describe("parallelism", () => {
     test("undefined by default", () => {
       const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty("parallelism");
+    });
+    test("defined when 3", () => {
+      const step = new CommandStep().command(':').parallelism(3).build();
+      expect(step).toHaveProperty("parallelism", 3);
+    });
+  });
+
+  describe("skip", () => {
+    test("undefined by default", () => {
+      const step = new CommandStep().command(':').command(':').build();
       expect(step).not.toHaveProperty("skip");
     });
     test("defined when true", () => {

@@ -9,6 +9,7 @@ import { SkipBuilder, SkipHelper } from "./partials/skip";
 import { PluginBuilder } from "./PluginBuilder";
 import {CommandStepSchema, PluginSchema, StepDependsOn } from "../schema";
 import { isPluginBuilder } from "./isPluginBuilder";
+import { ParallelismHelper } from "./partials/parrallelism";
 
 export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, ConditionBuilder, BranchesBuilder, DependenciesBuilder, SkipBuilder {
   #command?: string | string[]
@@ -20,6 +21,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   #branchesHelper = new BranchesHelper()
   #dependenciesHelper = new DependenciesHelper()
   #skipHelper = new SkipHelper()
+  #parallelismHelper = new ParallelismHelper() 
 
   command(command: string | string[]): this {
     this.#command = command
@@ -65,6 +67,11 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
     this.#plugins.push(plugin)
     return this
   }
+  
+  parallelism(parallelism: number): this {
+    this.#parallelismHelper.parallelism(parallelism)
+    return this
+  }
 
   build(): CommandStepSchema {
     if (!this.#command) {
@@ -78,6 +85,7 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
       ...this.#branchesHelper.build(),
       ...this.#dependenciesHelper.build(),
       ...this.#skipHelper.build(),
+      ...this.#parallelismHelper.build(),
     }
 
     if (this.#plugins.length > 0) {
@@ -96,7 +104,6 @@ export class CommandStep implements StepBuilder, KeyBuilder, LabelBuilder, Condi
   // addArtifactPath(path: string): this;
   // timeout(minutes: number): this;
   // softFail(fail: boolean): this;
-  // parallelism(count: number): this;
 
 }
 
