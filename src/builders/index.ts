@@ -1,4 +1,6 @@
 export * from "./Pipeline";
+export * from "./PipelineBuilder";
+export * from "./StepBuilder";
 export * from "./Plugin";
 export * from "./BlockStep";
 export * from "./CommandStep";
