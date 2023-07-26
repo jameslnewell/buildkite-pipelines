@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.0.3
+
+### Patch Changes
+
+- 699ccb8: Export StepBuilder interface
+
 ## 2.0.2
 
 ### Patch Changes
