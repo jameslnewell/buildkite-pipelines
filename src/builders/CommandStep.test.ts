@@ -18,17 +18,14 @@ const dockerPlugin = "docker#v3.11.0";
 
 describe(CommandStep.name, () => {
   describe("command", () => {
-    test("string when string", () => {
+    test("array when single value", () => {
       const step = new CommandStep().command(installCommand).build();
-      expect(step).toHaveProperty("command", installCommand);
+      expect(step).toHaveProperty("commands", [installCommand]);
     });
-    test("array when array length == 1", () => {
-      const step = new CommandStep().command([installCommand]).build();
-      expect(step).toHaveProperty("command", [installCommand]);
-    });
-    test("array when array length > 1", () => {
+    test("array when multiple commands provided", () => {
       const step = new CommandStep()
-        .command([installCommand, buildCommand])
+        .command(installCommand)
+        .command(buildCommand)
         .build();
       expect(step).toHaveProperty("commands", [installCommand, buildCommand]);
     });

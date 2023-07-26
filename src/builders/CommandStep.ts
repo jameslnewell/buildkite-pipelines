@@ -22,7 +22,7 @@ export class CommandStep
     DependenciesBuilder,
     SkipBuilder
 {
-  #command?: string | string[];
+  #commands?: string[];
   #plugins: Array<PluginSchema | PluginBuilder> = [];
   #keyHelper = new KeyHelper();
   #labelHelper = new LabelHelper();
@@ -38,8 +38,11 @@ export class CommandStep
   #soft_fail?: boolean;
   #timeout_in_minutes?: number;
 
-  command(command: string | string[]): this {
-    this.#command = command;
+  command(command: string): this {
+    if (!this.#commands) {
+      this.#commands = [];
+    }
+    this.#commands.push(command);
     return this;
   }
 
@@ -123,12 +126,8 @@ export class CommandStep
   }
 
   build(): CommandStepSchema {
-    const commandKey =
-      this.#command && Array.isArray(this.#command) && this.#command.length > 1
-        ? "commands"
-        : "command";
     const object: CommandStepSchema = {
-      ...{ [commandKey]: this.#command },
+      ...{ commands: this.#commands },
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       ...this.#conditionHelper.build(),
