@@ -1,3 +1,3 @@
-export * from './DockerPlugin'
-export * from './DockerLoginPlugin'
-export * from './SecretsManagerPlugin'
+export * from './DockerPlugin';
+export * from './DockerLoginPlugin';
+export * from './SecretsManagerPlugin';

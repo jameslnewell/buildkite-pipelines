@@ -1,16 +1,13 @@
-import { StepBuilder } from "./StepBuilder";
-import { KeyBuilder, KeyHelper } from "./partials/key";
-import { LabelBuilder, LabelHelper } from "./partials/label";
-import { ConditionBuilder, ConditionHelper } from "./partials/conition";
-import { BranchesBuilder, BranchesHelper } from "./partials/branches";
-import {
-  DependenciesBuilder,
-  DependenciesHelper,
-} from "./partials/dependencies";
-import { SkipBuilder, SkipHelper } from "./partials/skip";
-import { PluginBuilder } from "./PluginBuilder";
-import { CommandStepSchema, PluginSchema, StepDependsOn } from "../schema";
-import { isPluginBuilder } from "./isPluginBuilder";
+import {StepBuilder} from './StepBuilder';
+import {KeyBuilder, KeyHelper} from './partials/key';
+import {LabelBuilder, LabelHelper} from './partials/label';
+import {ConditionBuilder, ConditionHelper} from './partials/conition';
+import {BranchesBuilder, BranchesHelper} from './partials/branches';
+import {DependenciesBuilder, DependenciesHelper} from './partials/dependencies';
+import {SkipBuilder, SkipHelper} from './partials/skip';
+import {PluginBuilder} from './PluginBuilder';
+import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
+import {isPluginBuilder} from './isPluginBuilder';
 
 export class CommandStep
   implements
@@ -88,7 +85,7 @@ export class CommandStep
 
   parallelism(parallelism: number): this {
     if (parallelism === 0) {
-      throw new Error("Parallelism of zero will result in step being omitted");
+      throw new Error('Parallelism of zero will result in step being omitted');
     }
 
     this.#parallelism = parallelism;
@@ -106,7 +103,7 @@ export class CommandStep
   concurrency(group: string, jobs: number): this {
     if (jobs === 0) {
       throw new Error(
-        "Concurrency of zero will result in step which never starts"
+        'Concurrency of zero will result in step which never starts',
       );
     }
 
@@ -127,28 +124,28 @@ export class CommandStep
 
   build(): CommandStepSchema {
     const object: CommandStepSchema = {
-      ...{ commands: this.#commands },
+      ...{commands: this.#commands},
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       ...this.#conditionHelper.build(),
       ...this.#branchesHelper.build(),
       ...this.#dependenciesHelper.build(),
       ...this.#skipHelper.build(),
-      ...(this.#parallelism ? { parallelism: this.#parallelism } : {}),
-      ...(this.#concurrency ? { concurrency: this.#concurrency } : {}),
+      ...(this.#parallelism ? {parallelism: this.#parallelism} : {}),
+      ...(this.#concurrency ? {concurrency: this.#concurrency} : {}),
       ...(this.#concurrency_group
-        ? { concurrency_group: this.#concurrency_group }
+        ? {concurrency_group: this.#concurrency_group}
         : {}),
-      ...(this.#env ? { env: this.#env } : {}),
-      ...(this.#soft_fail ? { soft_fail: this.#soft_fail } : {}),
+      ...(this.#env ? {env: this.#env} : {}),
+      ...(this.#soft_fail ? {soft_fail: this.#soft_fail} : {}),
       ...(this.#timeout_in_minutes
-        ? { timeout_in_minutes: this.#timeout_in_minutes }
+        ? {timeout_in_minutes: this.#timeout_in_minutes}
         : {}),
     };
 
     if (this.#plugins.length > 0) {
       object.plugins = this.#plugins.map((plugin) =>
-        isPluginBuilder(plugin) ? plugin.build() : plugin
+        isPluginBuilder(plugin) ? plugin.build() : plugin,
       );
     }
 

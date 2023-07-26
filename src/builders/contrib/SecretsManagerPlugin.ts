@@ -1,12 +1,12 @@
-import { PluginBuilder } from "../PluginBuilder";
+import {PluginBuilder} from '../PluginBuilder';
 
 export interface SecretsManagerPluginSchema {
   env?: Record<
     string,
     | string
     | {
-        "secret-id": string;
-        "json-key": string;
+        'secret-id': string;
+        'json-key': string;
       }
   >;
 }
@@ -20,19 +20,19 @@ type Env = Record<
     }
 >;
 
-function maptoObjectEnv(env: Env): SecretsManagerPluginSchema["env"] {
+function maptoObjectEnv(env: Env): SecretsManagerPluginSchema['env'] {
   if (!env) {
     return undefined;
   }
-  const objectEnv: NonNullable<SecretsManagerPluginSchema["env"]> = {};
+  const objectEnv: NonNullable<SecretsManagerPluginSchema['env']> = {};
   for (const key in env) {
     const value = env[key];
-    if (typeof value === "string") {
+    if (typeof value === 'string') {
       objectEnv[key] = value;
     } else {
       objectEnv[key] = {
-        "secret-id": value.secretId,
-        "json-key": value.jsonKey,
+        'secret-id': value.secretId,
+        'json-key': value.jsonKey,
       };
     }
   }
@@ -49,12 +49,11 @@ export class SecretsManagerPlugin implements PluginBuilder {
 
   build() {
     return {
-      "seek-oss/aws-sm#v2.3.1": {
+      'seek-oss/aws-sm#v2.3.1': {
         env: this.#env && maptoObjectEnv(this.#env),
       },
     };
   }
-
 }
 
 // TODO:

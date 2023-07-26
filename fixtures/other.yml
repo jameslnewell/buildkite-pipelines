@@ -1,44 +1,44 @@
-  - label: ":coverage: coverage api"
-    branches:
-      - "!master"
-      - "!preview"
-      - "!production"
-    commands:
-      - npm install -g codecov
-      - ./scripts/upload-coverage.sh
-    depends_on:
-      - backend-unit-test-branch
-    plugins:
-      - artifacts#v1.5.0:
-          download:
-            - "**/*"
-      - seek-oss/aws-sm#v2.3.1:
-          env:
-            CODECOV_TOKEN:
-              secret-id: "global/buildkite/codecov"
-              json-key: .TOKEN
-      - docker#v3.11.0:
-          image: "node:16-stretch"
-          environment:
-            - "FORCE_CLOUR=2"
-            - "CODECOV_TOKEN"
-    soft_fail: true
-  - label: ":kafka: check kafka config (back-end)"
-    key: kafka-config-check
-    commands:
-      - set -e
-      - cd back-end/tools/kafka-scripts
-      - yarn install --frozen-lockfile --development
-      - yarn run cli validate-config
-    plugins:
-      - seek-oss/aws-sm#v2.3.1:
-          env:
-            GITHUB_TOKEN:
-              secret-id: global/buildkite/github
-              json-key: .TOKEN
-      - docker-login#v2.1.0:
-          username: jameslnewell
-          password-env: GITHUB_TOKEN
-          server: ghcr.io
-      - docker#v3.11.0:
-          image: ghcr.io/mr-yum/ci:2.4.0
+- label: ':coverage: coverage api'
+  branches:
+    - '!master'
+    - '!preview'
+    - '!production'
+  commands:
+    - npm install -g codecov
+    - ./scripts/upload-coverage.sh
+  depends_on:
+    - backend-unit-test-branch
+  plugins:
+    - artifacts#v1.5.0:
+        download:
+          - '**/*'
+    - seek-oss/aws-sm#v2.3.1:
+        env:
+          CODECOV_TOKEN:
+            secret-id: 'global/buildkite/codecov'
+            json-key: .TOKEN
+    - docker#v3.11.0:
+        image: 'node:16-stretch'
+        environment:
+          - 'FORCE_CLOUR=2'
+          - 'CODECOV_TOKEN'
+  soft_fail: true
+- label: ':kafka: check kafka config (back-end)'
+  key: kafka-config-check
+  commands:
+    - set -e
+    - cd back-end/tools/kafka-scripts
+    - yarn install --frozen-lockfile --development
+    - yarn run cli validate-config
+  plugins:
+    - seek-oss/aws-sm#v2.3.1:
+        env:
+          GITHUB_TOKEN:
+            secret-id: global/buildkite/github
+            json-key: .TOKEN
+    - docker-login#v2.1.0:
+        username: jameslnewell
+        password-env: GITHUB_TOKEN
+        server: ghcr.io
+    - docker#v3.11.0:
+        image: ghcr.io/mr-yum/ci:2.4.0

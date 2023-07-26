@@ -1,4 +1,4 @@
-import { PipelineSchema } from "../schema";
+import {PipelineSchema} from '../schema';
 
 export interface PipelineBuilder {
   build(): PipelineSchema;

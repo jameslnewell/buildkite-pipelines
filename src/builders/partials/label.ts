@@ -1,16 +1,15 @@
-
 export interface LabelBuilder {
-  label(label: string): this
+  label(label: string): this;
 }
 
 export class LabelHelper {
-  #label?: string
+  #label?: string;
 
   label(label: string): void {
-    this.#label = label
+    this.#label = label;
   }
 
   build() {
-    return this.#label ? {label: this.#label} : {}
+    return this.#label ? {label: this.#label} : {};
   }
 }

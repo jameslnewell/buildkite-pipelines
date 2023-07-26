@@ -7,11 +7,13 @@ Generate buildkite pipelines with code.
 ## Installation
 
 NPM:
+
 ```bash
 npm install @jameslnewell/buildkite-pipelines
 ```
 
 Yarn:
+
 ```bash
 yarn add --dev @jameslnewell/buildkite-pipelines
 ```
@@ -21,21 +23,19 @@ yarn add --dev @jameslnewell/buildkite-pipelines
 Define your pipeline in code.
 
 `./.buildkite/pipeline.js`
+
 ```ts
 const {Pipeline, CommandStep} = require('@jameslnewell/buildkite-pipelines');
 
-module.exports = new Pipeline()
-  .step(
-    new CommandStep()
-      .label('👋 Greeting')
-      .command('echo "Hello World!"')
-  )
-
+module.exports = new Pipeline().step(
+  new CommandStep().label('👋 Greeting').command('echo "Hello World!"'),
+);
 ```
 
 Generate and upload your pipeline in a Buildkite step.
 
 `./.buildkite/pipeline.yml`
+
 ```yaml
 steps:
   - commands:
@@ -50,21 +50,19 @@ steps:
 Define your pipeline in code.
 
 `./.buildkite/pipeline.ts`
+
 ```ts
 import {Pipeline, CommandStep} from '@jameslnewell/buildkite-pipelines';
 
-export default new Pipeline()
-  .step(
-    new CommandStep()
-      .label('👋 Greeting')
-      .command('echo "Hello World!"')
-  )
-
+export default new Pipeline().step(
+  new CommandStep().label('👋 Greeting').command('echo "Hello World!"'),
+);
 ```
 
 Generate and upload your pipeline in a Buildkite step.
 
 `./.buildkite/pipeline.yml`
+
 ```yaml
 steps:
   - commands:
@@ -75,10 +73,9 @@ steps:
           image: jameslnewell/buildkite-pipelines
 ```
 
-
 ## Why?
 
-This library is a very thin wrapper around [Buildkite's `yaml` syntax for defining a pipeline](https://buildkite.com/docs/pipelines/defining-steps). As such the value of this library is unlikely to be realised for simple one-file pipelines. 
+This library is a very thin wrapper around [Buildkite's `yaml` syntax for defining a pipeline](https://buildkite.com/docs/pipelines/defining-steps). As such the value of this library is unlikely to be realised for simple one-file pipelines.
 
 Consider using this library when:
 
@@ -90,7 +87,6 @@ Consider using this library when:
 
 - https://hasura.io/blog/what-we-learnt-by-migrating-from-circleci-to-buildkite/
 - https://docs.sourcegraph.com/dev/background-information/ci/development
-
 
 ### Development
 

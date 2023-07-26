@@ -1,9 +1,9 @@
-import { PluginBuilder } from "../PluginBuilder";
+import {PluginBuilder} from '../PluginBuilder';
 
 export interface DockerLoginPluginSchema {
   server?: string;
   username: string;
-  "password-env": string;
+  'password-env': string;
   retries?: number;
 }
 
@@ -15,26 +15,26 @@ export class DockerLoginPlugin implements PluginBuilder {
 
   username(username: string): this {
     this.#username = username;
-    return this
+    return this;
   }
   passwordEnv(passwordEnv: string): this {
     this.#password = passwordEnv;
-    return this
+    return this;
   }
   server(server: string): this {
     this.#server = server;
-    return this
+    return this;
   }
   retries(retries: number): this {
     this.#retries = retries;
-    return this
+    return this;
   }
 
   build() {
     return {
-      "docker-login#v2.1.0": {
+      'docker-login#v2.1.0': {
         username: this.#username,
-        "password-env": this.#password,
+        'password-env': this.#password,
         server: this.#server,
         retries: this.#retries,
       },

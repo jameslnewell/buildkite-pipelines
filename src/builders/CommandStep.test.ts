@@ -1,9 +1,9 @@
-import { CommandStep } from "./CommandStep";
-import { Plugin } from "./Plugin";
+import {CommandStep} from './CommandStep';
+import {Plugin} from './Plugin';
 
-const installCommand = "yarn install";
-const buildCommand = "yarn run build";
-const dockerPlugin = "docker#v3.11.0";
+const installCommand = 'yarn install';
+const buildCommand = 'yarn run build';
+const dockerPlugin = 'docker#v3.11.0';
 
 // test("foo", () => {
 //   const step = new CommandStep()
@@ -17,126 +17,129 @@ const dockerPlugin = "docker#v3.11.0";
 // });
 
 describe(CommandStep.name, () => {
-  describe("command", () => {
-    test("array when single value", () => {
+  describe('command', () => {
+    test('array when single value', () => {
       const step = new CommandStep().command(installCommand).build();
-      expect(step).toHaveProperty("commands", [installCommand]);
+      expect(step).toHaveProperty('commands', [installCommand]);
     });
-    test("array when multiple commands provided", () => {
+    test('array when multiple commands provided', () => {
       const step = new CommandStep()
         .command(installCommand)
         .command(buildCommand)
         .build();
-      expect(step).toHaveProperty("commands", [installCommand, buildCommand]);
+      expect(step).toHaveProperty('commands', [installCommand, buildCommand]);
     });
   });
 
-  describe("env", () => {
-    test("undefined when undefined", () => {
-      const step = new CommandStep().command(":").build();
-      expect(step).not.toHaveProperty("env");
+  describe('env', () => {
+    test('undefined when undefined', () => {
+      const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty('env');
     });
-    test("defined when object", () => {
-      const step = new CommandStep().command(":").env("FOO", "bar").build();
-      expect(step).toHaveProperty("env.FOO", "bar");
+    test('defined when object', () => {
+      const step = new CommandStep().command(':').env('FOO', 'bar').build();
+      expect(step).toHaveProperty('env.FOO', 'bar');
     });
   });
 
-  describe("plugins", () => {
-    test("undefined when not defined", () => {
-      const step = new CommandStep().command(":");
-      expect(step.build()).not.toHaveProperty("plugins");
+  describe('plugins', () => {
+    test('undefined when not defined', () => {
+      const step = new CommandStep().command(':');
+      expect(step.build()).not.toHaveProperty('plugins');
     });
-    test("defined when object", () => {
+    test('defined when object', () => {
       const step = new CommandStep()
-        .command(":")
-        .plugin({ [dockerPlugin]: null });
-      expect(step.build()).toHaveProperty("plugins.0", {
+        .command(':')
+        .plugin({[dockerPlugin]: null});
+      expect(step.build()).toHaveProperty('plugins.0', {
         [dockerPlugin]: null,
       });
     });
-    test("defined when builder", () => {
+    test('defined when builder', () => {
       const step = new CommandStep()
-        .command(":")
+        .command(':')
         .plugin(new Plugin(dockerPlugin));
-      expect(step.build()).toHaveProperty("plugins.0", {
+      expect(step.build()).toHaveProperty('plugins.0', {
         [dockerPlugin]: null,
       });
     });
   });
 
-  describe("parallelism", () => {
-    test("undefined by default", () => {
-      const step = new CommandStep().command(":").build();
-      expect(step).not.toHaveProperty("parallelism");
+  describe('parallelism', () => {
+    test('undefined by default', () => {
+      const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty('parallelism');
     });
-    test("defined when 3", () => {
-      const step = new CommandStep().command(":").parallelism(3).build();
-      expect(step).toHaveProperty("parallelism", 3);
-    });
-  });
-
-  describe("skip", () => {
-    test("undefined by default", () => {
-      const step = new CommandStep().command(":").build();
-      expect(step).not.toHaveProperty("skip");
-    });
-    test("defined when true", () => {
-      const step = new CommandStep().command(":").skip(true).build();
-      expect(step).toHaveProperty("skip", true);
-    });
-    test("defined when false", () => {
-      const step = new CommandStep().command(":").skip(false).build();
-      expect(step).toHaveProperty("skip", false);
+    test('defined when 3', () => {
+      const step = new CommandStep().command(':').parallelism(3).build();
+      expect(step).toHaveProperty('parallelism', 3);
     });
   });
 
-  describe("concurrency", () => {
-    test("undefined by default", () => {
-      const step = new CommandStep().command(":").build();
-      expect(step).not.toHaveProperty("concurrency");
+  describe('skip', () => {
+    test('undefined by default', () => {
+      const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty('skip');
     });
-    test("defined when 1", () => {
-      const step = new CommandStep().command(":").concurrency('test', 1).build();
-      expect(step).toHaveProperty("concurrency", 1);
+    test('defined when true', () => {
+      const step = new CommandStep().command(':').skip(true).build();
+      expect(step).toHaveProperty('skip', true);
+    });
+    test('defined when false', () => {
+      const step = new CommandStep().command(':').skip(false).build();
+      expect(step).toHaveProperty('skip', false);
     });
   });
 
-  describe("concurrency_group", () => {
-    test("undefined by default", () => {
-      const step = new CommandStep().command(":").build();
-      expect(step).not.toHaveProperty("concurrency_group");
+  describe('concurrency', () => {
+    test('undefined by default', () => {
+      const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty('concurrency');
     });
-    test("defined when 1", () => {
+    test('defined when 1', () => {
       const step = new CommandStep()
-        .command(":")
-        .concurrency("test", 1)
+        .command(':')
+        .concurrency('test', 1)
         .build();
-      expect(step).toHaveProperty("concurrency_group", "test");
+      expect(step).toHaveProperty('concurrency', 1);
     });
   });
 
-  describe("soft_fail", () => {
-    test("undefined by default", () => {
-      const step = new CommandStep().command(":").build();
-      expect(step).not.toHaveProperty("soft_fail");
+  describe('concurrency_group', () => {
+    test('undefined by default', () => {
+      const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty('concurrency_group');
     });
-
-    test("defined when true", () => {
-      const step = new CommandStep().command(":").softFail().build();
-      expect(step).toHaveProperty("soft_fail", true);
+    test('defined when 1', () => {
+      const step = new CommandStep()
+        .command(':')
+        .concurrency('test', 1)
+        .build();
+      expect(step).toHaveProperty('concurrency_group', 'test');
     });
   });
 
-  describe("timeout_in_minutes", () => {
-    test("undefined by default", () => {
-      const step = new CommandStep().command(":").build();
-      expect(step).not.toHaveProperty("timeout_in_minutes");
+  describe('soft_fail', () => {
+    test('undefined by default', () => {
+      const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty('soft_fail');
     });
 
-    test("defined when 2", () => {
-      const step = new CommandStep().command(":").timeout(2).build();
-      expect(step).toHaveProperty("timeout_in_minutes", 2);
+    test('defined when true', () => {
+      const step = new CommandStep().command(':').softFail().build();
+      expect(step).toHaveProperty('soft_fail', true);
+    });
+  });
+
+  describe('timeout_in_minutes', () => {
+    test('undefined by default', () => {
+      const step = new CommandStep().command(':').build();
+      expect(step).not.toHaveProperty('timeout_in_minutes');
+    });
+
+    test('defined when 2', () => {
+      const step = new CommandStep().command(':').timeout(2).build();
+      expect(step).toHaveProperty('timeout_in_minutes', 2);
     });
   });
 });
