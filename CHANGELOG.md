@@ -1,5 +1,12 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.0.1
+
+### Patch Changes
+
+- ad3a656: Standardise command output to always generate an array
+- c9b6e89: Set group key to null, allowing label key to be used instead
+
 ## 2.0.0
 
 ### Major Changes
