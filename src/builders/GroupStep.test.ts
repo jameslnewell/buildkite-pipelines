@@ -9,7 +9,7 @@ describe(GroupStep.name, () => {
   const object = group.build();
 
   test("has group key", () => {
-    expect(object).toHaveProperty("group", "");
+    expect(object).toHaveProperty("group", null);
   });
 
   test("has label key", () => {
