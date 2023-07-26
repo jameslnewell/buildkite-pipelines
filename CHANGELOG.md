@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.0.2
+
+### Patch Changes
+
+- b8e428a: Fix GroupStep validation errors
+
 ## 2.0.1
 
 ### Patch Changes
