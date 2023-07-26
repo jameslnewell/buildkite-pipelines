@@ -1,4 +1,4 @@
-import { StepSchema } from "../schema";
+import {StepSchema} from '../schema';
 
 export interface StepBuilder {
   build(): StepSchema;

@@ -1,16 +1,15 @@
-
 export interface ConditionBuilder {
   condition(condition: string): this;
 }
 
 export class ConditionHelper {
-  #condition?: string
+  #condition?: string;
 
   condition(condition: string): void {
-    this.#condition = condition
+    this.#condition = condition;
   }
 
   build() {
-    return this.#condition ? {if: this.#condition} : {}
+    return this.#condition ? {if: this.#condition} : {};
   }
 }

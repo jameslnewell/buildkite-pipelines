@@ -1,4 +1,4 @@
-import { PluginBuilder } from "../PluginBuilder";
+import {PluginBuilder} from '../PluginBuilder';
 
 export class DockerPlugin implements PluginBuilder {
   #image: string | undefined;
@@ -6,7 +6,7 @@ export class DockerPlugin implements PluginBuilder {
   #cpus: string | undefined;
   #memory: string | undefined;
   #memorySwap: string | undefined;
-  
+
   image(image: string) {
     this.#image = image;
     return this;
@@ -38,22 +38,21 @@ export class DockerPlugin implements PluginBuilder {
   }
 
   build() {
-    const object: {  
+    const object: {
       image?: string;
       command?: string[];
       environment?: string[];
 
-      "always-pull"?: boolean;
-      "mount-checkout"?: boolean;
-      "propagate-environment"?: string;
-      "propagate-aws-auth-tokens"?: boolean;
-    
+      'always-pull'?: boolean;
+      'mount-checkout'?: boolean;
+      'propagate-environment'?: string;
+      'propagate-aws-auth-tokens'?: boolean;
+
       cpus?: string;
       memory?: string;
       memorySwap?: string;
       volumes?: string[];
-    } = {
-    };
+    } = {};
 
     if (this.#image) {
       object.image = this.#image;
@@ -76,7 +75,7 @@ export class DockerPlugin implements PluginBuilder {
     }
 
     return {
-      "dockerthis.#v3.11.0": object,
+      'dockerthis.#v3.11.0': object,
     };
   }
 }

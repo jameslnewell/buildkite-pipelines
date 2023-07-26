@@ -1,4 +1,4 @@
-import {stringify} from './stringify'
+import {stringify} from './stringify';
 
 describe('stringify()', () => {
   test('outputs a yaml string', () => {
@@ -6,10 +6,10 @@ describe('stringify()', () => {
       steps: [
         {
           label: 'lint',
-          command: 'yarn run lint'
-        }
-      ]
+          command: 'yarn run lint',
+        },
+      ],
     });
-    expect(result).toMatchSnapshot()
-  })
-})
+    expect(result).toMatchSnapshot();
+  });
+});
