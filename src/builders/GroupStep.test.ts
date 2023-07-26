@@ -8,10 +8,6 @@ describe(GroupStep.name, () => {
   const group = new GroupStep().label(label).step(command);
   const object = group.build();
 
-  test("has group key", () => {
-    expect(object).toHaveProperty("group", "null");
-  });
-
   test("has label key", () => {
     expect(object).toHaveProperty("label", label);
   });
