@@ -57,7 +57,8 @@ export class GroupStep implements StepBuilder, KeyBuilder, LabelBuilder, Depende
 
   build(): GroupStepSchema {
     const step: GroupStepSchema = {
-      group: null,
+      // Workaround until the schema is updated to make `group` nullable
+      group: this.#labelHelper.build().label ?? '',
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       // TODO: cannot have group steps nested within groups so refactor steps helper to take a generic arg

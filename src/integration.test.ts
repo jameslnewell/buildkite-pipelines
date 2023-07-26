@@ -1,44 +1,36 @@
-import { stringify, validate } from './api'
-import { CommandStep, WaitStep } from './builders'
-import { BlockStep } from './builders/BlockStep'
-import {Pipeline} from './builders/Pipeline'
-import { DockerPlugin } from './builders/contrib'
+import { stringify, validate } from "./api";
+import { CommandStep, GroupStep, WaitStep } from "./builders";
+import { BlockStep } from "./builders/BlockStep";
+import { Pipeline } from "./builders/Pipeline";
+import { DockerPlugin } from "./builders/contrib";
 
-describe('integration', () => {
-  test('matches snapshot', () => {
+describe("integration", () => {
+  test("matches snapshot", () => {
     const pipeline = new Pipeline()
       .step(
-        new CommandStep()
-          .label(':eslint: Lint')
-          .command('npm run lint')
-      )
-      .step(
-        new CommandStep()
-          .label(':jest: Test')
-          .command('npm run test')
-          .key('unit-test')
-      )
-      .step(
-        new CommandStep()
-          .label(':upload: Upload coverage')
-          .command('npm run upload:coverage')
-          .dependOn('unit-test')
-          .plugin(
-            new DockerPlugin()
-              .image('codeclimate/codeclimate')
+        new GroupStep()
+          .label(":eslint: Lint group")
+          .step(
+            new CommandStep().label(":eslint: Lint").command("npm run lint")
           )
       )
       .step(
-        new WaitStep()
+        new CommandStep()
+          .label(":jest: Test")
+          .command("npm run test")
+          .key("unit-test")
       )
       .step(
-        new BlockStep()
-          .label('🚀 Release')
-          .key('release')
+        new CommandStep()
+          .label(":upload: Upload coverage")
+          .command("npm run upload:coverage")
+          .dependOn("unit-test")
+          .plugin(new DockerPlugin().image("codeclimate/codeclimate"))
       )
-    ;
-    const object = pipeline.build()
-    expect(validate(object)).toHaveLength(0)
-    expect(stringify(object)).toMatchSnapshot()
-  })
-})
+      .step(new WaitStep())
+      .step(new BlockStep().label("🚀 Release").key("release"));
+    const object = pipeline.build();
+    expect(validate(object)).toHaveLength(0);
+    expect(stringify(object)).toMatchSnapshot();
+  });
+});
