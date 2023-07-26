@@ -2,7 +2,8 @@
 
 exports[`integration matches snapshot 1`] = `
 "steps:
-  - label: \\":eslint: Lint group\\"
+  - group: \\":eslint: Lint group\\"
+    label: \\":eslint: Lint group\\"
     steps:
       - commands:
           - npm run lint

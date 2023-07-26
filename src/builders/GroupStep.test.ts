@@ -12,6 +12,10 @@ describe(GroupStep.name, () => {
     expect(object).toHaveProperty("label", label);
   });
 
+  test("has group key", () => {
+    expect(object).toHaveProperty("group", label);
+  });
+
   test("has steps", () => {
     expect(object).toHaveProperty(
       "steps",
