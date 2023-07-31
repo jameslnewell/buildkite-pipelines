@@ -1,4 +1,4 @@
-import { PipelineNotify } from "../../schema";
+import {PipelineNotify} from '../../schema';
 
 export interface NotifyBuilder {
   notify(notify: PipelineNotify): this;

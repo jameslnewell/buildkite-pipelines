@@ -1,4 +1,4 @@
-import { AgentsObject } from "../../schema/schema";
+import {AgentsObject} from '../../schema/schema';
 
 export interface AgentsBuilder {
   agent(tag: string, value: string): this;
