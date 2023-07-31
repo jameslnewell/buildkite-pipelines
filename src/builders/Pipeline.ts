@@ -3,10 +3,10 @@ import {PipelineBuilder} from './PipelineBuilder';
 import {StepBuilder} from './StepBuilder';
 import {isStepBuilder} from './isStepBuilder';
 import {StepsBuilder} from './helpers/steps';
-import {AgentsObject} from '../schema/schema';
+import { AgentsBuilder, AgentsHelper } from './helpers/agents';
 
-export class Pipeline implements PipelineBuilder, StepsBuilder {
-  #agents: AgentsObject = {};
+export class Pipeline implements PipelineBuilder, StepsBuilder, AgentsBuilder {
+  #agentsHelper = new AgentsHelper()
   #notify: Array<PipelineNotify> = [];
   #steps: Array<StepSchema | StepBuilder> = [];
 
@@ -14,7 +14,7 @@ export class Pipeline implements PipelineBuilder, StepsBuilder {
    * @see https://buildkite.com/docs/agent/v3/cli-start#agent-targeting
    */
   agent(tag: string, value: string): this {
-    this.#agents[tag] = value;
+    this.#agentsHelper.agent(tag, value)
     return this;
   }
 
@@ -33,6 +33,7 @@ export class Pipeline implements PipelineBuilder, StepsBuilder {
 
   build(): PipelineSchema {
     const pipeline: PipelineSchema = {
+      ...this.#agentsHelper.build(),
       steps: this.#steps.map((step) =>
         isStepBuilder(step) ? step.build() : step,
       ),
@@ -40,10 +41,6 @@ export class Pipeline implements PipelineBuilder, StepsBuilder {
 
     if (this.#notify.length) {
       pipeline.notify = this.#notify;
-    }
-
-    if (Object.keys(this.#agents).length) {
-      pipeline.agents = this.#agents;
     }
 
     return pipeline;
