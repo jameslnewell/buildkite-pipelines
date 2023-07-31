@@ -2,7 +2,7 @@ import {PipelineSchema, StepSchema} from '../schema';
 import {PipelineBuilder} from './PipelineBuilder';
 import {StepBuilder} from './StepBuilder';
 import {isStepBuilder} from './isStepBuilder';
-import {StepsBuilder} from './partials/steps';
+import {StepsBuilder} from './helpers/steps';
 
 export class Pipeline implements PipelineBuilder, StepsBuilder {
   #steps: Array<StepSchema | StepBuilder> = [];

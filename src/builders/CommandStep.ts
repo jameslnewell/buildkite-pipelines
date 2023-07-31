@@ -1,10 +1,10 @@
 import {StepBuilder} from './StepBuilder';
-import {KeyBuilder, KeyHelper} from './partials/key';
-import {LabelBuilder, LabelHelper} from './partials/label';
-import {ConditionBuilder, ConditionHelper} from './partials/conition';
-import {BranchesBuilder, BranchesHelper} from './partials/branches';
-import {DependenciesBuilder, DependenciesHelper} from './partials/dependencies';
-import {SkipBuilder, SkipHelper} from './partials/skip';
+import {KeyBuilder, KeyHelper} from './helpers/key';
+import {LabelBuilder, LabelHelper} from './helpers/label';
+import {ConditionBuilder, ConditionHelper} from './helpers/conition';
+import {BranchesBuilder, BranchesHelper} from './helpers/branches';
+import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
+import {SkipBuilder, SkipHelper} from './helpers/skip';
 import {PluginBuilder} from './PluginBuilder';
 import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
 import {isPluginBuilder} from './isPluginBuilder';

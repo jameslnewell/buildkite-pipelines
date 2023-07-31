@@ -1,10 +1,10 @@
 import {GroupStepSchema, StepDependsOn, StepSchema} from '../schema';
 import {StepBuilder} from './StepBuilder';
-import {DependenciesBuilder, DependenciesHelper} from './partials/dependencies';
-import {KeyBuilder, KeyHelper} from './partials/key';
-import {LabelBuilder, LabelHelper} from './partials/label';
-import {SkipBuilder, SkipHelper} from './partials/skip';
-import {StepsBuilder, StepsHelper} from './partials/steps';
+import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
+import {KeyBuilder, KeyHelper} from './helpers/key';
+import {LabelBuilder, LabelHelper} from './helpers/label';
+import {SkipBuilder, SkipHelper} from './helpers/skip';
+import {StepsBuilder, StepsHelper} from './helpers/steps';
 
 export class GroupStep
   implements

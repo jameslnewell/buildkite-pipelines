@@ -1,10 +1,10 @@
 import {BlockStepSchema, Field, StepDependsOn} from '../schema';
 import {StepBuilder} from './StepBuilder';
-import {BranchesBuilder, BranchesHelper} from './partials/branches';
-import {DependenciesBuilder, DependenciesHelper} from './partials/dependencies';
-import {KeyBuilder, KeyHelper} from './partials/key';
-import {LabelBuilder} from './partials/label';
-import {PromptBuilder, PromptHelper} from './partials/prompt';
+import {BranchesBuilder, BranchesHelper} from './helpers/branches';
+import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
+import {KeyBuilder, KeyHelper} from './helpers/key';
+import {LabelBuilder} from './helpers/label';
+import {PromptBuilder, PromptHelper} from './helpers/prompt';
 
 export class BlockStep
   implements

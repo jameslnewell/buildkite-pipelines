@@ -1,7 +1,7 @@
 import {StepDependsOn, WaitStepSchema} from '../schema';
 import {StepBuilder} from './StepBuilder';
-import {ConditionBuilder, ConditionHelper} from './partials/conition';
-import {DependenciesBuilder, DependenciesHelper} from './partials/dependencies';
+import {ConditionBuilder, ConditionHelper} from './helpers/conition';
+import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
 
 export class WaitStep
   implements StepBuilder, ConditionBuilder, DependenciesBuilder
