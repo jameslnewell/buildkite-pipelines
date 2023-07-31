@@ -7,6 +7,7 @@ import {
   TriggerStep,
   WaitStep,
   Fields,
+  BuildNotify,
 } from './schema';
 
 export {
@@ -39,4 +40,7 @@ export type StepDependsOn = Extract<
 > extends (infer U)[]
   ? U
   : never;
+
 export type Field = Fields extends (infer U)[] ? U : never;
+
+export type PipelineNotify = BuildNotify extends (infer U)[] ? U : never;
