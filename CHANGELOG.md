@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.1.0
+
+### Minor Changes
+
+- 85dbb5d: Added builder methods for pipeline notify and agents properties
+
 ## 2.0.3
 
 ### Patch Changes
