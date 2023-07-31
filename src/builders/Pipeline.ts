@@ -1,14 +1,14 @@
 import {PipelineNotify, PipelineSchema, StepSchema} from '../schema';
 import {PipelineBuilder} from './PipelineBuilder';
 import {StepBuilder} from './StepBuilder';
-import {isStepBuilder} from './isStepBuilder';
-import {StepsBuilder} from './helpers/steps';
+import {StepsBuilder, StepsHelper} from './helpers/steps';
 import { AgentsBuilder, AgentsHelper } from './helpers/agents';
+import { NotifyBuilder, NotifyHelper } from './helpers/notify';
 
-export class Pipeline implements PipelineBuilder, StepsBuilder, AgentsBuilder {
+export class Pipeline implements PipelineBuilder, AgentsBuilder, NotifyBuilder, StepsBuilder {
   #agentsHelper = new AgentsHelper()
-  #notify: Array<PipelineNotify> = [];
-  #steps: Array<StepSchema | StepBuilder> = [];
+  #notifyHelper =  new NotifyHelper();
+  #stepsHelper = new StepsHelper()
 
   /**
    * @see https://buildkite.com/docs/agent/v3/cli-start#agent-targeting
@@ -22,27 +22,21 @@ export class Pipeline implements PipelineBuilder, StepsBuilder, AgentsBuilder {
    * @see https://buildkite.com/docs/pipelines/notifications
    */
   notify(notify: PipelineNotify): this {
-    this.#notify.push(notify);
+    this.#notifyHelper.notify(notify);
     return this;
   }
 
   step(step: StepSchema | StepBuilder): this {
-    this.#steps.push(step);
+    this.#stepsHelper.step(step);
     return this;
   }
 
   build(): PipelineSchema {
     const pipeline: PipelineSchema = {
       ...this.#agentsHelper.build(),
-      steps: this.#steps.map((step) =>
-        isStepBuilder(step) ? step.build() : step,
-      ),
+      ...this.#notifyHelper.build(),
+      ...this.#stepsHelper.build()
     };
-
-    if (this.#notify.length) {
-      pipeline.notify = this.#notify;
-    }
-
     return pipeline;
   }
 }
