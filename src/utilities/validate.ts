@@ -2,6 +2,8 @@ import Ajv, {ErrorObject} from 'ajv';
 import {PipelineSchema} from '../schema';
 import * as schemaJSON from '../schema/schema.json';
 import * as draft6MetaSchema from 'ajv/dist/refs/json-schema-draft-06.json';
+import {PipelineBuilder} from '../builders';
+import {isPipelineBuilder} from '../builders/isPipelineBuilder';
 
 const ajv = new Ajv({
   allErrors: true,
@@ -14,7 +16,11 @@ const ajv = new Ajv({
 
 const schemaValidator = ajv.compile(schemaJSON);
 
-export function validate(pipeline: PipelineSchema): Array<ErrorObject> {
-  const valid = schemaValidator(pipeline);
+export function validate(
+  pipeline: PipelineSchema | PipelineBuilder,
+): Array<ErrorObject> {
+  const valid = schemaValidator(
+    isPipelineBuilder(pipeline) ? pipeline.build() : pipeline,
+  );
   return !valid && schemaValidator.errors ? schemaValidator.errors : [];
 }
