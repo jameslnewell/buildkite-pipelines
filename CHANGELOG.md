@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.2.0
+
+### Minor Changes
+
+- d230699: Support passing a PipelineBuilder where PipelineSchema is accepted (the stringify and validate methods)
+
 ## 2.1.0
 
 ### Minor Changes
