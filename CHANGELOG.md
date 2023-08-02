@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.3.0
+
+### Minor Changes
+
+- b2ee598: Add support for Agent on CommandStep
+
 ## 2.2.0
 
 ### Minor Changes
