@@ -8,7 +8,7 @@ import {SkipBuilder, SkipHelper} from './helpers/skip';
 import {PluginBuilder} from './PluginBuilder';
 import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
 import {isPluginBuilder} from './isPluginBuilder';
-import { AgentsHelper } from './helpers/agents';
+import {AgentsHelper} from './helpers/agents';
 
 export class CommandStep
   implements
@@ -128,7 +128,6 @@ export class CommandStep
     this.#agentsHelper.agent(tag, value);
     return this;
   }
-
 
   build(): CommandStepSchema {
     const object: CommandStepSchema = {
