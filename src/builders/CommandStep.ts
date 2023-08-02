@@ -8,7 +8,7 @@ import {SkipBuilder, SkipHelper} from './helpers/skip';
 import {PluginBuilder} from './PluginBuilder';
 import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
 import {isPluginBuilder} from './isPluginBuilder';
-import {AgentsHelper} from './helpers/agents';
+import {AgentsBuilder, AgentsHelper} from './helpers/agents';
 
 export class CommandStep
   implements
@@ -18,7 +18,8 @@ export class CommandStep
     ConditionBuilder,
     BranchesBuilder,
     DependenciesBuilder,
-    SkipBuilder
+    SkipBuilder,
+    AgentsBuilder
 {
   #commands?: string[];
   #plugins: Array<PluginSchema | PluginBuilder> = [];
