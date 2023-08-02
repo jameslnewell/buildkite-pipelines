@@ -8,6 +8,7 @@ import {SkipBuilder, SkipHelper} from './helpers/skip';
 import {PluginBuilder} from './PluginBuilder';
 import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
 import {isPluginBuilder} from './isPluginBuilder';
+import { AgentsHelper } from './helpers/agents';
 
 export class CommandStep
   implements
@@ -27,6 +28,7 @@ export class CommandStep
   #branchesHelper = new BranchesHelper();
   #dependenciesHelper = new DependenciesHelper();
   #skipHelper = new SkipHelper();
+  #agentsHelper = new AgentsHelper();
 
   #concurrency?: number;
   #concurrency_group?: string;
@@ -122,6 +124,12 @@ export class CommandStep
     return this;
   }
 
+  agent(tag: string, value: string): this {
+    this.#agentsHelper.agent(tag, value);
+    return this;
+  }
+
+
   build(): CommandStepSchema {
     const object: CommandStepSchema = {
       ...{commands: this.#commands},
@@ -141,6 +149,7 @@ export class CommandStep
       ...(this.#timeout_in_minutes
         ? {timeout_in_minutes: this.#timeout_in_minutes}
         : {}),
+      ...this.#agentsHelper.build(),
     };
 
     if (this.#plugins.length > 0) {

@@ -17,6 +17,8 @@ exports[`integration matches snapshot 1`] = `
     label: \\":upload: Upload coverage\\"
     depends_on:
       - unit-test
+    agents:
+      queue: arm
     plugins:
       - dockerthis.#v3.11.0:
           image: codeclimate/codeclimate
