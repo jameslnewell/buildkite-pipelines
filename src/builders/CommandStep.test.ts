@@ -149,7 +149,7 @@ describe(CommandStep.name, () => {
       expect(step).not.toHaveProperty('agents');
     });
 
-    test('defined when 2', () => {
+    test('defined when queue specified', () => {
       const step = new CommandStep().command(':').agent('queue', 'arm').build();
       expect(step).toHaveProperty('agents', {queue: 'arm'});
     });
