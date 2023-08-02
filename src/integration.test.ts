@@ -23,6 +23,7 @@ describe('integration', () => {
       .step(
         new CommandStep()
           .label(':upload: Upload coverage')
+          .agent('queue', 'arm')
           .command('npm run upload:coverage')
           .dependOn('unit-test')
           .plugin(new DockerPlugin().image('codeclimate/codeclimate')),
