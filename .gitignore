@@ -1,4 +1,5 @@
-dist
 node_modules
 
+# generated files
 src/schema/schema.ts
+dist
