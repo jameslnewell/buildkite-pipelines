@@ -1,5 +1,5 @@
 node_modules
 
 # generated files
-src/schema/schema.ts
+src/lib/schema/schema.ts
 dist

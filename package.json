@@ -65,7 +65,7 @@
     "check:formatting": "prettier --check .",
     "check:types": "tsc --noEmit",
     "prepare": "pnpm run codegen",
-    "codegen": "json2ts src/schema/schema.json src/schema/schema.ts",
+    "codegen": "json2ts src/lib/schema/schema.json src/lib/schema/schema.ts",
     "develop": "pnpm run build:transpile --watch",
     "build": "pnpm run build:types && pnpm run build:transpile && pnpm run build:docs",
     "build:pages": "typedoc",
