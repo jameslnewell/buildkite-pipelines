@@ -4,4 +4,4 @@ dist
 .changeset
 
 # generated from json-schema
-src/schema/schema.ts
+src/lib/schema/schema.ts
