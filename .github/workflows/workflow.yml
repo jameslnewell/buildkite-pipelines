@@ -135,11 +135,9 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
       - run: pnpm run build:pages
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-pages-artifact@v2
         with:
-          name: pages-dist
-          path: |
-            dist/pages
+          path: ./dist/pages
 
   publish-package:
     name: '⬆️📦 Publishing to NPM'
@@ -176,6 +174,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: package-dist
+          path: dist
       - run: pnpm run changeset version
       - id: version
         run: echo "::set-output name=version::$(jq -r .version package.json)"
@@ -239,6 +238,5 @@ jobs:
       id-token: write # to verify the deployment originates from an appropriate source
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/configure-pages@v3
       - uses: actions/deploy-pages@v2
-        with:
-          artifact_name: pages-dist
