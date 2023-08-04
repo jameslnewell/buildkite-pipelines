@@ -142,7 +142,7 @@ jobs:
             dist/pages
 
   publish-package:
-    name: '📦 Publishing to NPM'
+    name: '⬆️📦 Publishing to NPM'
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs:
@@ -187,7 +187,7 @@ jobs:
       - run: pnpm dlx publish-if-not-published
 
   docker-push:
-    name: '🐳 Publishing to DockerHub'
+    name: '⬆️🐳 Publishing to DockerHub'
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs:
@@ -217,7 +217,7 @@ jobs:
       #     readme-filepath: docker/README.md
 
   pages-upload:
-    name: '🕸️ Publishing to Github Pages'
+    name: '⬆️🕸️ Publishing to Github Pages'
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs:
