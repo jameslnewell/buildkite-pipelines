@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.4.0
+
+### Minor Changes
+
+- b61b108: Generate API docs from types and publish to Github Pages
+
 ## 2.3.0
 
 ### Minor Changes
