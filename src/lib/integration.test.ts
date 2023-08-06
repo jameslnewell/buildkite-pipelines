@@ -1,4 +1,4 @@
-import {stringify, validate} from './api';
+import {stringify, validate} from '.';
 import {CommandStep, GroupStep, WaitStep} from './builders';
 import {BlockStep} from './builders/BlockStep';
 import {Pipeline} from './builders/Pipeline';

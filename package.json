@@ -1,10 +1,11 @@
 {
   "name": "@jameslnewell/buildkite-pipelines",
   "version": "2.3.0",
-  "bin": "dist/cli.js",
-  "main": "dist/api.js",
+  "bin": "dist/cli/index.js",
+  "main": "dist/lib/index.js",
   "files": [
-    "dist"
+    "dist/cli",
+    "dist/lib"
   ],
   "author": "James Newell <gday@jameslnewell.dev>",
   "license": "MIT",
@@ -50,6 +51,7 @@
     "json-schema-to-typescript": "^13.0.2",
     "pretty-quick": "^3.1.3",
     "ts-node": "^10.7.0",
+    "typedoc": "^0.24.8",
     "typescript": "^5.1.6"
   },
   "jest": {
@@ -63,9 +65,10 @@
     "check:formatting": "prettier --check .",
     "check:types": "tsc --noEmit",
     "prepare": "pnpm run codegen",
-    "codegen": "json2ts src/schema/schema.json src/schema/schema.ts",
+    "codegen": "json2ts src/lib/schema/schema.json src/lib/schema/schema.ts",
     "develop": "pnpm run build:transpile --watch",
-    "build": "pnpm run build:types && pnpm run build:transpile",
+    "build": "pnpm run build:types && pnpm run build:transpile && pnpm run build:docs",
+    "build:pages": "typedoc",
     "build:types": "tsc --declaration --emitDeclarationOnly",
     "build:transpile": "swc src --out-dir dist --source-maps --copy-files",
     "test": "jest --maxWorkers=1",
