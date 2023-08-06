@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.5.0
+
+### Minor Changes
+
+- 92e934e: Update the version of the docker plugin and add additional methods
+
 ## 2.4.0
 
 ### Minor Changes
