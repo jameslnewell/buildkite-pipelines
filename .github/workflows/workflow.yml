@@ -199,6 +199,7 @@ jobs:
       - test
       - build-pages
       - build-package
+      - publish-package
     steps:
       - uses: actions/checkout@v3
       - uses: docker/setup-buildx-action@v2
@@ -208,14 +209,14 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - id: pushed
-        run: echo "::set-output name=pushed::$(docker manifest inspect jameslnewell/buildkite-pipelines:${{ steps.npm-publish.outputs.version }} > /dev/null)"
+        run: echo "::set-output name=pushed::$(docker manifest inspect jameslnewell/buildkite-pipelines:${{ steps.publish-package.outputs.version }} > /dev/null)"
       - uses: docker/build-push-action@v2
         if: ${{ steps.version.outputs.pushed }} == 1
         with:
           push: true
           context: .
           file: docker/Dockerfile
-          tags: jameslnewell/buildkite-pipelines:latest,jameslnewell/buildkite-pipelines:${{ needs.npm-publish.outputs.version }}
+          tags: jameslnewell/buildkite-pipelines:latest,jameslnewell/buildkite-pipelines:${{ needs.publish-package.outputs.version }}
       # doesn't work with DH PAT 😔
       # - uses: peter-evans/dockerhub-description@v2
       #   with:
