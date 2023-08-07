@@ -2,7 +2,7 @@
 
 Generate buildkite pipelines from code.
 
-![checks](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/checks.yml/badge.svg) ![release](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/release.yml/badge.svg)
+![CI/CD](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/workflow.yml/badge.svg)
 
 ## Installation
 
