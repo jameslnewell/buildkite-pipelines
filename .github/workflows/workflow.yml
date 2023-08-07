@@ -177,7 +177,7 @@ jobs:
           path: dist
       - run: pnpm run changeset version
       - id: version
-        run: echo "::set-output name=version::$(jq -r .version package.json)"
+        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
       - run: git config --global user.email "github-actions[bot]"
       - run: git config --global user.name github-actions[bot]@users.noreply.github.com
       - run: git commit -am "Bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
