@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.6.0
+
+### Minor Changes
+
+- 04dfccc: Added ECRPlugin and updated SecretsManagerPlugin
+
 ## 2.5.1
 
 ### Patch Changes
