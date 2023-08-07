@@ -1,64 +1,54 @@
 import {PluginBuilder} from '../PluginBuilder';
 
-export interface SecretsManagerPluginSchema {
-  env?: Record<
-    string,
-    | string
-    | {
-        'secret-id': string;
-        'json-key': string;
-      }
-  >;
-}
-
-type Env = Record<
-  string,
-  | string
-  | {
-      secretId: string;
-      jsonKey: string;
-    }
->;
-
-function maptoObjectEnv(env: Env): SecretsManagerPluginSchema['env'] {
-  if (!env) {
-    return undefined;
-  }
-  const objectEnv: NonNullable<SecretsManagerPluginSchema['env']> = {};
-  for (const key in env) {
-    const value = env[key];
-    if (typeof value === 'string') {
-      objectEnv[key] = value;
-    } else {
-      objectEnv[key] = {
-        'secret-id': value.secretId,
-        'json-key': value.jsonKey,
-      };
-    }
-  }
-  return objectEnv;
-}
+/**
+ * @see https://github.com/seek-oss/aws-sm-buildkite-plugin
+ */
 
 export class SecretsManagerPlugin implements PluginBuilder {
-  #env: Env | undefined;
+  static PLUGIN = 'seek-oss/aws-sm#v2.3.1';
 
-  env(env: Env): this {
-    this.#env = env;
+  #options: {[name: string]: unknown} = {};
+  #envs: Record<string, string | {}> = {};
+  #files: {}[] = [];
+
+  region(region: string): this {
+    this.#options['region'] = region;
+    return this;
+  }
+
+  env(name: string, secretId: string, jsonKey?: string): this {
+    this.#envs[name] = jsonKey
+      ? {
+          'secret-id': secretId,
+          'json-key': jsonKey,
+        }
+      : secretId;
+    return this;
+  }
+
+  file(name: string, secretId: string): this {
+    this.#files.push({
+      path: name,
+      'secret-id': secretId,
+    });
     return this;
   }
 
   build() {
+    const object: Record<string, unknown> = {
+      ...this.#options,
+    };
+
+    if (Object.keys(this.#envs).length) {
+      object['env'] = this.#envs;
+    }
+
+    if (this.#files.length) {
+      object['file'] = this.#files;
+    }
+
     return {
-      'seek-oss/aws-sm#v2.3.1': {
-        env: this.#env && maptoObjectEnv(this.#env),
-      },
+      [SecretsManagerPlugin.PLUGIN]: object,
     };
   }
 }
-
-// TODO:
-// SecretsManagerPlugin.builder()
-//   .addEnv(SecretsManagerPlugin.EnvBuilder.builder()
-//      .secretId('')
-//      .jsonKey('')
-//   )
