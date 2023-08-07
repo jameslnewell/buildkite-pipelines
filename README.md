@@ -1,6 +1,6 @@
 # @jameslnewell/buildkite-pipelines
 
-Generate buildkite pipelines from code.
+Generate Buildkite pipelines from code.
 
 ![CI/CD](https://github.com/jameslnewell/buildkite-pipelines/actions/workflows/workflow.yml/badge.svg)
 
