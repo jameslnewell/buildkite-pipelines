@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.5.1
+
+### Patch Changes
+
+- 3222290: Move tagline before status checks so it shows on npmjs.com
+
 ## 2.5.0
 
 ### Minor Changes
