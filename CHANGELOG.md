@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.7.0
+
+### Minor Changes
+
+- 5af7a22: Add .user and .userns methods to DockerPlugin
+
 ## 2.6.0
 
 ### Minor Changes
