@@ -76,6 +76,16 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  user(user: string): this {
+    this.#options['user'] = user;
+    return this;
+  }
+
+  userns(namespace: string): this {
+    this.#options['userns'] = namespace;
+    return this;
+  }
+
   volume(volume: string): this {
     this.#volumes.push(volume);
     return this;
