@@ -8,6 +8,8 @@ export interface DockerLoginPluginSchema {
 }
 
 export class DockerLoginPlugin implements PluginBuilder {
+  static PLUGIN = 'docker-login#v2.1.0';
+
   #username?: string;
   #password?: string;
   #server?: string;
