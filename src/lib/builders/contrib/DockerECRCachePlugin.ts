@@ -12,43 +12,43 @@ export class DockerECRCachePlugin implements PluginBuilder {
   #options: {[name: string]: unknown} = {};
 
   cacheOn(glob: string): this {
-    this.#cacheOn.push(glob)
+    this.#cacheOn.push(glob);
     return this;
   }
 
   dockerfile(file: string): this {
-    this.#options['dockerfile'] = file
-    return this
+    this.#options['dockerfile'] = file;
+    return this;
   }
 
   target(target: string): this {
-    this.#options['target'] = target
-    return this
+    this.#options['target'] = target;
+    return this;
   }
 
   secret(secret: string): this {
-    this.#secrets.push(secret)
+    this.#secrets.push(secret);
     return this;
   }
 
   buildArg(arg: string): this {
-    this.#buildArgs.push(arg)
-    return this
+    this.#buildArgs.push(arg);
+    return this;
   }
 
   maxAgeDay(days: number): this {
-    this.#options['max-age-days'] = days
-    return this
+    this.#options['max-age-days'] = days;
+    return this;
   }
 
   region(region: string): this {
-    this.#options['region'] = region
+    this.#options['region'] = region;
     return this;
   }
 
   ecrName(name: string): this {
-    this.#options['ecr-name'] = name
-    return this
+    this.#options['ecr-name'] = name;
+    return this;
   }
 
   build() {
