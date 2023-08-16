@@ -1,5 +1,12 @@
 # @jameslnewell/buildkite-pipelines
 
+## 2.8.0
+
+### Minor Changes
+
+- d7f50aa: Add DockerECRCachePlugin
+- 9084b95: Added ArtifactsPlugin
+
 ## 2.7.0
 
 ### Minor Changes
