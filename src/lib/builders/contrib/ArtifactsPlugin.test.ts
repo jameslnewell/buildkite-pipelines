@@ -12,20 +12,25 @@ describe(ArtifactsPlugin.name, () => {
   describe('.download()', () => {
     test('is not defined when not specified', () => {
       const plugin = new ArtifactsPlugin();
-      expect(plugin.build()[ArtifactsPlugin.PLUGIN]).not.toHaveProperty('download');
+      expect(plugin.build()[ArtifactsPlugin.PLUGIN]).not.toHaveProperty(
+        'download',
+      );
     });
     test('is an array when specified', () => {
       const glob = '*.log';
       const plugin = new ArtifactsPlugin().download(glob);
-      expect(plugin.build()[ArtifactsPlugin.PLUGIN]).toHaveProperty('download', [
-        glob,
-      ]);
+      expect(plugin.build()[ArtifactsPlugin.PLUGIN]).toHaveProperty(
+        'download',
+        [glob],
+      );
     });
   });
   describe('.upload()', () => {
     test('is not defined when not specified', () => {
       const plugin = new ArtifactsPlugin();
-      expect(plugin.build()[ArtifactsPlugin.PLUGIN]).not.toHaveProperty('upload');
+      expect(plugin.build()[ArtifactsPlugin.PLUGIN]).not.toHaveProperty(
+        'upload',
+      );
     });
     test('is an array when specified', () => {
       const glob = '*.log';
