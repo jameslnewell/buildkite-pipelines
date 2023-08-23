@@ -33,11 +33,11 @@ export class Pipeline
     return this;
   }
 
-  build(): PipelineSchema {
+  async build(): Promise<PipelineSchema> {
     const pipeline: PipelineSchema = {
       ...this.#agentsHelper.build(),
       ...this.#notifyHelper.build(),
-      ...this.#stepsHelper.build(),
+      ...(await this.#stepsHelper.build()),
     };
     return pipeline;
   }

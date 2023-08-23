@@ -4,9 +4,11 @@ import {PipelineSchema} from '../schema';
 import {PipelineBuilder} from '../builders';
 import {isPipelineBuilder} from '../builders/isPipelineBuilder';
 
-export function stringify(pipeline: PipelineSchema | PipelineBuilder): string {
+export async function stringify(
+  pipeline: PipelineSchema | PipelineBuilder,
+): Promise<string> {
   return prettier.format(
-    yaml.dump(isPipelineBuilder(pipeline) ? pipeline.build() : pipeline, {
+    yaml.dump(isPipelineBuilder(pipeline) ? await pipeline.build() : pipeline, {
       styles: {
         sortKeys: true,
         noRefs: true,

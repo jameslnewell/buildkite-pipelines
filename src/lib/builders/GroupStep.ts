@@ -64,14 +64,14 @@ export class GroupStep
     return this;
   }
 
-  build(): GroupStepSchema {
+  async build(): Promise<GroupStepSchema> {
     const step: GroupStepSchema = {
       // Workaround until the schema is updated to make `group` nullable
       group: this.#labelHelper.build().label ?? '',
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       // TODO: cannot have group steps nested within groups so refactor steps helper to take a generic arg
-      ...(this.#stepsHelper.build() as any),
+      ...((await this.#stepsHelper.build()) as any),
       ...this.skipHelper.build(),
       ...this.dependenciesHelper.build(),
     };

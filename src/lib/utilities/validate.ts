@@ -16,11 +16,11 @@ const ajv = new Ajv({
 
 const schemaValidator = ajv.compile(schemaJSON);
 
-export function validate(
+export async function validate(
   pipeline: PipelineSchema | PipelineBuilder,
-): Array<ErrorObject> {
+): Promise<Array<ErrorObject>> {
   const valid = schemaValidator(
-    isPipelineBuilder(pipeline) ? pipeline.build() : pipeline,
+    isPipelineBuilder(pipeline) ? await pipeline.build() : pipeline,
   );
   return !valid && schemaValidator.errors ? schemaValidator.errors : [];
 }

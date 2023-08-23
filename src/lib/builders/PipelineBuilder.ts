@@ -1,5 +1,5 @@
 import {PipelineSchema} from '../schema';
 
 export interface PipelineBuilder {
-  build(): PipelineSchema;
+  build(): PipelineSchema | Promise<PipelineSchema>;
 }
