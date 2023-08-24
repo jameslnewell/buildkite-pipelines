@@ -5,7 +5,7 @@ import {Pipeline} from './builders/Pipeline';
 import {DockerPlugin} from './builders/contrib';
 
 describe('integration', () => {
-  test('matches snapshot', () => {
+  test('matches snapshot', async () => {
     const pipeline = new Pipeline()
       .step(
         new GroupStep()
@@ -30,8 +30,8 @@ describe('integration', () => {
       )
       .step(new WaitStep())
       .step(new BlockStep().label('🚀 Release').key('release'));
-    const object = pipeline.build();
-    expect(validate(object)).toHaveLength(0);
-    expect(stringify(object)).toMatchSnapshot();
+    const object = await pipeline.build();
+    expect(await validate(object)).toHaveLength(0);
+    expect(await stringify(object)).toMatchSnapshot();
   });
 });

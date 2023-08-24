@@ -13,11 +13,13 @@ export class StepsHelper {
     this.#steps.push(step);
   }
 
-  build() {
+  async build() {
     return this.#steps.length > 0
       ? {
-          steps: this.#steps.map((step) =>
-            isStepBuilder(step) ? step.build() : step,
+          steps: await Promise.all(
+            this.#steps.map(async (step) =>
+              isStepBuilder(step) ? await step.build() : step,
+            ),
           ),
         }
       : {};

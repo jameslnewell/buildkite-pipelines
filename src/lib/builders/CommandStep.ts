@@ -130,7 +130,7 @@ export class CommandStep
     return this;
   }
 
-  build(): CommandStepSchema {
+  async build(): Promise<CommandStepSchema> {
     const object: CommandStepSchema = {
       ...{commands: this.#commands},
       ...this.#keyHelper.build(),
@@ -153,8 +153,10 @@ export class CommandStep
     };
 
     if (this.#plugins.length > 0) {
-      object.plugins = this.#plugins.map((plugin) =>
-        isPluginBuilder(plugin) ? plugin.build() : plugin,
+      object.plugins = await Promise.all(
+        this.#plugins.map(async (plugin) =>
+          isPluginBuilder(plugin) ? await plugin.build() : plugin,
+        ),
       );
     }
 

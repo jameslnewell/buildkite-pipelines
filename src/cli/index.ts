@@ -94,7 +94,7 @@ const resolve = (id: string) =>
 
       // validate
       log('validating pipeline');
-      const errors = validate(pipeline);
+      const errors = await validate(pipeline);
       if (errors.length) {
         for (const error of errors) {
           console.error(error);
@@ -104,7 +104,7 @@ const resolve = (id: string) =>
       }
 
       log('stringifying pipeline');
-      console.log(stringify(pipeline));
+      console.log(await stringify(pipeline));
     },
   ).argv;
 })();

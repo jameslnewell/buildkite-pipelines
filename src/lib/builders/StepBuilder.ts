@@ -1,5 +1,5 @@
 import {StepSchema} from '../schema';
 
 export interface StepBuilder {
-  build(): StepSchema;
+  build(): StepSchema | Promise<StepSchema>;
 }
