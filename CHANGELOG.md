@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.0.0
+
+### Major Changes
+
+- ca6f2ba: Make .build(), validate() and stringify() functions async"
+
 ## 2.8.0
 
 ### Minor Changes
