@@ -89,7 +89,7 @@ const resolve = (id: string) =>
       // build the pipeline if its a builder
       if (isPipelineBuilder(pipeline)) {
         log('building pipeline');
-        pipeline = pipeline.build();
+        pipeline = await pipeline.build();
       }
 
       // validate
