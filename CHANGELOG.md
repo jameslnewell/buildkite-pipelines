@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.0.1
+
+### Patch Changes
+
+- 8f22b9d: Fix missing await in the CLI
+
 ## 3.0.0
 
 ### Major Changes
