@@ -1,3 +1,4 @@
+import {PluginSchema} from '../../schema';
 import {PluginBuilder} from '../PluginBuilder';
 
 /**
@@ -34,7 +35,7 @@ export class SecretsManagerPlugin implements PluginBuilder {
     return this;
   }
 
-  build() {
+  build(): PluginSchema | Promise<PluginSchema> {
     const object: Record<string, unknown> = {
       ...this.#options,
     };

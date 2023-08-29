@@ -1,3 +1,4 @@
+import {PluginSchema} from '../../schema';
 import {PluginBuilder} from '../PluginBuilder';
 
 /**
@@ -51,7 +52,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
     return this;
   }
 
-  build() {
+  build(): PluginSchema | Promise<PluginSchema> {
     if (this.#cacheOn.length) {
       this.#options['cache-on'] = this.#cacheOn;
     }

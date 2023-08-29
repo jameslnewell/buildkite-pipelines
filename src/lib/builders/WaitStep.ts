@@ -43,5 +43,3 @@ export class WaitStep
     return object;
   }
 }
-
-new WaitStep().condition('xyz').dependOn('unit-test');

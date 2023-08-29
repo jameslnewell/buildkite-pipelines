@@ -69,7 +69,7 @@ export class GroupStep
     return this;
   }
 
-  async build() {
+  async build(): Promise<StepSchema> {
     const step: GroupStepSchema = {
       // Workaround until the schema is updated to make `group` nullable
       group: this.#labelHelper.build().label ?? '',

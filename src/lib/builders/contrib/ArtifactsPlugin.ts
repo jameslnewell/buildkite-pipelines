@@ -1,3 +1,4 @@
+import {PluginSchema} from '../../schema';
 import {PluginBuilder} from '../PluginBuilder';
 
 /**
@@ -42,7 +43,7 @@ export class ArtifactsPlugin implements PluginBuilder {
     return this;
   }
 
-  build() {
+  build(): PluginSchema | Promise<PluginSchema> {
     if (this.#downloads.length) {
       this.#options['download'] = this.#downloads;
     }
