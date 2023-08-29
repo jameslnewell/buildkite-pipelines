@@ -1,3 +1,4 @@
+import {PluginSchema} from '../../schema';
 import {PluginBuilder} from '../PluginBuilder';
 
 export interface DockerLoginPluginSchema {
@@ -32,7 +33,7 @@ export class DockerLoginPlugin implements PluginBuilder {
     return this;
   }
 
-  build() {
+  build(): PluginSchema | Promise<PluginSchema> {
     return {
       'docker-login#v2.1.0': {
         username: this.#username,

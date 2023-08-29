@@ -62,7 +62,7 @@ export class BlockStep
     return this;
   }
 
-  build() {
+  build(): BlockStepSchema | Promise<BlockStepSchema> {
     if (!this.#label) {
       throw new Error('BlockStep must have a label.');
     }

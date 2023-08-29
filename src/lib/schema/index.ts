@@ -27,12 +27,9 @@ export type StepSchema =
   | InputStep
   | TriggerStep
   | WaitStep;
-export type PluginSchema = Extract<
-  NonNullable<CommandStep['plugins']>,
-  any[]
-> extends (infer U)[]
-  ? U
-  : never;
+export type PluginSchema = {
+  [pluginName: string]: null | {[name: string]: unknown};
+};
 
 export type StepDependsOn = Extract<
   NonNullable<CommandStep['depends_on']>,

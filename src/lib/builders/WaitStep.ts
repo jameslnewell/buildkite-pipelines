@@ -30,7 +30,7 @@ export class WaitStep
     return this;
   }
 
-  build(): WaitStepSchema {
+  build(): WaitStepSchema | Promise<WaitStepSchema> {
     const object: WaitStepSchema = {
       wait: null,
       ...this.#dependenciesHelper.build(),
@@ -43,5 +43,3 @@ export class WaitStep
     return object;
   }
 }
-
-new WaitStep().condition('xyz').dependOn('unit-test');

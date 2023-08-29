@@ -1,3 +1,4 @@
+import {PluginSchema} from '../../schema';
 import {PluginBuilder} from '../PluginBuilder';
 
 /**
@@ -116,7 +117,7 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
-  build() {
+  build(): PluginSchema | Promise<PluginSchema> {
     const object: Record<string, unknown> = {
       ...this.#options,
     };
