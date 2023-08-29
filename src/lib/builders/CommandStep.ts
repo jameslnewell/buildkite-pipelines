@@ -46,8 +46,16 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setKey() instead
+   */
   key(key: string): this {
-    this.#keyHelper.key(key);
+    this.#keyHelper.setKey(key);
+    return this;
+  }
+
+  setKey(key: string): this {
+    this.#keyHelper.setKey(key);
     return this;
   }
 
@@ -69,8 +77,16 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .addBranch() instead
+   */
   branch(branch: string): this {
-    this.#branchesHelper.branch(branch);
+    this.#branchesHelper.addBranch(branch);
+    return this;
+  }
+
+  addBranch(branch: string): this {
+    this.#branchesHelper.addBranch(branch);
     return this;
   }
 

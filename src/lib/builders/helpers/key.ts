@@ -1,11 +1,15 @@
 export interface KeyBuilder {
+  /**
+   * @deprecated Use .setKey() instead
+   */
   key(key: string): this;
+  setKey(key: string): this;
 }
 
 export class KeyHelper {
   #key?: string;
 
-  key(key: string): void {
+  setKey(key: string): void {
     this.#key = key;
   }
 

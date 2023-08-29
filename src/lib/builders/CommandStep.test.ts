@@ -8,7 +8,7 @@ const dockerPlugin = 'docker#v3.11.0';
 
 // test("foo", () => {
 //   const step = new CommandStep()
-//     .key("i-am-awesome")
+//     .setKey("i-am-awesome")
 //     .setLabel(":yarn: install")
 //     .command(installCommand)
 //     .env({ GITHUB_TOKEN: "ghp_xxx" })

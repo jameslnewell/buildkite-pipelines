@@ -27,7 +27,7 @@ Define your pipeline in code.
 ```ts
 const {Pipeline, CommandStep} = require('@jameslnewell/buildkite-pipelines');
 
-module.exports = new Pipeline().step(
+module.exports = new Pipeline().addStep(
   new CommandStep().setLabel('👋 Greeting').command('echo "Hello World!"'),
 );
 ```
@@ -54,7 +54,7 @@ Define your pipeline in code.
 ```ts
 import {Pipeline, CommandStep} from '@jameslnewell/buildkite-pipelines';
 
-export default new Pipeline().step(
+export default new Pipeline().addStep(
   new CommandStep().setLabel('👋 Greeting').command('echo "Hello World!"'),
 );
 ```

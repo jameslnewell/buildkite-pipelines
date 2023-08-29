@@ -7,20 +7,20 @@ import {DockerPlugin} from './builders/contrib';
 describe('integration', () => {
   test('matches snapshot', async () => {
     const pipeline = new Pipeline()
-      .step(
+      .addStep(
         new GroupStep()
           .setLabel(':eslint: Lint group')
-          .step(
+          .addStep(
             new CommandStep().setLabel(':eslint: Lint').command('npm run lint'),
           ),
       )
-      .step(
+      .addStep(
         new CommandStep()
           .setLabel(':jest: Test')
           .command('npm run test')
-          .key('unit-test'),
+          .setKey('unit-test'),
       )
-      .step(
+      .addStep(
         new CommandStep()
           .setLabel(':upload: Upload coverage')
           .agent('queue', 'arm')
@@ -28,8 +28,8 @@ describe('integration', () => {
           .dependOn('unit-test')
           .plugin(new DockerPlugin().image('codeclimate/codeclimate')),
       )
-      .step(new WaitStep())
-      .step(new BlockStep().setLabel('🚀 Release').key('release'));
+      .addStep(new WaitStep())
+      .addStep(new BlockStep().setLabel('🚀 Release').setKey('release'));
     const object = await pipeline.build();
     expect(await validate(object)).toHaveLength(0);
     expect(await stringify(object)).toMatchSnapshot();

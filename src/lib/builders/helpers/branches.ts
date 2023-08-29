@@ -1,11 +1,15 @@
 export interface BranchesBuilder {
+  /**
+   * @deprecated Use .addBranch() instead
+   */
   branch(branch: string): this;
+  addBranch(branch: string): this;
 }
 
 export class BranchesHelper {
   #branches: string[] = [];
 
-  branch(branch: string): void {
+  addBranch(branch: string): void {
     this.#branches.push(branch);
   }
 

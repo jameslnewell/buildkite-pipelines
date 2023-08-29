@@ -23,7 +23,7 @@ describe(BlockStep.name, () => {
 
   test('has key', async () => {
     const key = 'main';
-    const step = new BlockStep().setLabel(label).key(key);
+    const step = new BlockStep().setLabel(label).setKey(key);
     expect((await step.build()).key).toEqual(key);
   });
 
