@@ -63,7 +63,7 @@ describe(CommandStep.name, () => {
     test('defined when builder', async () => {
       const object = await new CommandStep()
         .addCommand(':')
-        .addPlugin(new Plugin(dockerPlugin))
+        .addPlugin(new Plugin().setName(dockerPlugin))
         .build();
       expect(object).toHaveProperty('plugins.0', {
         [dockerPlugin]: null,

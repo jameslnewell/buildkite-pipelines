@@ -82,8 +82,15 @@ export class GroupStep
     return this;
   }
 
-  dependOn(dependency: null | StepDependsOn): this {
-    this.dependenciesHelper.dependOn(dependency);
+  /**
+   * @deprecated Use .setKey() instead
+   */
+  dependsOn(dependency: null | StepDependsOn): this {
+    return this.addDependency(dependency);
+  }
+
+  addDependency(dependency: null | StepDependsOn): this {
+    this.dependenciesHelper.addDependency(dependency);
     return this;
   }
 

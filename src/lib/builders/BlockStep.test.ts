@@ -1,5 +1,5 @@
-import { Field } from '../schema';
-import { BlockStep } from './BlockStep';
+import {Field} from '../schema';
+import {BlockStep} from './BlockStep';
 
 describe(BlockStep.name, () => {
   const label = 'Release';
@@ -29,7 +29,7 @@ describe(BlockStep.name, () => {
 
   test('has dependencies', async () => {
     const key = 'unit-tests';
-    const step = new BlockStep().setLabel(label).dependOn(key);
+    const step = new BlockStep().setLabel(label).addDependency(key);
     expect((await step.build()).depends_on).toContain(key);
   });
 

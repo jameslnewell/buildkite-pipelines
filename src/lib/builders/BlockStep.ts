@@ -66,8 +66,8 @@ export class BlockStep
     return this;
   }
 
-  dependOn(dependency: null | StepDependsOn): this {
-    this.#dependenciesHelper.dependOn(dependency);
+  addDependency(dependency: null | StepDependsOn): this {
+    this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
 

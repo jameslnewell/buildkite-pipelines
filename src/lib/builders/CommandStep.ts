@@ -93,8 +93,8 @@ export class CommandStep
     return this;
   }
 
-  dependOn(dependency: StepDependsOn): this {
-    this.#dependenciesHelper.dependOn(dependency);
+  addDependency(dependency: StepDependsOn): this {
+    this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
 
