@@ -15,9 +15,23 @@ export class WaitStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setCondition() instead
+   */
   condition(condition: string): this {
-    this.#conditionHelper.condition(condition);
+    return this.setCondition(condition);
+  }
+
+  setCondition(condition: string): this {
+    this.#conditionHelper.setCondition(condition);
     return this;
+  }
+
+  /**
+   * @deprecated Use .addDependency() instead
+   */
+  dependsOn(dependency: null | StepDependsOn): this {
+    return this.addDependency(dependency);
   }
 
   addDependency(dependency: null | StepDependsOn): this {

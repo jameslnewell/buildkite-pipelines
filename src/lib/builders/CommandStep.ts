@@ -2,7 +2,7 @@ import { StepBuilder } from './StepBuilder';
 import { KeyBuilder, KeyHelper } from './helpers/key';
 import { LabelBuilder, LabelHelper } from './helpers/label';
 import { ConditionBuilder, ConditionHelper } from './helpers/condition';
-import { BranchesBuilder, BranchesHelper } from './helpers/branches';
+import { BranchFilterBuilder, BranchFilterHelper } from './helpers/branches';
 import { DependenciesBuilder, DependenciesHelper } from './helpers/dependencies';
 import { SkipBuilder, SkipHelper } from './helpers/skip';
 import { PluginBuilder } from './PluginBuilder';
@@ -16,7 +16,7 @@ export class CommandStep
   KeyBuilder,
   LabelBuilder,
   ConditionBuilder,
-  BranchesBuilder,
+  BranchFilterBuilder,
   DependenciesBuilder,
   SkipBuilder,
   AgentsBuilder {
@@ -25,7 +25,7 @@ export class CommandStep
   #keyHelper = new KeyHelper();
   #labelHelper = new LabelHelper();
   #conditionHelper = new ConditionHelper();
-  #branchesHelper = new BranchesHelper();
+  #branchesHelper = new BranchFilterHelper();
   #dependenciesHelper = new DependenciesHelper();
   #skipHelper = new SkipHelper();
   #agentsHelper = new AgentsHelper();
@@ -76,8 +76,8 @@ export class CommandStep
     return this;
   }
 
-  condition(condition: string): this {
-    this.#conditionHelper.condition(condition);
+  setCondition(condition: string): this {
+    this.#conditionHelper.setCondition(condition);
     return this;
   }
 
@@ -93,7 +93,14 @@ export class CommandStep
     return this;
   }
 
-  addDependency(dependency: StepDependsOn): this {
+  /**
+   * @deprecated Use .addDependency() instead
+   */
+  dependsOn(dependency: null | StepDependsOn): this {
+    return this.addDependency(dependency);
+  }
+
+  addDependency(dependency: null | StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }

@@ -1,6 +1,6 @@
 import {BlockStepSchema, Field, StepDependsOn} from '../schema';
 import {StepBuilder} from './StepBuilder';
-import {BranchesBuilder, BranchesHelper} from './helpers/branches';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
 import {KeyBuilder, KeyHelper} from './helpers/key';
 import {LabelBuilder} from './helpers/label';
@@ -11,14 +11,14 @@ export class BlockStep
     StepBuilder,
     LabelBuilder,
     KeyBuilder,
-    BranchesBuilder,
+    BranchFilterBuilder,
     DependenciesBuilder,
     PromptBuilder
 {
   #label?: string;
   #state?: 'passed' | 'failed' | 'running';
   #keyHelper = new KeyHelper();
-  #branchesHelper = new BranchesHelper();
+  #branchesHelper = new BranchFilterHelper();
   #dependenciesHelper = new DependenciesHelper();
   #promptHelper = new PromptHelper();
 

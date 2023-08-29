@@ -1,11 +1,15 @@
 export interface ConditionBuilder {
-  condition(condition: string): this;
+  /**
+   * @deprecated Use .setCondition() instead
+   */
+  setCondition(condition: string): this;
+  setCondition(condition: string): this;
 }
 
 export class ConditionHelper {
   #condition?: string;
 
-  condition(condition: string): void {
+  setCondition(condition: string): void {
     this.#condition = condition;
   }
 
