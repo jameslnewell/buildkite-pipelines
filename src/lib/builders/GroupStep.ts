@@ -44,6 +44,11 @@ export class GroupStep
     return this;
   }
 
+  steps(steps: Iterable<StepSchema | StepBuilder>): this {
+    this.#stepsHelper.steps(steps);
+    return this;
+  }
+
   key(key: string): this {
     this.#keyHelper.key(key);
     return this;

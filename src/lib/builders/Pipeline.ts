@@ -33,6 +33,11 @@ export class Pipeline
     return this;
   }
 
+  steps(steps: Iterable<StepSchema | StepBuilder>): this {
+    this.#stepsHelper.steps(steps);
+    return this;
+  }
+
   async build(): Promise<PipelineSchema> {
     const pipeline: PipelineSchema = {
       ...this.#agentsHelper.build(),

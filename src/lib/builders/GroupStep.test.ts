@@ -3,26 +3,37 @@ import {GroupStep} from './GroupStep';
 
 describe(GroupStep.name, () => {
   const label = 'Testing Steps';
-  const command = new CommandStep().command('yarn run test');
+  const step = new CommandStep().command('yarn run test');
 
   test('has label key', async () => {
-    const group = new GroupStep().label(label).step(command);
+    const group = new GroupStep().label(label).step(step);
     const object = await group.build();
     expect(object).toHaveProperty('label', label);
   });
 
   test('has group key', async () => {
-    const group = new GroupStep().label(label).step(command);
+    const group = new GroupStep().label(label).step(step);
     const object = await group.build();
     expect(object).toHaveProperty('group', label);
   });
 
-  test('has steps', async () => {
-    const group = new GroupStep().label(label).step(command);
+  test('has steps added various different ways', async () => {
+    const checkStep = new CommandStep().command('yarn run check');
+    const buildStep = new CommandStep().command('yarn run build');
+    const testStep = new CommandStep().command('yarn run test');
+
+    const group = new GroupStep()
+      .label(label)
+      .steps([checkStep, buildStep])
+      .step(testStep);
     const object = await group.build();
     expect(object).toHaveProperty(
       'steps',
-      expect.arrayContaining([await command.build()]),
+      expect.arrayContaining([
+        await checkStep.build(),
+        await buildStep.build(),
+        await testStep.build(),
+      ]),
     );
   });
 });

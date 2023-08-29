@@ -13,6 +13,10 @@ export class StepsHelper {
     this.#steps.push(step);
   }
 
+  steps(steps: Iterable<StepSchema | StepBuilder>): void {
+    this.#steps.push(...steps);
+  }
+
   async build() {
     return this.#steps.length > 0
       ? {
