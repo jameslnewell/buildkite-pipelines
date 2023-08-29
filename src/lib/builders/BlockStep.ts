@@ -1,4 +1,4 @@
-import {BlockStepSchema, Field, StepDependsOn, StepSchema} from '../schema';
+import {BlockStepSchema, Field, StepDependsOn} from '../schema';
 import {StepBuilder} from './StepBuilder';
 import {BranchesBuilder, BranchesHelper} from './helpers/branches';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
@@ -62,7 +62,7 @@ export class BlockStep
     return this;
   }
 
-  build(): StepSchema | Promise<StepSchema> {
+  build(): BlockStepSchema | Promise<BlockStepSchema> {
     if (!this.#label) {
       throw new Error('BlockStep must have a label.');
     }

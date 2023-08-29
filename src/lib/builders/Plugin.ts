@@ -1,7 +1,9 @@
 import {PluginSchema} from '../schema';
 import {PluginBuilder} from './PluginBuilder';
 
-export class Plugin<Options extends {}> implements PluginBuilder {
+export class Plugin<Options extends {[name: string]: unknown}>
+  implements PluginBuilder
+{
   #name: string;
   #options: Options | null = null;
 

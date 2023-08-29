@@ -6,12 +6,7 @@ import {BranchesBuilder, BranchesHelper} from './helpers/branches';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
 import {SkipBuilder, SkipHelper} from './helpers/skip';
 import {PluginBuilder} from './PluginBuilder';
-import {
-  CommandStepSchema,
-  PluginSchema,
-  StepDependsOn,
-  StepSchema,
-} from '../schema';
+import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
 import {isPluginBuilder} from './isPluginBuilder';
 import {AgentsBuilder, AgentsHelper} from './helpers/agents';
 
@@ -135,7 +130,7 @@ export class CommandStep
     return this;
   }
 
-  async build(): Promise<StepSchema> {
+  async build(): Promise<CommandStepSchema> {
     const object: CommandStepSchema = {
       ...{commands: this.#commands},
       ...this.#keyHelper.build(),
