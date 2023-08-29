@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.1.1
+
+### Patch Changes
+
+- f67b971: more specific return type
+
 ## 3.1.0
 
 ### Minor Changes
