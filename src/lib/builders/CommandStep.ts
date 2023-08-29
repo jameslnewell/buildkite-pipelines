@@ -1,7 +1,7 @@
 import {StepBuilder} from './StepBuilder';
 import {KeyBuilder, KeyHelper} from './helpers/key';
 import {LabelBuilder, LabelHelper} from './helpers/label';
-import {ConditionBuilder, ConditionHelper} from './helpers/conition';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition';
 import {BranchesBuilder, BranchesHelper} from './helpers/branches';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
 import {SkipBuilder, SkipHelper} from './helpers/skip';
