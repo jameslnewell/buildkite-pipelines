@@ -3,7 +3,7 @@ import {GroupStep} from './GroupStep';
 
 describe(GroupStep.name, () => {
   const label = 'Testing Steps';
-  const step = new CommandStep().command('yarn run test');
+  const step = new CommandStep().addCommand('yarn run test');
 
   test('has label key', async () => {
     const group = new GroupStep().setLabel(label).addStep(step);
@@ -18,9 +18,9 @@ describe(GroupStep.name, () => {
   });
 
   test('has steps added various different ways', async () => {
-    const checkStep = new CommandStep().command('yarn run check');
-    const buildStep = new CommandStep().command('yarn run build');
-    const testStep = new CommandStep().command('yarn run test');
+    const checkStep = new CommandStep().addCommand('yarn run check');
+    const buildStep = new CommandStep().addCommand('yarn run build');
+    const testStep = new CommandStep().addCommand('yarn run test');
 
     const group = new GroupStep()
       .setLabel(label)

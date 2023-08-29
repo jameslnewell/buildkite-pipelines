@@ -1,4 +1,4 @@
-import {DockerPlugin} from './DockerPlugin';
+import { DockerPlugin } from './DockerPlugin';
 
 describe(DockerPlugin.name, () => {
   test('nested under name/version', async () => {
@@ -9,7 +9,7 @@ describe(DockerPlugin.name, () => {
     );
   });
 
-  describe('.command()', () => {
+  describe('.addCommand()', () => {
     test('is not defined when not specified', async () => {
       const plugin = new DockerPlugin();
       expect(

@@ -28,7 +28,7 @@ Define your pipeline in code.
 const {Pipeline, CommandStep} = require('@jameslnewell/buildkite-pipelines');
 
 module.exports = new Pipeline().addStep(
-  new CommandStep().setLabel('👋 Greeting').command('echo "Hello World!"'),
+  new CommandStep().setLabel('👋 Greeting').addCommand('echo "Hello World!"'),
 );
 ```
 
@@ -55,7 +55,7 @@ Define your pipeline in code.
 import {Pipeline, CommandStep} from '@jameslnewell/buildkite-pipelines';
 
 export default new Pipeline().addStep(
-  new CommandStep().setLabel('👋 Greeting').command('echo "Hello World!"'),
+  new CommandStep().setLabel('👋 Greeting').addCommand('echo "Hello World!"'),
 );
 ```
 

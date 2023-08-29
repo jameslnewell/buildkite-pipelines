@@ -19,7 +19,7 @@ const resolve = (id: string, basedir: string) =>
   );
 
 (async () => {
-  await yargs.command(
+  await yargs.addCommand(
     '$0 <file>',
     'Generate a Buildkite pipeline',
     (yargs) =>

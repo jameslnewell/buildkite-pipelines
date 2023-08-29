@@ -11,22 +11,24 @@ describe('integration', () => {
         new GroupStep()
           .setLabel(':eslint: Lint group')
           .addStep(
-            new CommandStep().setLabel(':eslint: Lint').command('npm run lint'),
+            new CommandStep()
+              .setLabel(':eslint: Lint')
+              .addCommand('npm run lint'),
           ),
       )
       .addStep(
         new CommandStep()
           .setLabel(':jest: Test')
-          .command('npm run test')
+          .addCommand('npm run test')
           .setKey('unit-test'),
       )
       .addStep(
         new CommandStep()
           .setLabel(':upload: Upload coverage')
           .agent('queue', 'arm')
-          .command('npm run upload:coverage')
+          .addCommand('npm run upload:coverage')
           .dependOn('unit-test')
-          .plugin(new DockerPlugin().image('codeclimate/codeclimate')),
+          .addPlugin(new DockerPlugin().image('codeclimate/codeclimate')),
       )
       .addStep(new WaitStep())
       .addStep(new BlockStep().setLabel('🚀 Release').setKey('release'));
