@@ -28,7 +28,7 @@ describe('integration', () => {
           .agent('queue', 'arm')
           .addCommand('npm run upload:coverage')
           .dependOn('unit-test')
-          .addPlugin(new DockerPlugin().image('codeclimate/codeclimate')),
+          .addPlugin(new DockerPlugin().setImage('codeclimate/codeclimate')),
       )
       .addStep(new WaitStep())
       .addStep(new BlockStep().setLabel('🚀 Release').setKey('release'));

@@ -18,7 +18,7 @@ describe(DockerPlugin.name, () => {
     });
     test('is an array when specified', async () => {
       const command = 'echo "Hello World!"';
-      const plugin = new DockerPlugin().command(command);
+      const plugin = new DockerPlugin().addCommand(command);
       expect((await plugin.build())[DockerPlugin.PLUGIN]).toHaveProperty(
         'command',
         [command],
@@ -43,7 +43,7 @@ describe(DockerPlugin.name, () => {
     });
   });
 
-  describe('.volume()', () => {
+  describe('.addVolume()', () => {
     test('is not defined when not specified', async () => {
       const plugin = new DockerPlugin();
       expect((await plugin.build())[DockerPlugin.PLUGIN]).not.toHaveProperty(
@@ -52,7 +52,7 @@ describe(DockerPlugin.name, () => {
     });
     test('is an array when specified', async () => {
       const volume = '${PWD}:/workdir';
-      const plugin = new DockerPlugin().volume(volume);
+      const plugin = new DockerPlugin().addVolume(volume);
       expect((await plugin.build())[DockerPlugin.PLUGIN]).toHaveProperty(
         'volumes',
         [volume],
