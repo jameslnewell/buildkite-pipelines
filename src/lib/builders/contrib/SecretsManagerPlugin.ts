@@ -12,7 +12,14 @@ export class SecretsManagerPlugin implements PluginBuilder {
   #envs: Record<string, string | {}> = {};
   #files: {}[] = [];
 
+  /**
+   * @deprecated Use .setRegion() instead
+   */
   region(region: string): this {
+    return this.setRegion(region);
+  }
+
+  setRegion(region: string): this {
     this.#options['region'] = region;
     return this;
   }
@@ -27,7 +34,14 @@ export class SecretsManagerPlugin implements PluginBuilder {
     return this;
   }
 
+  /**
+   * @deprecated Use .addFile() instead
+   */
   file(name: string, secretId: string): this {
+    return this.addFile(name, secretId);
+  }
+
+  addFile(name: string, secretId: string): this {
     this.#files.push({
       path: name,
       'secret-id': secretId,
