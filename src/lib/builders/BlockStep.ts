@@ -22,7 +22,15 @@ export class BlockStep
   #dependenciesHelper = new DependenciesHelper();
   #promptHelper = new PromptHelper();
 
+  /**
+   * @deprecated Use .setLabel() instead
+   */
   label(label: string): this {
+    this.#label = label;
+    return this;
+  }
+
+  setLabel(label: string): this {
     this.#label = label;
     return this;
   }

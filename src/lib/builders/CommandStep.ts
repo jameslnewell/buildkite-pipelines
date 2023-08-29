@@ -51,8 +51,16 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setLabel() instead
+   */
   label(label: string): this {
-    this.#labelHelper.label(label);
+    this.#labelHelper.setLabel(label);
+    return this;
+  }
+
+  setLabel(label: string): this {
+    this.#labelHelper.setLabel(label);
     return this;
   }
 

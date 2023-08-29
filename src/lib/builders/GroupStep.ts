@@ -23,29 +23,44 @@ export class GroupStep
   dependenciesHelper = new DependenciesHelper();
 
   /**
-   * Required
-   * The name of the group
-   * @param label
-   * @returns
+   * @deprecated Use .setLabel() instead
    */
   label(label: string): this {
-    this.#labelHelper.label(label);
+    this.#labelHelper.setLabel(label);
     return this;
   }
 
   /**
-   * Required
-   * A step
-   * @param step
-   * @returns
+   * @deprecated
    */
-  step(step: StepSchema | StepBuilder): this {
-    this.#stepsHelper.step(step);
+  setLabel(label: string): this {
+    this.#labelHelper.setLabel(label);
     return this;
   }
 
+  /**
+   * @deprecated Use .addStep() instead
+   */
+  step(step: StepSchema | StepBuilder): this {
+    this.#stepsHelper.addStep(step);
+    return this;
+  }
+
+  addStep(step: StepSchema | StepBuilder): this {
+    this.#stepsHelper.addStep(step);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addSteps() instead
+   */
   steps(steps: Iterable<StepSchema | StepBuilder>): this {
-    this.#stepsHelper.steps(steps);
+    this.#stepsHelper.addSteps(steps);
+    return this;
+  }
+
+  addSteps(steps: Iterable<StepSchema | StepBuilder>): this {
+    this.#stepsHelper.addSteps(steps);
     return this;
   }
 

@@ -28,13 +28,29 @@ export class Pipeline
     return this;
   }
 
+  /**
+   * @deprecated Use .addStep() instead
+   */
   step(step: StepSchema | StepBuilder): this {
-    this.#stepsHelper.step(step);
+    this.#stepsHelper.addStep(step);
     return this;
   }
 
+  addStep(step: StepSchema | StepBuilder): this {
+    this.#stepsHelper.addStep(step);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addSteps() instead
+   */
   steps(steps: Iterable<StepSchema | StepBuilder>): this {
-    this.#stepsHelper.steps(steps);
+    this.#stepsHelper.addSteps(steps);
+    return this;
+  }
+
+  addSteps(steps: Iterable<StepSchema | StepBuilder>): this {
+    this.#stepsHelper.addSteps(steps);
     return this;
   }
 

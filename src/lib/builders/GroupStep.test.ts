@@ -6,13 +6,13 @@ describe(GroupStep.name, () => {
   const step = new CommandStep().command('yarn run test');
 
   test('has label key', async () => {
-    const group = new GroupStep().label(label).step(step);
+    const group = new GroupStep().setLabel(label).step(step);
     const object = await group.build();
     expect(object).toHaveProperty('label', label);
   });
 
   test('has group key', async () => {
-    const group = new GroupStep().label(label).step(step);
+    const group = new GroupStep().setLabel(label).step(step);
     const object = await group.build();
     expect(object).toHaveProperty('group', label);
   });
@@ -23,7 +23,7 @@ describe(GroupStep.name, () => {
     const testStep = new CommandStep().command('yarn run test');
 
     const group = new GroupStep()
-      .label(label)
+      .setLabel(label)
       .steps([checkStep, buildStep])
       .step(testStep);
     const object = await group.build();
