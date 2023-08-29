@@ -76,13 +76,29 @@ export class BlockStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setPrompt() instead
+   */
   prompt(prompt: string): this {
-    this.#promptHelper.prompt(prompt);
+    this.#promptHelper.setPrompt(prompt);
     return this;
   }
 
+  setPrompt(prompt: string): this {
+    this.#promptHelper.setPrompt(prompt);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addField() instead
+   */
   field(field: Field): this {
-    this.#promptHelper.field(field);
+    this.#promptHelper.addField(field);
+    return this;
+  }
+
+  addField(field: Field): this {
+    this.#promptHelper.addField(field);
     return this;
   }
 

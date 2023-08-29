@@ -2,19 +2,28 @@ import {Field} from '../../schema';
 import {InputStep} from '../../schema/schema';
 
 export interface PromptBuilder {
+  /**
+   * @deprecated Use .setPrompt() instead
+   */
   prompt(prompt: string): this;
+  setPrompt(prompt: string): this;
+
+  /**
+   * @deprecated Use .addField() instead
+   */
   field(field: Field): this;
+  addField(field: Field): this;
 }
 
 export class PromptHelper {
   #prompt?: string;
   #fields: Array<Field> = [];
 
-  prompt(prompt: string): void {
+  setPrompt(prompt: string): void {
     this.#prompt = prompt;
   }
 
-  field(field: Field): void {
+  addField(field: Field): void {
     this.#fields.push(field);
   }
 

@@ -35,7 +35,7 @@ describe(BlockStep.name, () => {
 
   test('has prompt', async () => {
     const prompt = 'Fill out the details for this release';
-    const step = new BlockStep().setLabel(label).prompt(prompt);
+    const step = new BlockStep().setLabel(label).setPrompt(prompt);
     expect((await step.build()).prompt).toEqual(prompt);
   });
 
@@ -44,7 +44,7 @@ describe(BlockStep.name, () => {
       text: 'ReleaseName',
       key: 'release-name',
     };
-    const step = new BlockStep().setLabel(label).field(field);
+    const step = new BlockStep().setLabel(label).addField(field);
     expect((await step.build()).fields).toContain(field);
   });
 });
