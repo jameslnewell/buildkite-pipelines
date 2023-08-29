@@ -33,17 +33,19 @@ describe('Pipeline', () => {
     });
   });
 
-  test('has steps', async () => {
-    const step1 = new CommandStep().command('echo "hello"');
-    const step2 = new CommandStep().command('echo "world"');
+  test('has steps added various different ways', async () => {
+    const checkStep = new CommandStep().command('yarn run check');
+    const buildStep = new CommandStep().command('yarn run build');
+    const testStep = new CommandStep().command('yarn run test');
 
-    const pipeline = await new Pipeline().step(step1).step(step2).build();
-
-    expect(pipeline).toHaveProperty(
+    const group = new Pipeline().steps([checkStep, buildStep]).step(testStep);
+    const object = await group.build();
+    expect(object).toHaveProperty(
       'steps',
       expect.arrayContaining([
-        expect.objectContaining(step1.build()),
-        expect.objectContaining(step1.build()),
+        await checkStep.build(),
+        await buildStep.build(),
+        await testStep.build(),
       ]),
     );
   });
