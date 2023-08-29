@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.1.0
+
+### Minor Changes
+
+- 892e6a0: Add Pipeline.steps([...]) and GroupStep.steps([...]) methods to add multiple steps at once.
+
 ## 3.0.1
 
 ### Patch Changes
