@@ -24,7 +24,14 @@ export class SecretsManagerPlugin implements PluginBuilder {
     return this;
   }
 
+  /**
+   * @deprecated Use .addEnv() instead
+   */
   env(name: string, secretId: string, jsonKey?: string): this {
+    return this.addEnv(name, secretId, jsonKey);
+  }
+
+  addEnv(name: string, secretId: string, jsonKey?: string): this {
     this.#envs[name] = jsonKey
       ? {
           'secret-id': secretId,

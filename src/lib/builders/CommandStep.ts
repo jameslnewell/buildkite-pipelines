@@ -33,7 +33,7 @@ export class CommandStep
   #concurrency?: number;
   #concurrency_group?: string;
   #parallelism?: number;
-  #env?: Record<string, string | number>;
+  #env: Record<string, string | number> = {};
   #soft_fail?: boolean;
   #timeout_in_minutes?: number;
 
@@ -74,6 +74,13 @@ export class CommandStep
   setLabel(label: string): this {
     this.#labelHelper.setLabel(label);
     return this;
+  }
+
+  /**
+   * @deprecated Use .setCondition() instead
+   */
+  condition(condition: string): this {
+    return this.setCondition(condition);
   }
 
   setCondition(condition: string): this {
@@ -155,11 +162,15 @@ export class CommandStep
     return this;
   }
 
-  env(key: string, value: string | number): this {
-    if (!this.#env) {
-      this.#env = {};
-    }
-    this.#env[key] = value;
+  /**
+   * @deprecated Use .addEnv() instead
+   */
+  env(name: string, value: string | number): this {
+    return this.addEnv(name, value);
+  }
+
+  addEnv(name: string, value: string | number): this {
+    this.#env[name] = value;
     return this;
   }
 
@@ -199,8 +210,15 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .addAgent() instead
+   */
   agent(tag: string, value: string): this {
-    this.#agentsHelper.agent(tag, value);
+    return this.addAgent(tag, value);
+  }
+
+  addAgent(tag: string, value: string): this {
+    this.#agentsHelper.addAgent(tag, value);
     return this;
   }
 
@@ -218,7 +236,7 @@ export class CommandStep
       ...(this.#concurrency_group
         ? { concurrency_group: this.#concurrency_group }
         : {}),
-      ...(this.#env ? { env: this.#env } : {}),
+      ...(Object.keys(this.#env).length ? { env: this.#env } : {}),
       ...(this.#soft_fail ? { soft_fail: this.#soft_fail } : {}),
       ...(this.#timeout_in_minutes
         ? { timeout_in_minutes: this.#timeout_in_minutes }

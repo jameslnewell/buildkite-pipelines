@@ -30,9 +30,6 @@ export class GroupStep
     return this;
   }
 
-  /**
-   * @deprecated
-   */
   setLabel(label: string): this {
     this.#labelHelper.setLabel(label);
     return this;

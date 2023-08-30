@@ -13,10 +13,17 @@ export class Pipeline
   #stepsHelper = new StepsHelper();
 
   /**
-   * @see https://buildkite.com/docs/agent/v3/cli-start#agent-targeting
+   * @deprecated Use .addAgent() instead
    */
   agent(tag: string, value: string): this {
-    this.#agentsHelper.agent(tag, value);
+    return this.addAgent(tag, value);
+  }
+
+  /**
+   * @see https://buildkite.com/docs/agent/v3/cli-start#agent-targeting
+   */
+  addAgent(tag: string, value: string): this {
+    this.#agentsHelper.addAgent(tag, value);
     return this;
   }
 

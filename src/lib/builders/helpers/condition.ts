@@ -2,7 +2,7 @@ export interface ConditionBuilder {
   /**
    * @deprecated Use .setCondition() instead
    */
-  setCondition(condition: string): this;
+  condition(condition: string): this;
   setCondition(condition: string): this;
 }
 

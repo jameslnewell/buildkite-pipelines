@@ -18,20 +18,20 @@ describe('integration', () => {
       )
       .addStep(
         new CommandStep()
+          .setKey('unit-test')
           .setLabel(':jest: Test')
-          .addCommand('npm run test')
-          .setKey('unit-test'),
+          .addCommand('npm run test'),
       )
       .addStep(
         new CommandStep()
           .setLabel(':upload: Upload coverage')
           .agent('queue', 'arm')
-          .addCommand('npm run upload:coverage')
           .addDependency('unit-test')
+          .addCommand('npm run upload:coverage')
           .addPlugin(new DockerPlugin().setImage('codeclimate/codeclimate')),
       )
       .addStep(new WaitStep())
-      .addStep(new BlockStep().setLabel('🚀 Release').setKey('release'));
+      .addStep(new BlockStep().setKey('release').setLabel('🚀 Release'));
     const object = await pipeline.build();
     expect(await validate(object)).toHaveLength(0);
     expect(await stringify(object)).toMatchSnapshot();

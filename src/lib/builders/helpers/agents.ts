@@ -1,7 +1,11 @@
 import {AgentsObject} from '../../schema/schema';
 
 export interface AgentsBuilder {
+  /**
+   * @deprecated Use .addAgent() instead
+   */
   agent(tag: string, value: string): this;
+  addAgent(tag: string, value: string): this;
 }
 
 export class AgentsHelper {
@@ -10,7 +14,7 @@ export class AgentsHelper {
   /**
    * @see https://buildkite.com/docs/agent/v3/cli-start#agent-targeting
    */
-  agent(tag: string, value: string): void {
+  addAgent(tag: string, value: string): void {
     this.#agents[tag] = value;
   }
 
