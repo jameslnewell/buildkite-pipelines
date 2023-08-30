@@ -35,7 +35,14 @@ export class BlockStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setState() instead
+   */
   state(state: 'passed' | 'failed' | 'running'): this {
+    return this.setState(state);
+  }
+
+  setState(state: 'passed' | 'failed' | 'running'): this {
     this.#state = state;
     return this;
   }
