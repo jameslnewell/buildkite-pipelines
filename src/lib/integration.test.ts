@@ -25,10 +25,11 @@ describe('integration', () => {
       .addStep(
         new CommandStep()
           .setLabel(':upload: Upload coverage')
-          .agent('queue', 'arm')
+          .addAgent('queue', 'arm')
           .addDependency('unit-test')
           .addCommand('npm run upload:coverage')
-          .addPlugin(new DockerPlugin().setImage('codeclimate/codeclimate')),
+          .addPlugin(new DockerPlugin().setImage('codeclimate/codeclimate'))
+          .shouldSkip(),
       )
       .addStep(new WaitStep())
       .addStep(new BlockStep().setKey('release').setLabel('🚀 Release'));
