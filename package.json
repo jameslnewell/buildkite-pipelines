@@ -67,7 +67,7 @@
     "prepare": "husky install && pnpm run codegen",
     "codegen": "json2ts src/lib/schema/schema.json src/lib/schema/schema.ts",
     "develop": "pnpm run build:transpile --watch",
-    "build": "pnpm run build:types && pnpm run build:transpile && pnpm run build:docs",
+    "build": "pnpm run build:types && pnpm run build:transpile && pnpm run build:pages",
     "build:pages": "typedoc",
     "build:types": "tsc --declaration --emitDeclarationOnly",
     "build:transpile": "swc src --out-dir dist --source-maps --copy-files",

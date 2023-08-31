@@ -7,9 +7,9 @@ import {isPipelineBuilder} from '../lib/builders/isPipelineBuilder';
 
 const log = debug('buildkite-pipelines');
 
-const resolve = (id: string) =>
+const resolve = (id: string, basedir: string) =>
   new Promise<string>((resolve, reject) =>
-    resolveCallback(id, {basedir: process.cwd()}, (error, path) => {
+    resolveCallback(id, {basedir}, (error, path) => {
       if (error || !path) {
         reject(error);
       } else {
@@ -29,12 +29,21 @@ const resolve = (id: string) =>
           alias: 'r',
           description: `Require a module on startup`,
         })
+        .option('cwd', {
+          type: 'string',
+          description: `Change the working directory`,
+        })
         .positional('file', {
           type: 'string',
           demandOption: true,
+          description: 'The file exporting a pipeline object',
         }),
     async (argv) => {
-      const {file, require} = argv;
+      const {file, require, cwd} = argv;
+
+      // change the current working directory
+      const basedir = process.cwd();
+      if (cwd) process.chdir(cwd);
 
       // coerce the requires into an array
       const requires: string[] = Array.isArray(require)
@@ -46,7 +55,7 @@ const resolve = (id: string) =>
       // import scripts in order to setup transpilers and stuff
       for (const r of requires) {
         log('requiring: %s', r);
-        const m = await resolve(r);
+        const m = await resolve(r, basedir);
         await import(m);
       }
 
@@ -59,7 +68,7 @@ const resolve = (id: string) =>
 
       // import the pipeline
       log('importing pipeline: %s', file);
-      const m = await resolve(file);
+      const m = await resolve(file, basedir);
       let pipeline = await import(m);
 
       // check for a version range
