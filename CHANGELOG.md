@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.2.0
+
+### Minor Changes
+
+- 524572f: Add --cwd option to the CLI
+
 ## 3.1.1
 
 ### Patch Changes
