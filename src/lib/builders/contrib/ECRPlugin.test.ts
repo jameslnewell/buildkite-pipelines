@@ -18,7 +18,7 @@ describe(ECRPlugin.name, () => {
     });
     test('is an array when specified', async () => {
       const account = '12345678';
-      const plugin = new ECRPlugin().account(account);
+      const plugin = new ECRPlugin().setAccount(account);
       expect((await plugin.build())[ECRPlugin.PLUGIN]).toHaveProperty(
         'account-ids',
         [account],

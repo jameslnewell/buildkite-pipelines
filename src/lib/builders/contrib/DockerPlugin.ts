@@ -58,7 +58,14 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  /**
+   * @deprecated Use .addEnvironment() instead
+   */
   environment(environment: string): this {
+    return this.addEnvironment(environment);
+  }
+
+  addEnvironment(environment: string): this {
     this.#envvars.push(environment);
     return this;
   }
@@ -112,12 +119,26 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  /**
+   * @deprecated Use .setUser() instead
+   */
   user(user: string): this {
+    return this.setUser(user);
+  }
+
+  setUser(user: string): this {
     this.#options['user'] = user;
     return this;
   }
 
+  /**
+   * @deprecated Use .setUserNamespace() instead
+   */
   userns(namespace: string): this {
+    return this.setUserns(namespace);
+  }
+
+  setUserns(namespace: string): this {
     this.#options['userns'] = namespace;
     return this;
   }
@@ -146,12 +167,26 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  /**
+   * @deprecated Use .setCPUs() instead
+   */
   cpus(cpus: string): this {
+    return this.setCPUs(cpus);
+  }
+
+  setCPUs(cpus: string): this {
     this.#options['cpus'] = cpus;
     return this;
   }
 
+  /**
+   * @deprecated Use .setMemory() instead
+   */
   memory(memory: string): this {
+    return this.setMemory(memory);
+  }
+
+  setMemory(memory: string): this {
     this.#options['memory'] = memory;
     return this;
   }

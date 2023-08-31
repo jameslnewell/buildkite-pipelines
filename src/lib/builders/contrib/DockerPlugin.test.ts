@@ -1,4 +1,4 @@
-import { DockerPlugin } from './DockerPlugin';
+import {DockerPlugin} from './DockerPlugin';
 
 describe(DockerPlugin.name, () => {
   test('nested under name/version', async () => {
@@ -35,7 +35,7 @@ describe(DockerPlugin.name, () => {
     });
     test('is an array when specified', async () => {
       const envvar = 'SWITCH=ON';
-      const plugin = new DockerPlugin().environment(envvar);
+      const plugin = new DockerPlugin().addEnvironment(envvar);
       expect((await plugin.build())[DockerPlugin.PLUGIN]).toHaveProperty(
         'environment',
         [envvar],
