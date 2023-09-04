@@ -33,6 +33,11 @@ const resolve = (id: string, basedir: string) =>
           type: 'string',
           description: `Change the working directory`,
         })
+        .option('ignore-validation-errors', {
+          boolean: true,
+          description:
+            'Output the pipeline and exit cleanly when the pipeline is not valid',
+        })
         .positional('file', {
           type: 'string',
           demandOption: true,
@@ -55,8 +60,20 @@ const resolve = (id: string, basedir: string) =>
       // import scripts in order to setup transpilers and stuff
       for (const r of requires) {
         log('requiring: %s', r);
-        const m = await resolve(r, basedir);
-        await import(m);
+        let m: string;
+        try {
+          m = await resolve(r, basedir);
+          await import(m);
+        } catch (error) {
+          console.error();
+          console.error(`💥 ERROR`);
+          console.error();
+          console.error(`An error occurred whilst requiring "${r}"`);
+          console.error();
+          console.error(error);
+          process.exitCode = 1;
+          return;
+        }
       }
 
       // check the pipeline file is specified
@@ -68,31 +85,55 @@ const resolve = (id: string, basedir: string) =>
 
       // import the pipeline
       log('importing pipeline: %s', file);
-      const m = await resolve(file, basedir);
-      let pipeline = await import(m);
-
-      // check for a version range
-      const version = pipeline.version;
-      if (version) {
-        // TODO: ensure the version of the cli running matches the version the pipeline was written with
+      let m: string;
+      let pipeline;
+      try {
+        m = await resolve(file, basedir);
+        pipeline = await import(m);
+      } catch (error) {
+        console.error();
+        console.error(`💥 ERROR`);
+        console.error();
+        console.error(`An error occurred whilst executing "${file}"`);
+        console.error();
+        console.error(error);
+        process.exitCode = 1;
+        return;
       }
 
       // check for a named property
+      let property: string | undefined;
       if (pipeline.pipeline) {
         log('using .pipeline property');
+        property = '.pipeline';
         pipeline = pipeline.pipeline;
         // check for a default property
       } else if (pipeline.default) {
+        property = '.default';
         log('using .default property');
         pipeline = pipeline.default;
       } else {
         log('using module');
+        property = '.default';
       }
 
       // execute the factory function if pipeline is a factory
       if (typeof pipeline === 'function') {
         log('executing pipeline factory');
-        pipeline = await pipeline();
+        try {
+          pipeline = await pipeline();
+        } catch (error) {
+          console.error();
+          console.error(`💥 ERROR`);
+          console.error();
+          console.error(
+            `An error occurred whilst executing "${file}#${property}()"`,
+          );
+          console.error();
+          console.error(error);
+          process.exitCode = 1;
+          return;
+        }
       }
 
       // build the pipeline if its a builder
@@ -102,14 +143,19 @@ const resolve = (id: string, basedir: string) =>
       }
 
       // validate
-      log('validating pipeline');
-      const errors = await validate(pipeline);
-      if (errors.length) {
-        for (const error of errors) {
-          console.error(error);
+      if (!argv.ignoreValidationErrors) {
+        log('validating pipeline');
+        const errors = await validate(pipeline);
+        if (errors.length) {
+          console.error();
+          console.error(`👮‍♀️ The pipeline is not valid:`);
+          console.error();
+          for (const error of errors) {
+            console.error(error);
+          }
+          process.exitCode = 1;
+          return;
         }
-        process.exitCode = 1;
-        return;
       }
 
       log('stringifying pipeline');
