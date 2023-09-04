@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.3.0
+
+### Minor Changes
+
+- f088682: Improve error messaging
+
 ## 3.2.0
 
 ### Minor Changes
