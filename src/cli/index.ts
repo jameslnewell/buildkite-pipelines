@@ -143,16 +143,16 @@ const resolve = (id: string, basedir: string) =>
       }
 
       // validate
-      if (!argv.ignoreValidationErrors) {
-        log('validating pipeline');
-        const errors = await validate(pipeline);
-        if (errors.length) {
-          console.error();
-          console.error(`👮‍♀️ The pipeline is not valid:`);
-          console.error();
-          for (const error of errors) {
-            console.error(error);
-          }
+      log('validating pipeline');
+      const errors = await validate(pipeline);
+      if (errors.length) {
+        console.error();
+        console.error(`👮‍♀️ The pipeline is not valid:`);
+        console.error();
+        for (const error of errors) {
+          console.error(error);
+        }
+        if (!argv.ignoreValidationErrors) {
           process.exitCode = 1;
           return;
         }
