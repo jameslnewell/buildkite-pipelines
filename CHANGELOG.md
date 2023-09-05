@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.3.1
+
+### Patch Changes
+
+- 800ecd0: log validation errors to stderr when validation errors are ignored
+
 ## 3.3.0
 
 ### Minor Changes
