@@ -41,7 +41,7 @@ const resolve = (id: string, basedir: string) =>
         .positional('file', {
           type: 'string',
           demandOption: true,
-          description: 'The file exporting a pipeline object',
+          description: 'A file exporting a pipeline object',
         }),
     async (argv) => {
       const {file, require, cwd} = argv;
