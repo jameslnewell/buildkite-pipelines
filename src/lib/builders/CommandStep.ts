@@ -1,25 +1,26 @@
-import { StepBuilder } from './StepBuilder';
-import { KeyBuilder, KeyHelper } from './helpers/key';
-import { LabelBuilder, LabelHelper } from './helpers/label';
-import { ConditionBuilder, ConditionHelper } from './helpers/condition';
-import { BranchFilterBuilder, BranchFilterHelper } from './helpers/branches';
-import { DependenciesBuilder, DependenciesHelper } from './helpers/dependencies';
-import { SkipBuilder, SkipHelper } from './helpers/skip';
-import { PluginBuilder } from './PluginBuilder';
-import { CommandStepSchema, PluginSchema, StepDependsOn } from '../schema';
-import { isPluginBuilder } from './isPluginBuilder';
-import { AgentsBuilder, AgentsHelper } from './helpers/agents';
+import {StepBuilder} from './StepBuilder';
+import {KeyBuilder, KeyHelper} from './helpers/key';
+import {LabelBuilder, LabelHelper} from './helpers/label';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
+import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
+import {SkipBuilder, SkipHelper} from './helpers/skip';
+import {PluginBuilder} from './PluginBuilder';
+import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
+import {isPluginBuilder} from './isPluginBuilder';
+import {AgentsBuilder, AgentsHelper} from './helpers/agents';
 
 export class CommandStep
   implements
-  StepBuilder,
-  KeyBuilder,
-  LabelBuilder,
-  ConditionBuilder,
-  BranchFilterBuilder,
-  DependenciesBuilder,
-  SkipBuilder,
-  AgentsBuilder {
+    StepBuilder,
+    KeyBuilder,
+    LabelBuilder,
+    ConditionBuilder,
+    BranchFilterBuilder,
+    DependenciesBuilder,
+    SkipBuilder,
+    AgentsBuilder
+{
   #commands?: string[];
   #plugins: Array<PluginSchema | PluginBuilder> = [];
   #keyHelper = new KeyHelper();
@@ -117,7 +118,7 @@ export class CommandStep
     return this;
   }
 
-  skip(skip: boolean): this {
+  skip(skip: boolean | string = true): this {
     this.#skipHelper.skip(skip);
     return this;
   }
@@ -224,22 +225,22 @@ export class CommandStep
 
   async build(): Promise<CommandStepSchema> {
     const object: CommandStepSchema = {
-      ...{ commands: this.#commands },
+      ...{commands: this.#commands},
       ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       ...this.#conditionHelper.build(),
       ...this.#branchesHelper.build(),
       ...this.#dependenciesHelper.build(),
       ...this.#skipHelper.build(),
-      ...(this.#parallelism ? { parallelism: this.#parallelism } : {}),
-      ...(this.#concurrency ? { concurrency: this.#concurrency } : {}),
+      ...(this.#parallelism ? {parallelism: this.#parallelism} : {}),
+      ...(this.#concurrency ? {concurrency: this.#concurrency} : {}),
       ...(this.#concurrency_group
-        ? { concurrency_group: this.#concurrency_group }
+        ? {concurrency_group: this.#concurrency_group}
         : {}),
-      ...(Object.keys(this.#env).length ? { env: this.#env } : {}),
-      ...(this.#soft_fail ? { soft_fail: this.#soft_fail } : {}),
+      ...(Object.keys(this.#env).length ? {env: this.#env} : {}),
+      ...(this.#soft_fail ? {soft_fail: this.#soft_fail} : {}),
       ...(this.#timeout_in_minutes
-        ? { timeout_in_minutes: this.#timeout_in_minutes }
+        ? {timeout_in_minutes: this.#timeout_in_minutes}
         : {}),
       ...this.#agentsHelper.build(),
     };

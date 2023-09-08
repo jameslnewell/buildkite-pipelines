@@ -1,11 +1,11 @@
 export interface SkipBuilder {
-  skip(skip: boolean | string): void;
+  skip(skip?: boolean | string): void;
 }
 
 export class SkipHelper {
-  #skip?: boolean;
+  #skip?: boolean | string;
 
-  skip(skip: boolean): void {
+  skip(skip?: boolean | string): void {
     this.#skip = skip;
   }
 
