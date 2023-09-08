@@ -86,6 +86,11 @@ export class CommandStep
     return this;
   }
 
+  plugins(plugins: Iterable<PluginSchema | PluginBuilder>): this {
+    this.#plugins.push(...plugins);
+    return this;
+  }
+
   parallelism(parallelism: number): this {
     if (parallelism === 0) {
       throw new Error('Parallelism of zero will result in step being omitted');
