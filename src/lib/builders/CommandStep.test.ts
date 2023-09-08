@@ -1,5 +1,6 @@
 import {CommandStep} from './CommandStep';
 import {Plugin} from './Plugin';
+import {ECRPlugin} from './contrib';
 
 const installCommand = 'yarn install';
 const buildCommand = 'yarn run build';
@@ -65,6 +66,18 @@ describe(CommandStep.name, () => {
         .plugin(new Plugin(dockerPlugin))
         .build();
       expect(object).toHaveProperty('plugins.0', {
+        [dockerPlugin]: null,
+      });
+    });
+    test('can add multiple', async () => {
+      const object = await new CommandStep()
+        .command(':')
+        .plugins([new ECRPlugin(), new Plugin(dockerPlugin)])
+        .build();
+      expect(object).toHaveProperty('plugins.0', {
+        [ECRPlugin.PLUGIN]: {},
+      });
+      expect(object).toHaveProperty('plugins.1', {
         [dockerPlugin]: null,
       });
     });
