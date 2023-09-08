@@ -19,8 +19,8 @@ export class GroupStep
   #labelHelper = new LabelHelper();
   #stepsHelper = new StepsHelper();
   #keyHelper = new KeyHelper();
-  skipHelper = new SkipHelper();
-  dependenciesHelper = new DependenciesHelper();
+  #skipHelper = new SkipHelper();
+  #dependenciesHelper = new DependenciesHelper();
 
   /**
    * @deprecated Use .setLabel() instead
@@ -74,8 +74,15 @@ export class GroupStep
     return this;
   }
 
-  skip(skip: boolean): this {
-    this.skipHelper.skip(skip);
+  /**
+   * @deprecated Use .setSkip() instead
+   */
+  skip(skip?: boolean | string): this {
+    return this.setSkip(skip);
+  }
+
+  setSkip(skip?: boolean | string): this {
+    this.#skipHelper.setSkip(skip);
     return this;
   }
 
@@ -87,12 +94,19 @@ export class GroupStep
   }
 
   addDependency(dependency: null | StepDependsOn): this {
-    this.dependenciesHelper.addDependency(dependency);
+    this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
 
+  /**
+   * @deprecated Use .setKey() instead
+   */
   allowDependencyFailure(allow: boolean): this {
-    this.dependenciesHelper.allowDependencyFailure(allow);
+    return this.setAllowDependencyFailure(allow);
+  }
+
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
 
@@ -104,8 +118,8 @@ export class GroupStep
       ...this.#labelHelper.build(),
       // TODO: cannot have group steps nested within groups so refactor steps helper to take a generic arg
       ...((await this.#stepsHelper.build()) as any),
-      ...this.skipHelper.build(),
-      ...this.dependenciesHelper.build(),
+      ...this.#skipHelper.build(),
+      ...this.#dependenciesHelper.build(),
     };
 
     return step;

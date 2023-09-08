@@ -1,11 +1,15 @@
 export interface SkipBuilder {
-  skip(skip?: boolean | string): void;
+  /**
+   * @deprecated Use .setSkip() instead
+   */
+  setSkip(skip?: boolean | string): void;
+  setSkip(skip?: boolean | string): void;
 }
 
 export class SkipHelper {
   #skip?: boolean | string;
 
-  skip(skip?: boolean | string): void {
+  setSkip(skip?: boolean | string): void {
     this.#skip = skip;
   }
 

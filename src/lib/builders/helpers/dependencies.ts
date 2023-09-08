@@ -6,7 +6,11 @@ export interface DependenciesBuilder {
    */
   addDependency(dependency: null | StepDependsOn | Array<StepDependsOn>): this;
   addDependency(dependency: null | StepDependsOn | Array<StepDependsOn>): this;
-  allowDependencyFailure(allow: boolean): this;
+  /**
+   * @deprecated Use .setAllowDependencyFailure() instead
+   */
+  setAllowDependencyFailure(allow: boolean): this;
+  setAllowDependencyFailure(allow: boolean): this;
 }
 
 export class DependenciesHelper {
@@ -22,7 +26,7 @@ export class DependenciesHelper {
     }
   }
 
-  allowDependencyFailure(allow: boolean): void {
+  setAllowDependencyFailure(allow: boolean): void {
     this.#allowDependencyFailure = allow;
   }
 

@@ -85,8 +85,8 @@ export class BlockStep
     return this;
   }
 
-  allowDependencyFailure(allow: boolean): this {
-    this.#dependenciesHelper.allowDependencyFailure(allow);
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
 

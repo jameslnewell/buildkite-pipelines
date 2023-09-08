@@ -113,13 +113,20 @@ export class CommandStep
     return this;
   }
 
-  allowDependencyFailure(allow: boolean): this {
-    this.#dependenciesHelper.allowDependencyFailure(allow);
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
 
+  /**
+   * @deprecated Use .setSkip() instead
+   */
   skip(skip: boolean | string = true): this {
-    this.#skipHelper.skip(skip);
+    return this.setSkip(skip);
+  }
+
+  setSkip(skip: boolean | string = true): this {
+    this.#skipHelper.setSkip(skip);
     return this;
   }
 

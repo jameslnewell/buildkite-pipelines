@@ -39,8 +39,15 @@ export class WaitStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setAllowDependencyFailure() instead
+   */
   allowDependencyFailure(allow: boolean): this {
-    this.#dependenciesHelper.allowDependencyFailure(allow);
+    return this.setAllowDependencyFailure(allow);
+  }
+
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
 

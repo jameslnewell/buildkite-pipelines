@@ -1,6 +1,6 @@
-import { CommandStep } from './CommandStep';
-import { Plugin } from './Plugin';
-import { ECRPlugin } from './contrib';
+import {CommandStep} from './CommandStep';
+import {Plugin} from './Plugin';
+import {ECRPlugin} from './contrib';
 
 const installCommand = 'yarn install';
 const buildCommand = 'yarn run build';
@@ -54,7 +54,7 @@ describe(CommandStep.name, () => {
     test('defined when object', async () => {
       const object = await new CommandStep()
         .addCommand(':')
-        .addPlugin({ [dockerPlugin]: null })
+        .addPlugin({[dockerPlugin]: null})
         .build();
       expect(object).toHaveProperty('plugins.0', {
         [dockerPlugin]: null,
@@ -103,11 +103,17 @@ describe(CommandStep.name, () => {
       expect(step).not.toHaveProperty('skip');
     });
     test('defined when true', async () => {
-      const step = await new CommandStep().addCommand(':').skip(true).build();
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setSkip(true)
+        .build();
       expect(step).toHaveProperty('skip', true);
     });
     test('defined when false', async () => {
-      const step = await new CommandStep().addCommand(':').skip(false).build();
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setSkip(false)
+        .build();
       expect(step).toHaveProperty('skip', false);
     });
   });
@@ -175,7 +181,7 @@ describe(CommandStep.name, () => {
         .addCommand(':')
         .agent('queue', 'arm')
         .build();
-      expect(step).toHaveProperty('agents', { queue: 'arm' });
+      expect(step).toHaveProperty('agents', {queue: 'arm'});
     });
   });
 });
