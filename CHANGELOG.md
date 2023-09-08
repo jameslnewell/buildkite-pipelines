@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.4.0
+
+### Minor Changes
+
+- 271ca8a: Add CommandStep.plugins(...) method for adding multiple plugins at once
+
 ## 3.3.1
 
 ### Patch Changes
