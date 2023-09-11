@@ -16,19 +16,50 @@ export class DockerLoginPlugin implements PluginBuilder {
   #server?: string;
   #retries?: number;
 
+  /**
+   * @deprecated Use .setUsername() instead
+   */
   username(username: string): this {
+    return this.setUsername(username);
+  }
+
+  setUsername(username: string): this {
     this.#username = username;
     return this;
   }
+
+  /**
+   * @deprecated Use .setUsername() instead
+   */
   passwordEnv(passwordEnv: string): this {
+    return this.setPasswordEnv(passwordEnv);
+  }
+
+  setPasswordEnv(passwordEnv: string): this {
     this.#password = passwordEnv;
     return this;
   }
+
+  /**
+   * @deprecated Use .setServer() instead
+   */
   server(server: string): this {
+    return this.setServer(server);
+  }
+
+  setServer(server: string): this {
     this.#server = server;
     return this;
   }
+
+  /**
+   * @deprecated Use .setRetries() instead
+   */
   retries(retries: number): this {
+    return this.setRetries(retries);
+  }
+
+  setRetries(retries: number): this {
     this.#retries = retries;
     return this;
   }

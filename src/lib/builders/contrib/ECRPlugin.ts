@@ -10,13 +10,19 @@ export class ECRPlugin implements PluginBuilder {
   #accounts: string[] = [];
   #options: {[name: string]: unknown} = {};
 
+  /**
+   * @deprecated Use .setLogin() instead
+   */
   login(login: boolean = true): this {
+    return this.setLogin(login);
+  }
+
+  setLogin(login: boolean): this {
     this.#options['login'] = login;
     return this;
   }
 
   /**
-   *
    * @deprecated Use .setAccount() instead
    */
   account(id: string): this {
