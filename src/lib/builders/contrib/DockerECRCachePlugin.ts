@@ -13,7 +13,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   #options: {[name: string]: unknown} = {};
 
   /**
-   * Use .addCacheOn() instead
+   * @deprecated Use .addCacheOn() instead
    */
   cacheOn(glob: string): this {
     return this.addCacheOn(glob);
@@ -25,7 +25,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setDockerfile() instead
+   * @deprecated Use .setDockerfile() instead
    */
   dockerfile(file: string): this {
     return this.setDockerfile(file);
@@ -37,7 +37,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setTarget() instead
+   * @deprecated Use .setTarget() instead
    */
   target(target: string): this {
     return this.setTarget(target);
@@ -49,7 +49,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setSecret() instead
+   * @deprecated Use .setSecret() instead
    */
   secret(secret: string): this {
     return this.setSecret(secret);
@@ -61,7 +61,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   }
 
   /**
-   * Use .addBuildArg() instead
+   * @deprecated Use .addBuildArg() instead
    */
   buildArg(arg: string): this {
     return this.addBuildArg(arg);
@@ -73,7 +73,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setMaxAgeDays() instead
+   * @deprecated Use .setMaxAgeDays() instead
    */
   maxAgeDay(days: number): this {
     return this.setMaxAgeDays(days);
@@ -85,7 +85,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setRegion() instead
+   * @deprecated Use .setRegion() instead
    */
   region(region: string): this {
     return this.setRegion(region);
@@ -97,7 +97,7 @@ export class DockerECRCachePlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setECRName() instead
+   * @deprecated Use .setECRName() instead
    */
   ecrName(name: string): this {
     return this.setECRName(name);

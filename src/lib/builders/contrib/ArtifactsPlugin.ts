@@ -14,7 +14,7 @@ export class ArtifactsPlugin implements PluginBuilder {
   #options: {[name: string]: unknown} = {};
 
   /**
-   * Use .setCompressed() instead
+   * @deprecated Use .setCompressed() instead
    */
   compressed(file: string): this {
     return this.setCompressed(file);
@@ -26,7 +26,7 @@ export class ArtifactsPlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setDownload() instead
+   * @deprecated Use .setDownload() instead
    */
   download(file: string): this {
     return this.setDownload(file);
@@ -38,7 +38,7 @@ export class ArtifactsPlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setUpload() instead
+   * @deprecated Use .setUpload() instead
    */
   upload(glob: string): this {
     return this.setUpload(glob);
@@ -50,7 +50,7 @@ export class ArtifactsPlugin implements PluginBuilder {
   }
 
   /**
-   * Use .setStep() instead
+   * @deprecated Use .setStep() instead
    */
   step(id: string): this {
     return this.setStep(id);
