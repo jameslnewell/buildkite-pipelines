@@ -10,22 +10,50 @@ export class ECRPlugin implements PluginBuilder {
   #accounts: string[] = [];
   #options: {[name: string]: unknown} = {};
 
+  /**
+   * @deprecated Use .setLogin() instead
+   */
   login(login: boolean = true): this {
+    return this.setLogin(login);
+  }
+
+  setLogin(login: boolean): this {
     this.#options['login'] = login;
     return this;
   }
 
+  /**
+   * @deprecated Use .setAccount() instead
+   */
   account(id: string): this {
+    return this.setAccount(id);
+  }
+
+  setAccount(id: string): this {
     this.#accounts.push(id);
     return this;
   }
 
+  /**
+   * @deprecated Use .setRegion() instead
+   */
   region(region: string): this {
+    return this.setRegion(region);
+  }
+
+  setRegion(region: string): this {
     this.#options['region'] = region;
     return this;
   }
 
+  /**
+   * @deprecated Use .setRetries() instead
+   */
   retries(retries: number): this {
+    return this.setRetries(retries);
+  }
+
+  setRetries(retries: number): this {
     this.#options['retries'] = retries;
     return this;
   }

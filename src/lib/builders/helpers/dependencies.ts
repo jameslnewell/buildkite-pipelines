@@ -1,24 +1,32 @@
 import {CommandStepSchema, StepDependsOn} from '../../schema';
 
 export interface DependenciesBuilder {
+  /**
+   * @deprecated Use .addDependency() instead
+   */
   dependOn(dependency: null | StepDependsOn | Array<StepDependsOn>): this;
+  addDependency(dependency: null | StepDependsOn | Array<StepDependsOn>): this;
+  /**
+   * @deprecated Use .setAllowDependencyFailure() instead
+   */
   allowDependencyFailure(allow: boolean): this;
+  setAllowDependencyFailure(allow: boolean): this;
 }
 
 export class DependenciesHelper {
-  #dependsOn: null | Array<StepDependsOn> = [];
+  dependencies: null | Array<StepDependsOn> = [];
   #allowDependencyFailure?: boolean;
 
-  dependOn(dependency: null | StepDependsOn): void {
-    if (this.#dependsOn === null) {
+  addDependency(dependency: null | StepDependsOn): void {
+    if (this.dependencies === null) {
     } else if (dependency === null) {
       // TODO:
     } else {
-      this.#dependsOn.push(dependency);
+      this.dependencies.push(dependency);
     }
   }
 
-  allowDependencyFailure(allow: boolean): void {
+  setAllowDependencyFailure(allow: boolean): void {
     this.#allowDependencyFailure = allow;
   }
 
@@ -28,8 +36,8 @@ export class DependenciesHelper {
       'depends_on' | 'allow_dependency_failure'
     > = {};
 
-    if (this.#dependsOn === null || this.#dependsOn.length > 0) {
-      object.depends_on = this.#dependsOn;
+    if (this.dependencies === null || this.dependencies.length > 0) {
+      object.depends_on = this.dependencies;
     }
 
     if (this.#allowDependencyFailure) {

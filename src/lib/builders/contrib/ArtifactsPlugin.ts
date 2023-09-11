@@ -13,32 +13,74 @@ export class ArtifactsPlugin implements PluginBuilder {
 
   #options: {[name: string]: unknown} = {};
 
-  download(glob: string): this {
-    this.#downloads.push(glob);
-    return this;
-  }
-
-  upload(glob: string): this {
-    this.#uploads.push(glob);
-    return this;
-  }
-
-  step(id: string): this {
-    this.#options['step'] = id;
-    return this;
-  }
-
+  /**
+   * Use .setCompressed() instead
+   */
   compressed(file: string): this {
+    return this.setCompressed(file);
+  }
+
+  setCompressed(file: string): this {
     this.#options['compressed'] = file;
     return this;
   }
 
+  /**
+   * Use .setDownload() instead
+   */
+  download(file: string): this {
+    return this.setDownload(file);
+  }
+
+  setDownload(glob: string): this {
+    this.#downloads.push(glob);
+    return this;
+  }
+
+  /**
+   * Use .setUpload() instead
+   */
+  upload(glob: string): this {
+    return this.setUpload(glob);
+  }
+
+  setUpload(glob: string): this {
+    this.#uploads.push(glob);
+    return this;
+  }
+
+  /**
+   * Use .setStep() instead
+   */
+  step(id: string): this {
+    return this.setStep(id);
+  }
+
+  setStep(id: string): this {
+    this.#options['step'] = id;
+    return this;
+  }
+
+  /**
+   * @deprecated Use .setIgnoreMissing() instead
+   */
   ignoreMissing(ignore: boolean = true): this {
+    return this.setIgnoreMissing(ignore);
+  }
+
+  setIgnoreMissing(ignore: boolean): this {
     this.#options['ignore-missing'] = ignore;
     return this;
   }
 
+  /**
+   * @deprecated Use .setSkipOnStatus() instead
+   */
   skipOnStatus(status: number): this {
+    return this.setSkipOnStatus(status);
+  }
+
+  setSkipOnStatus(status: number): this {
     this.#skipOnStatus.push(status);
     return this;
   }

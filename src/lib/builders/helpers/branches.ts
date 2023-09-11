@@ -1,12 +1,16 @@
-export interface BranchesBuilder {
-  branch(branch: string): this;
+export interface BranchFilterBuilder {
+  /**
+   * @deprecated Use .addBranch() instead
+   */
+  branch(pattern: string): this;
+  addBranch(pattern: string): this;
 }
 
-export class BranchesHelper {
+export class BranchFilterHelper {
   #branches: string[] = [];
 
-  branch(branch: string): void {
-    this.#branches.push(branch);
+  addBranch(pattern: string): void {
+    this.#branches.push(pattern);
   }
 
   build() {

@@ -1,6 +1,6 @@
 import {BlockStepSchema, Field, StepDependsOn} from '../schema';
 import {StepBuilder} from './StepBuilder';
-import {BranchesBuilder, BranchesHelper} from './helpers/branches';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
 import {KeyBuilder, KeyHelper} from './helpers/key';
 import {LabelBuilder} from './helpers/label';
@@ -11,54 +11,115 @@ export class BlockStep
     StepBuilder,
     LabelBuilder,
     KeyBuilder,
-    BranchesBuilder,
+    BranchFilterBuilder,
     DependenciesBuilder,
     PromptBuilder
 {
   #label?: string;
   #state?: 'passed' | 'failed' | 'running';
   #keyHelper = new KeyHelper();
-  #branchesHelper = new BranchesHelper();
+  #branchesHelper = new BranchFilterHelper();
   #dependenciesHelper = new DependenciesHelper();
   #promptHelper = new PromptHelper();
 
+  /**
+   * @deprecated Use .setLabel() instead
+   */
   label(label: string): this {
+    this.setLabel(label);
+    return this;
+  }
+
+  setLabel(label: string): this {
     this.#label = label;
     return this;
   }
 
+  /**
+   * @deprecated Use .setState() instead
+   */
   state(state: 'passed' | 'failed' | 'running'): this {
+    return this.setState(state);
+  }
+
+  setState(state: 'passed' | 'failed' | 'running'): this {
     this.#state = state;
     return this;
   }
 
+  /**
+   * @deprecated Use .setKey() instead
+   */
   key(key: string): this {
-    this.#keyHelper.key(key);
+    this.setKey(key);
     return this;
   }
 
+  setKey(key: string): this {
+    this.#keyHelper.setKey(key);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addBranch() instead
+   */
   branch(branch: string): this {
-    this.#branchesHelper.branch(branch);
+    this.addBranch(branch);
     return this;
   }
 
+  addBranch(branch: string): this {
+    this.#branchesHelper.addBranch(branch);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addDependency() instead
+   */
   dependOn(dependency: null | StepDependsOn): this {
-    this.#dependenciesHelper.dependOn(dependency);
+    return this.addDependency(dependency);
+  }
+
+  addDependency(dependency: null | StepDependsOn): this {
+    this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
 
+  /**
+   * @deprecated Use .setAllowDependencyFailure() instead
+   */
   allowDependencyFailure(allow: boolean): this {
-    this.#dependenciesHelper.allowDependencyFailure(allow);
+    return this.setAllowDependencyFailure(allow);
+  }
+
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
 
+  /**
+   * @deprecated Use .setPrompt() instead
+   */
   prompt(prompt: string): this {
-    this.#promptHelper.prompt(prompt);
+    this.setPrompt(prompt);
     return this;
   }
 
+  setPrompt(prompt: string): this {
+    this.#promptHelper.setPrompt(prompt);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addField() instead
+   */
   field(field: Field): this {
-    this.#promptHelper.field(field);
+    this.addField(field);
+    return this;
+  }
+
+  addField(field: Field): this {
+    this.#promptHelper.addField(field);
     return this;
   }
 

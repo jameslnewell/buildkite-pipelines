@@ -7,29 +7,31 @@ import {DockerPlugin} from './builders/contrib';
 describe('integration', () => {
   test('matches snapshot', async () => {
     const pipeline = new Pipeline()
-      .step(
+      .addStep(
         new GroupStep()
-          .label(':eslint: Lint group')
-          .step(
-            new CommandStep().label(':eslint: Lint').command('npm run lint'),
+          .setLabel(':eslint: Lint group')
+          .addStep(
+            new CommandStep()
+              .setLabel(':eslint: Lint')
+              .addCommand('npm run lint'),
           ),
       )
-      .step(
+      .addStep(
         new CommandStep()
-          .label(':jest: Test')
-          .command('npm run test')
-          .key('unit-test'),
+          .setKey('unit-test')
+          .setLabel(':jest: Test')
+          .addCommand('npm run test'),
       )
-      .step(
+      .addStep(
         new CommandStep()
-          .label(':upload: Upload coverage')
-          .agent('queue', 'arm')
-          .command('npm run upload:coverage')
-          .dependOn('unit-test')
-          .plugin(new DockerPlugin().image('codeclimate/codeclimate')),
+          .setLabel(':upload: Upload coverage')
+          .addAgent('queue', 'arm')
+          .addDependency('unit-test')
+          .addCommand('npm run upload:coverage')
+          .addPlugin(new DockerPlugin().setImage('codeclimate/codeclimate')),
       )
-      .step(new WaitStep())
-      .step(new BlockStep().label('🚀 Release').key('release'));
+      .addStep(new WaitStep())
+      .addStep(new BlockStep().setKey('release').setLabel('🚀 Release'));
     const object = await pipeline.build();
     expect(await validate(object)).toHaveLength(0);
     expect(await stringify(object)).toMatchSnapshot();

@@ -1,11 +1,15 @@
 export interface LabelBuilder {
+  /**
+   * @deprecated Use .setLabel() instead
+   */
   label(label: string): this;
+  setLabel(label: string): this;
 }
 
 export class LabelHelper {
   #label?: string;
 
-  label(label: string): void {
+  setLabel(label: string): void {
     this.#label = label;
   }
 

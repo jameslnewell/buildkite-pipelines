@@ -50,7 +50,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
-      - run: pnpm run check:types
+      - run: pnpm run check:typing
 
   test:
     name: '🧪 Run tests'

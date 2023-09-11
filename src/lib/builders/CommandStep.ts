@@ -1,8 +1,8 @@
 import {StepBuilder} from './StepBuilder';
 import {KeyBuilder, KeyHelper} from './helpers/key';
 import {LabelBuilder, LabelHelper} from './helpers/label';
-import {ConditionBuilder, ConditionHelper} from './helpers/conition';
-import {BranchesBuilder, BranchesHelper} from './helpers/branches';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
 import {SkipBuilder, SkipHelper} from './helpers/skip';
 import {PluginBuilder} from './PluginBuilder';
@@ -16,7 +16,7 @@ export class CommandStep
     KeyBuilder,
     LabelBuilder,
     ConditionBuilder,
-    BranchesBuilder,
+    BranchFilterBuilder,
     DependenciesBuilder,
     SkipBuilder,
     AgentsBuilder
@@ -26,7 +26,7 @@ export class CommandStep
   #keyHelper = new KeyHelper();
   #labelHelper = new LabelHelper();
   #conditionHelper = new ConditionHelper();
-  #branchesHelper = new BranchesHelper();
+  #branchesHelper = new BranchFilterHelper();
   #dependenciesHelper = new DependenciesHelper();
   #skipHelper = new SkipHelper();
   #agentsHelper = new AgentsHelper();
@@ -34,11 +34,18 @@ export class CommandStep
   #concurrency?: number;
   #concurrency_group?: string;
   #parallelism?: number;
-  #env?: Record<string, string | number>;
+  #env: Record<string, string | number> = {};
   #soft_fail?: boolean;
   #timeout_in_minutes?: number;
 
+  /**
+   * @deprecated Use .addCommand() instead
+   */
   command(command: string): this {
+    return this.addCommand(command);
+  }
+
+  addCommand(command: string): this {
     if (!this.#commands) {
       this.#commands = [];
     }
@@ -46,52 +53,122 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setKey() instead
+   */
   key(key: string): this {
-    this.#keyHelper.key(key);
+    return this.setKey(key);
+  }
+
+  setKey(key: string): this {
+    this.#keyHelper.setKey(key);
     return this;
   }
 
+  /**
+   * @deprecated Use .setLabel() instead
+   */
   label(label: string): this {
-    this.#labelHelper.label(label);
+    return this.setLabel(label);
+  }
+
+  setLabel(label: string): this {
+    this.#labelHelper.setLabel(label);
     return this;
   }
 
+  /**
+   * @deprecated Use .setCondition() instead
+   */
   condition(condition: string): this {
-    this.#conditionHelper.condition(condition);
+    return this.setCondition(condition);
+  }
+
+  setCondition(condition: string): this {
+    this.#conditionHelper.setCondition(condition);
     return this;
   }
 
+  /**
+   * @deprecated Use .addBranch() instead
+   */
   branch(branch: string): this {
-    this.#branchesHelper.branch(branch);
+    return this.addBranch(branch);
+  }
+
+  addBranch(branch: string): this {
+    this.#branchesHelper.addBranch(branch);
     return this;
   }
 
-  dependOn(dependency: StepDependsOn): this {
-    this.#dependenciesHelper.dependOn(dependency);
+  /**
+   * @deprecated Use .addDependency() instead
+   */
+  dependOn(dependency: null | StepDependsOn): this {
+    return this.addDependency(dependency);
+  }
+
+  addDependency(dependency: null | StepDependsOn): this {
+    this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
 
+  /**
+   * @deprecated Use .addDependency() instead
+   */
   allowDependencyFailure(allow: boolean): this {
-    this.#dependenciesHelper.allowDependencyFailure(allow);
+    return this.setAllowDependencyFailure(allow);
+  }
+
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
 
-  skip(skip: boolean): this {
-    this.#skipHelper.skip(skip);
+  /**
+   * @deprecated Use .setSkip() instead
+   */
+  skip(skip: boolean | string): this {
+    return this.setSkip(skip);
+  }
+
+  setSkip(skip: boolean | string): this {
+    this.#skipHelper.setSkip(skip);
     return this;
   }
 
+  /**
+   * @deprecated Use .addPlugin() instead
+   */
   plugin(plugin: PluginSchema | PluginBuilder): this {
+    return this.addPlugin(plugin);
+  }
+
+  addPlugin(plugin: PluginSchema | PluginBuilder): this {
     this.#plugins.push(plugin);
     return this;
   }
 
+  /**
+   * @deprecated Use .addPlugins() instead
+   */
   plugins(plugins: Iterable<PluginSchema | PluginBuilder>): this {
+    return this.addPlugins(plugins);
+  }
+
+  addPlugins(plugins: Iterable<PluginSchema | PluginBuilder>): this {
     this.#plugins.push(...plugins);
     return this;
   }
 
+  /**
+   * @deprecated Use .setParallelism() instead
+   */
   parallelism(parallelism: number): this {
+    return this.setParallelism(parallelism);
+  }
+
+  setParallelism(parallelism: number): this {
     if (parallelism === 0) {
       throw new Error('Parallelism of zero will result in step being omitted');
     }
@@ -100,15 +177,26 @@ export class CommandStep
     return this;
   }
 
-  env(key: string, value: string | number): this {
-    if (!this.#env) {
-      this.#env = {};
-    }
-    this.#env[key] = value;
+  /**
+   * @deprecated Use .addEnv() instead
+   */
+  env(name: string, value: string | number): this {
+    return this.addEnv(name, value);
+  }
+
+  addEnv(name: string, value: string | number): this {
+    this.#env[name] = value;
     return this;
   }
 
+  /**
+   * @deprecated Use .setConcurrency() instead
+   */
   concurrency(group: string, jobs: number): this {
+    return this.setConcurrency(group, jobs);
+  }
+
+  setConcurrency(group: string, jobs: number): this {
     if (jobs === 0) {
       throw new Error(
         'Concurrency of zero will result in step which never starts',
@@ -120,18 +208,39 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setSoftFail() instead
+   */
   softFail(fail: boolean = true): this {
+    return this.setSoftFail(fail);
+  }
+
+  setSoftFail(fail: boolean): this {
     this.#soft_fail = fail;
     return this;
   }
 
+  /**
+   * @deprecated Use .setTimeout() instead
+   */
   timeout(minutes: number): this {
+    return this.setTimeout(minutes);
+  }
+
+  setTimeout(minutes: number): this {
     this.#timeout_in_minutes = minutes;
     return this;
   }
 
+  /**
+   * @deprecated Use .addAgent() instead
+   */
   agent(tag: string, value: string): this {
-    this.#agentsHelper.agent(tag, value);
+    return this.addAgent(tag, value);
+  }
+
+  addAgent(tag: string, value: string): this {
+    this.#agentsHelper.addAgent(tag, value);
     return this;
   }
 
@@ -149,7 +258,7 @@ export class CommandStep
       ...(this.#concurrency_group
         ? {concurrency_group: this.#concurrency_group}
         : {}),
-      ...(this.#env ? {env: this.#env} : {}),
+      ...(Object.keys(this.#env).length ? {env: this.#env} : {}),
       ...(this.#soft_fail ? {soft_fail: this.#soft_fail} : {}),
       ...(this.#timeout_in_minutes
         ? {timeout_in_minutes: this.#timeout_in_minutes}

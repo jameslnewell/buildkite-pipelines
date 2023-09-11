@@ -18,7 +18,7 @@ describe(SecretsManagerPlugin.name, () => {
     });
     test('is an array when specified', async () => {
       const secretId = 'test';
-      const plugin = new SecretsManagerPlugin().env('TEST', 'test');
+      const plugin = new SecretsManagerPlugin().addEnv('TEST', 'test');
       expect(
         (await plugin.build())[SecretsManagerPlugin.PLUGIN],
       ).toHaveProperty('env', {TEST: secretId});
@@ -35,7 +35,7 @@ describe(SecretsManagerPlugin.name, () => {
     test('is an array when specified', async () => {
       const name = 'secret.txt';
       const secretId = 'test';
-      const plugin = new SecretsManagerPlugin().file(name, secretId);
+      const plugin = new SecretsManagerPlugin().addFile(name, secretId);
       expect(
         (await plugin.build())[SecretsManagerPlugin.PLUGIN],
       ).toHaveProperty(

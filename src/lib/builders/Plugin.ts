@@ -7,12 +7,27 @@ export class Plugin<Options extends {[name: string]: unknown}>
   #name: string;
   #options: Options | null = null;
 
-  public constructor(name: string, options?: Options) {
+  /**
+   * @param name This parameter is deprecated
+   * @param options This parameter is deprecated
+   */
+  public constructor(name: string = '', options?: Options) {
     this.#name = name;
     this.#options = options ?? null;
   }
 
+  setName(name: string): this {
+    this.#name = name;
+    return this;
+  }
+
+  /**
+   * @deprecated
+   */
   options(): Options;
+  /**
+   * @deprecated Use .setOptions() instead
+   */
   options(options: Options | null): this;
   options(options?: Options | null): Options | null | this {
     if (options) {
@@ -23,9 +38,15 @@ export class Plugin<Options extends {[name: string]: unknown}>
     }
   }
 
+  setOptions(options: Options | null): this {
+    this.#options = options;
+    return this;
+  }
+
   build(): PluginSchema {
+    if (!this.#name) throw new Error('Plugin must have a name');
     return {
-      [this.#name]: this.#options ?? null,
+      [this.#name]: this.#options,
     };
   }
 }

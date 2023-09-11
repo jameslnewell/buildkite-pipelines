@@ -34,11 +34,13 @@ describe('Pipeline', () => {
   });
 
   test('has steps added various different ways', async () => {
-    const checkStep = new CommandStep().command('yarn run check');
-    const buildStep = new CommandStep().command('yarn run build');
-    const testStep = new CommandStep().command('yarn run test');
+    const checkStep = new CommandStep().addCommand('yarn run check');
+    const buildStep = new CommandStep().addCommand('yarn run build');
+    const testStep = new CommandStep().addCommand('yarn run test');
 
-    const group = new Pipeline().steps([checkStep, buildStep]).step(testStep);
+    const group = new Pipeline()
+      .addSteps([checkStep, buildStep])
+      .addStep(testStep);
     const object = await group.build();
     expect(object).toHaveProperty(
       'steps',

@@ -19,53 +19,94 @@ export class GroupStep
   #labelHelper = new LabelHelper();
   #stepsHelper = new StepsHelper();
   #keyHelper = new KeyHelper();
-  skipHelper = new SkipHelper();
-  dependenciesHelper = new DependenciesHelper();
+  #skipHelper = new SkipHelper();
+  #dependenciesHelper = new DependenciesHelper();
 
   /**
-   * Required
-   * The name of the group
-   * @param label
-   * @returns
+   * @deprecated Use .setLabel() instead
    */
   label(label: string): this {
-    this.#labelHelper.label(label);
+    this.setLabel(label);
+    return this;
+  }
+
+  setLabel(label: string): this {
+    this.#labelHelper.setLabel(label);
     return this;
   }
 
   /**
-   * Required
-   * A step
-   * @param step
-   * @returns
+   * @deprecated Use .addStep() instead
    */
   step(step: StepSchema | StepBuilder): this {
-    this.#stepsHelper.step(step);
+    this.addStep(step);
     return this;
   }
 
+  addStep(step: StepSchema | StepBuilder): this {
+    this.#stepsHelper.addStep(step);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addSteps() instead
+   */
   steps(steps: Iterable<StepSchema | StepBuilder>): this {
-    this.#stepsHelper.steps(steps);
+    this.addSteps(steps);
     return this;
   }
 
+  addSteps(steps: Iterable<StepSchema | StepBuilder>): this {
+    this.#stepsHelper.addSteps(steps);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .setKey() instead
+   */
   key(key: string): this {
-    this.#keyHelper.key(key);
+    this.setKey(key);
     return this;
   }
 
-  skip(skip: boolean): this {
-    this.skipHelper.skip(skip);
+  setKey(key: string): this {
+    this.#keyHelper.setKey(key);
     return this;
   }
 
+  /**
+   * @deprecated Use .setSkip() instead
+   */
+  skip(skip: boolean | string): this {
+    return this.setSkip(skip);
+  }
+
+  setSkip(skip: boolean | string): this {
+    this.#skipHelper.setSkip(skip);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .setKey() instead
+   */
   dependOn(dependency: null | StepDependsOn): this {
-    this.dependenciesHelper.dependOn(dependency);
+    return this.addDependency(dependency);
+  }
+
+  addDependency(dependency: null | StepDependsOn): this {
+    this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
 
+  /**
+   * @deprecated Use .setKey() instead
+   */
   allowDependencyFailure(allow: boolean): this {
-    this.dependenciesHelper.allowDependencyFailure(allow);
+    return this.setAllowDependencyFailure(allow);
+  }
+
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
 
@@ -77,8 +118,8 @@ export class GroupStep
       ...this.#labelHelper.build(),
       // TODO: cannot have group steps nested within groups so refactor steps helper to take a generic arg
       ...((await this.#stepsHelper.build()) as any),
-      ...this.skipHelper.build(),
-      ...this.dependenciesHelper.build(),
+      ...this.#skipHelper.build(),
+      ...this.#dependenciesHelper.build(),
     };
 
     return step;
