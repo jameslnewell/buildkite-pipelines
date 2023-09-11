@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.5.1
+
+### Patch Changes
+
+- 5d4ff30: Add missing @deprecated JSDoc
+
 ## 3.5.0
 
 ### Minor Changes
