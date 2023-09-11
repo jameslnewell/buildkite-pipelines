@@ -7,6 +7,10 @@ export class Plugin<Options extends {[name: string]: unknown}>
   #name: string;
   #options: Options | null = null;
 
+  /**
+   * @param name This parameter is deprecated
+   * @param options This parameter is deprecated
+   */
   public constructor(name: string = '', options?: Options) {
     this.#name = name;
     this.#options = options ?? null;

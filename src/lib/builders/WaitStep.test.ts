@@ -13,13 +13,13 @@ describe(WaitStep.name, () => {
       );
     });
     test('set to true when set on the object', () => {
-      expect(new WaitStep().continueOnFailure(true).build()).toHaveProperty(
+      expect(new WaitStep().setContinueOnFailure(true).build()).toHaveProperty(
         'continue_on_failure',
         true,
       );
     });
     test('set to false when set on the object', () => {
-      expect(new WaitStep().continueOnFailure(false).build()).toHaveProperty(
+      expect(new WaitStep().setContinueOnFailure(false).build()).toHaveProperty(
         'continue_on_failure',
         false,
       );

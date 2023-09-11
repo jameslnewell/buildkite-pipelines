@@ -10,7 +10,14 @@ export class WaitStep
   #conditionHelper = new ConditionHelper();
   #dependenciesHelper = new DependenciesHelper();
 
-  continueOnFailure(continueOnFailure: boolean): this {
+  /**
+   * @deprecated Use .setCondition() instead
+   */
+  continueOnFailure(continueOnFailure: boolean = true): this {
+    return this.setContinueOnFailure(continueOnFailure);
+  }
+
+  setContinueOnFailure(continueOnFailure: boolean): this {
     this.#continueOnFailure = continueOnFailure;
     return this;
   }
