@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.5.0
+
+### Minor Changes
+
+- 382ccd0: Add more explicitly named methods and deprecate the old methods.
+
 ## 3.4.0
 
 ### Minor Changes
