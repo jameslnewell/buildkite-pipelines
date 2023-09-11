@@ -153,7 +153,10 @@ describe(CommandStep.name, () => {
     });
 
     test('defined when true', async () => {
-      const step = await new CommandStep().addCommand(':').softFail().build();
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setSoftFail(true)
+        .build();
       expect(step).toHaveProperty('soft_fail', true);
     });
   });

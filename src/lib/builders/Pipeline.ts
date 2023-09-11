@@ -1,15 +1,15 @@
-import {PipelineNotify, PipelineSchema, StepSchema} from '../schema';
+import {PipelineNotification, PipelineSchema, StepSchema} from '../schema';
 import {PipelineBuilder} from './PipelineBuilder';
 import {StepBuilder} from './StepBuilder';
 import {StepsBuilder, StepsHelper} from './helpers/steps';
 import {AgentsBuilder, AgentsHelper} from './helpers/agents';
-import {NotifyBuilder, NotifyHelper} from './helpers/notify';
+import {NotifyBuilder, NotificationHelper} from './helpers/notifification';
 
 export class Pipeline
   implements PipelineBuilder, AgentsBuilder, NotifyBuilder, StepsBuilder
 {
   #agentsHelper = new AgentsHelper();
-  #notifyHelper = new NotifyHelper();
+  #notifyHelper = new NotificationHelper();
   #stepsHelper = new StepsHelper();
 
   /**
@@ -28,10 +28,17 @@ export class Pipeline
   }
 
   /**
+   * @deprecated Use .addNotification() instead
+   */
+  notify(notification: PipelineNotification): this {
+    return this.addNotification(notification);
+  }
+
+  /**
    * @see https://buildkite.com/docs/pipelines/notifications
    */
-  notify(notify: PipelineNotify): this {
-    this.#notifyHelper.notify(notify);
+  addNotification(notification: PipelineNotification): this {
+    this.#notifyHelper.addNotification(notification);
     return this;
   }
 

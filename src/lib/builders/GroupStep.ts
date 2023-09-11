@@ -77,7 +77,7 @@ export class GroupStep
   /**
    * @deprecated Use .setSkip() instead
    */
-  skip(skip?: boolean | string): this {
+  skip(skip: boolean | string = true): this {
     return this.setSkip(skip);
   }
 

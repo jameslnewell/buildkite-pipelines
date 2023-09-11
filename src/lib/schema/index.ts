@@ -40,4 +40,4 @@ export type StepDependsOn = Extract<
 
 export type Field = Fields extends (infer U)[] ? U : never;
 
-export type PipelineNotify = BuildNotify extends (infer U)[] ? U : never;
+export type PipelineNotification = BuildNotify extends (infer U)[] ? U : never;

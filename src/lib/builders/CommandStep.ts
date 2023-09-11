@@ -113,6 +113,13 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .addDependency() instead
+   */
+  allowDependencyFailure(allow: boolean): this {
+    return this.setAllowDependencyFailure(allow);
+  }
+
   setAllowDependencyFailure(allow: boolean): this {
     this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
@@ -201,7 +208,14 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setSoftFail() instead
+   */
   softFail(fail: boolean = true): this {
+    return this.setSoftFail(fail);
+  }
+
+  setSoftFail(fail: boolean): this {
     this.#soft_fail = fail;
     return this;
   }
