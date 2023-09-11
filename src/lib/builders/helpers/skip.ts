@@ -2,14 +2,14 @@ export interface SkipBuilder {
   /**
    * @deprecated Use .setSkip() instead
    */
-  setSkip(skip?: boolean | string): void;
-  setSkip(skip?: boolean | string): void;
+  skip(skip: boolean | string): void;
+  setSkip(skip: boolean | string | undefined): void;
 }
 
 export class SkipHelper {
-  #skip?: boolean | string;
+  #skip: boolean | string | undefined;
 
-  setSkip(skip?: boolean | string): void {
+  setSkip(skip?: boolean | string | undefined): void {
     this.#skip = skip;
   }
 

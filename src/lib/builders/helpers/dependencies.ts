@@ -4,12 +4,12 @@ export interface DependenciesBuilder {
   /**
    * @deprecated Use .addDependency() instead
    */
-  addDependency(dependency: null | StepDependsOn | Array<StepDependsOn>): this;
+  dependOn(dependency: null | StepDependsOn | Array<StepDependsOn>): this;
   addDependency(dependency: null | StepDependsOn | Array<StepDependsOn>): this;
   /**
    * @deprecated Use .setAllowDependencyFailure() instead
    */
-  setAllowDependencyFailure(allow: boolean): this;
+  allowDependencyFailure(allow: boolean): this;
   setAllowDependencyFailure(allow: boolean): this;
 }
 

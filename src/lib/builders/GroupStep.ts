@@ -26,7 +26,7 @@ export class GroupStep
    * @deprecated Use .setLabel() instead
    */
   label(label: string): this {
-    this.#labelHelper.setLabel(label);
+    this.setLabel(label);
     return this;
   }
 
@@ -39,7 +39,7 @@ export class GroupStep
    * @deprecated Use .addStep() instead
    */
   step(step: StepSchema | StepBuilder): this {
-    this.#stepsHelper.addStep(step);
+    this.addStep(step);
     return this;
   }
 
@@ -52,7 +52,7 @@ export class GroupStep
    * @deprecated Use .addSteps() instead
    */
   steps(steps: Iterable<StepSchema | StepBuilder>): this {
-    this.#stepsHelper.addSteps(steps);
+    this.addSteps(steps);
     return this;
   }
 
@@ -65,7 +65,7 @@ export class GroupStep
    * @deprecated Use .setKey() instead
    */
   key(key: string): this {
-    this.#keyHelper.setKey(key);
+    this.setKey(key);
     return this;
   }
 
@@ -77,11 +77,11 @@ export class GroupStep
   /**
    * @deprecated Use .setSkip() instead
    */
-  skip(skip: boolean | string = true): this {
+  skip(skip: boolean | string): this {
     return this.setSkip(skip);
   }
 
-  setSkip(skip?: boolean | string): this {
+  setSkip(skip: boolean | string): this {
     this.#skipHelper.setSkip(skip);
     return this;
   }
@@ -89,7 +89,7 @@ export class GroupStep
   /**
    * @deprecated Use .setKey() instead
    */
-  dependsOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: null | StepDependsOn): this {
     return this.addDependency(dependency);
   }
 

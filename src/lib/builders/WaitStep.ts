@@ -13,7 +13,7 @@ export class WaitStep
   /**
    * @deprecated Use .setCondition() instead
    */
-  continueOnFailure(continueOnFailure: boolean = true): this {
+  continueOnFailure(continueOnFailure: boolean): this {
     return this.setContinueOnFailure(continueOnFailure);
   }
 
@@ -37,7 +37,7 @@ export class WaitStep
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependsOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: null | StepDependsOn): this {
     return this.addDependency(dependency);
   }
 

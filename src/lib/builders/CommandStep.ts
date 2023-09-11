@@ -104,7 +104,7 @@ export class CommandStep
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependsOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: null | StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
@@ -128,11 +128,11 @@ export class CommandStep
   /**
    * @deprecated Use .setSkip() instead
    */
-  skip(skip: boolean | string = true): this {
+  skip(skip: boolean | string): this {
     return this.setSkip(skip);
   }
 
-  setSkip(skip: boolean | string = true): this {
+  setSkip(skip: boolean | string): this {
     this.#skipHelper.setSkip(skip);
     return this;
   }

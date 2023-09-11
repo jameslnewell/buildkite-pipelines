@@ -46,7 +46,7 @@ export class Pipeline
    * @deprecated Use .addStep() instead
    */
   step(step: StepSchema | StepBuilder): this {
-    this.#stepsHelper.addStep(step);
+    this.addStep(step);
     return this;
   }
 
@@ -59,7 +59,7 @@ export class Pipeline
    * @deprecated Use .addSteps() instead
    */
   steps(steps: Iterable<StepSchema | StepBuilder>): this {
-    this.#stepsHelper.addSteps(steps);
+    this.addSteps(steps);
     return this;
   }
 

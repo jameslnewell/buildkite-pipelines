@@ -26,7 +26,7 @@ export class BlockStep
    * @deprecated Use .setLabel() instead
    */
   label(label: string): this {
-    this.#label = label;
+    this.setLabel(label);
     return this;
   }
 
@@ -51,7 +51,7 @@ export class BlockStep
    * @deprecated Use .setKey() instead
    */
   key(key: string): this {
-    this.#keyHelper.setKey(key);
+    this.setKey(key);
     return this;
   }
 
@@ -64,7 +64,7 @@ export class BlockStep
    * @deprecated Use .addBranch() instead
    */
   branch(branch: string): this {
-    this.#branchesHelper.addBranch(branch);
+    this.addBranch(branch);
     return this;
   }
 
@@ -85,6 +85,13 @@ export class BlockStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setAllowDependencyFailure() instead
+   */
+  allowDependencyFailure(allow: boolean): this {
+    return this.setAllowDependencyFailure(allow);
+  }
+
   setAllowDependencyFailure(allow: boolean): this {
     this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
@@ -94,7 +101,7 @@ export class BlockStep
    * @deprecated Use .setPrompt() instead
    */
   prompt(prompt: string): this {
-    this.#promptHelper.setPrompt(prompt);
+    this.setPrompt(prompt);
     return this;
   }
 
@@ -107,7 +114,7 @@ export class BlockStep
    * @deprecated Use .addField() instead
    */
   field(field: Field): this {
-    this.#promptHelper.addField(field);
+    this.addField(field);
     return this;
   }
 

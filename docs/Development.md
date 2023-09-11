@@ -9,7 +9,7 @@ For example:
 - `.setLabel(':docker: build')`
 - `.setSkip(true)` or `.setSkip('Reason for skipping')`
 
-These methods should allow the `undefined` value which will overwrite the previously set value with the default behaviour.
+These methods should require a parameter which allows the (explicit) `undefined` value which will overwrite the previously set value with the default behaviour.
 
 ## Append methods
 
