@@ -9,7 +9,7 @@ export interface SkipBuilder {
 export class SkipHelper {
   #skip: boolean | string | undefined;
 
-  setSkip(skip?: boolean | string | undefined): void {
+  setSkip(skip: boolean | string | undefined): void {
     this.#skip = skip;
   }
 

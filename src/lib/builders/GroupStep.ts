@@ -101,7 +101,7 @@ export class GroupStep
   /**
    * @deprecated Use .setKey() instead
    */
-  allowDependencyFailure(allow: boolean = true): this {
+  allowDependencyFailure(allow: boolean): this {
     return this.setAllowDependencyFailure(allow);
   }
 
