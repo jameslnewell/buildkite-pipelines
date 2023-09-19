@@ -1,6 +1,7 @@
 import {BlockStepSchema, Field, StepDependsOn} from '../schema';
 import {StepBuilder} from './StepBuilder';
 import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
 import {KeyBuilder, KeyHelper} from './helpers/key';
 import {LabelBuilder} from './helpers/label';
@@ -13,6 +14,7 @@ export class BlockStep
     KeyBuilder,
     BranchFilterBuilder,
     DependenciesBuilder,
+    ConditionBuilder,
     PromptBuilder
 {
   #label?: string;
@@ -21,6 +23,7 @@ export class BlockStep
   #branchesHelper = new BranchFilterHelper();
   #dependenciesHelper = new DependenciesHelper();
   #promptHelper = new PromptHelper();
+  #conditionHelper = new ConditionHelper();
 
   /**
    * @deprecated Use .setLabel() instead
@@ -120,6 +123,18 @@ export class BlockStep
 
   addField(field: Field): this {
     this.#promptHelper.addField(field);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .setCondition() instead
+   */
+  condition(condition: string): this {
+    return this.setCondition(condition);
+  }
+
+  setCondition(condition: string): this {
+    this.#conditionHelper.setCondition(condition);
     return this;
   }
 
