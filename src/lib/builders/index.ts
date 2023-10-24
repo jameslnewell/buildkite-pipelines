@@ -8,3 +8,4 @@ export * from './CommandStep';
 export * from './GroupStep';
 export * from './WaitStep';
 export * from './contrib';
+export * from './TriggerStep';

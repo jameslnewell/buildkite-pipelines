@@ -11,7 +11,7 @@ export class WaitStep
   #dependenciesHelper = new DependenciesHelper();
 
   /**
-   * @deprecated Use .setCondition() instead
+   * @deprecated Use .setContinueOnFailure() instead
    */
   continueOnFailure(continueOnFailure: boolean): this {
     return this.setContinueOnFailure(continueOnFailure);

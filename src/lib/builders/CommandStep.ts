@@ -32,11 +32,11 @@ export class CommandStep
   #agentsHelper = new AgentsHelper();
 
   #concurrency?: number;
-  #concurrency_group?: string;
+  #concurrencyGroup?: string;
   #parallelism?: number;
   #env: Record<string, string | number> = {};
-  #soft_fail?: boolean;
-  #timeout_in_minutes?: number;
+  #softFail?: boolean;
+  #timeoutInMinutes?: number;
 
   /**
    * @deprecated Use .addCommand() instead
@@ -204,7 +204,7 @@ export class CommandStep
     }
 
     this.#concurrency = jobs;
-    this.#concurrency_group = group;
+    this.#concurrencyGroup = group;
     return this;
   }
 
@@ -216,7 +216,7 @@ export class CommandStep
   }
 
   setSoftFail(fail: boolean): this {
-    this.#soft_fail = fail;
+    this.#softFail = fail;
     return this;
   }
 
@@ -228,7 +228,7 @@ export class CommandStep
   }
 
   setTimeout(minutes: number): this {
-    this.#timeout_in_minutes = minutes;
+    this.#timeoutInMinutes = minutes;
     return this;
   }
 
@@ -255,13 +255,13 @@ export class CommandStep
       ...this.#skipHelper.build(),
       ...(this.#parallelism ? {parallelism: this.#parallelism} : {}),
       ...(this.#concurrency ? {concurrency: this.#concurrency} : {}),
-      ...(this.#concurrency_group
-        ? {concurrency_group: this.#concurrency_group}
+      ...(this.#concurrencyGroup
+        ? {concurrency_group: this.#concurrencyGroup}
         : {}),
       ...(Object.keys(this.#env).length ? {env: this.#env} : {}),
-      ...(this.#soft_fail ? {soft_fail: this.#soft_fail} : {}),
-      ...(this.#timeout_in_minutes
-        ? {timeout_in_minutes: this.#timeout_in_minutes}
+      ...(this.#softFail ? {soft_fail: this.#softFail} : {}),
+      ...(this.#timeoutInMinutes
+        ? {timeout_in_minutes: this.#timeoutInMinutes}
         : {}),
       ...this.#agentsHelper.build(),
     };
