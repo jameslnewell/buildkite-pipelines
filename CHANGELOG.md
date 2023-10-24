@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.6.0
+
+### Minor Changes
+
+- 64e8fac: Added TriggerStep builder
+
 ## 3.5.1
 
 ### Patch Changes
