@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.7.0
+
+### Minor Changes
+
+- d1b391a: Adds support for the `assume-role` `ecr-buildkite-plugin` option.
+
 ## 3.6.0
 
 ### Minor Changes
