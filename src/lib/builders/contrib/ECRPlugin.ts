@@ -58,9 +58,9 @@ export class ECRPlugin implements PluginBuilder {
     return this;
   }
 
-  setAssumeRole(assumeRole: string, durationSeconds?: number): this {
+  setAssumeRole(roleArn: string, durationSeconds?: number): this {
     this.#options['assume-role'] = {
-      'role-arn': assumeRole,
+      'role-arn': roleArn,
       ...(durationSeconds !== undefined
         ? {'duration-seconds': durationSeconds}
         : {}),
