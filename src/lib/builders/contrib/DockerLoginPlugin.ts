@@ -8,8 +8,11 @@ export interface DockerLoginPluginSchema {
   retries?: number;
 }
 
+/**
+ * @see https://github.com/buildkite-plugins/docker-login-buildkite-plugin
+ */
 export class DockerLoginPlugin implements PluginBuilder {
-  static PLUGIN = 'docker-login#v2.1.0';
+  static PLUGIN = 'docker-login#v3.0.0';
 
   #username?: string;
   #password?: string;

@@ -5,7 +5,7 @@ import {PluginBuilder} from '../PluginBuilder';
  * @see https://github.com/buildkite-plugins/docker-buildkite-plugin
  */
 export class DockerPlugin implements PluginBuilder {
-  static PLUGIN = 'docker#v5.8.0';
+  static PLUGIN = 'docker#v5.9.0';
 
   #options: {[name: string]: unknown} = {};
   #commands: string[] = [];

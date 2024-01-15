@@ -4,9 +4,8 @@ import {PluginBuilder} from '../PluginBuilder';
 /**
  * @see https://github.com/seek-oss/aws-sm-buildkite-plugin
  */
-
 export class SecretsManagerPlugin implements PluginBuilder {
-  static PLUGIN = 'seek-oss/aws-sm#v2.3.1';
+  static PLUGIN = 'seek-oss/aws-sm#v2.3.2';
 
   #options: {[name: string]: unknown} = {};
   #envs: Record<string, string | {}> = {};
