@@ -5,7 +5,7 @@ import {PluginBuilder} from '../PluginBuilder';
  * @see https://github.com/buildkite-plugins/artifacts-buildkite-plugin
  */
 export class ArtifactsPlugin implements PluginBuilder {
-  static PLUGIN = 'artifacts#v1.9.0';
+  static PLUGIN = 'artifacts#v1.9.2';
 
   #downloads: string[] = [];
   #uploads: string[] = [];
