@@ -20,7 +20,7 @@ exports[`integration matches snapshot 1`] = `
     agents:
       queue: arm
     plugins:
-      - docker#v5.8.0:
+      - docker#v5.9.0:
           image: codeclimate/codeclimate
   - wait: null
   - block: 🚀 Release
