@@ -9,7 +9,7 @@ export interface ConditionBuilder {
 export class ConditionHelper {
   #condition?: string;
 
-  setCondition(condition: string): void {
+  setCondition(condition: string | undefined): void {
     this.#condition = condition;
   }
 

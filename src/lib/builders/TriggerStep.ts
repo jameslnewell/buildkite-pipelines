@@ -24,17 +24,17 @@ export class TriggerStep
   #dependenciesHelper = new DependenciesHelper();
   #skipHelper = new SkipHelper();
 
-  setPipeline(pipeline: string): this {
+  setPipeline(pipeline: string | undefined): this {
     this.#pipeline = pipeline;
     return this;
   }
 
-  setAsync(async: boolean): this {
+  setAsync(async: boolean | undefined): this {
     this.#async = async;
     return this;
   }
 
-  setSoftFail(fail: boolean): this {
+  setSoftFail(fail: boolean | undefined): this {
     this.#softFail = fail;
     return this;
   }
@@ -47,7 +47,7 @@ export class TriggerStep
     return this;
   }
 
-  setLabel(label: string): this {
+  setLabel(label: string | undefined): this {
     this.#labelHelper.setLabel(label);
     return this;
   }
@@ -71,7 +71,7 @@ export class TriggerStep
     return this.setCondition(condition);
   }
 
-  setCondition(condition: string): this {
+  setCondition(condition: string | undefined): this {
     this.#conditionHelper.setCondition(condition);
     return this;
   }
@@ -95,7 +95,7 @@ export class TriggerStep
     return this.setAllowDependencyFailure(allow);
   }
 
-  setAllowDependencyFailure(allow: boolean): this {
+  setAllowDependencyFailure(allow: boolean | undefined): this {
     this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
@@ -107,7 +107,7 @@ export class TriggerStep
     return this.setSkip(skip);
   }
 
-  setSkip(skip: boolean | string): this {
+  setSkip(skip: boolean | string | undefined): this {
     this.#skipHelper.setSkip(skip);
     return this;
   }

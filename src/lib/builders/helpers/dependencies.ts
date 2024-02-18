@@ -26,7 +26,7 @@ export class DependenciesHelper {
     }
   }
 
-  setAllowDependencyFailure(allow: boolean): void {
+  setAllowDependencyFailure(allow: boolean | undefined): void {
     this.#allowDependencyFailure = allow;
   }
 

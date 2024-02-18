@@ -60,7 +60,7 @@ export class CommandStep
     return this.setKey(key);
   }
 
-  setKey(key: string): this {
+  setKey(key: string | undefined): this {
     this.#keyHelper.setKey(key);
     return this;
   }
@@ -72,7 +72,7 @@ export class CommandStep
     return this.setLabel(label);
   }
 
-  setLabel(label: string): this {
+  setLabel(label: string | undefined): this {
     this.#labelHelper.setLabel(label);
     return this;
   }
@@ -84,7 +84,7 @@ export class CommandStep
     return this.setCondition(condition);
   }
 
-  setCondition(condition: string): this {
+  setCondition(condition: string | undefined): this {
     this.#conditionHelper.setCondition(condition);
     return this;
   }
@@ -120,7 +120,7 @@ export class CommandStep
     return this.setAllowDependencyFailure(allow);
   }
 
-  setAllowDependencyFailure(allow: boolean): this {
+  setAllowDependencyFailure(allow: boolean | undefined): this {
     this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
@@ -132,7 +132,7 @@ export class CommandStep
     return this.setSkip(skip);
   }
 
-  setSkip(skip: boolean | string): this {
+  setSkip(skip: boolean | string | undefined): this {
     this.#skipHelper.setSkip(skip);
     return this;
   }
@@ -168,7 +168,7 @@ export class CommandStep
     return this.setParallelism(parallelism);
   }
 
-  setParallelism(parallelism: number): this {
+  setParallelism(parallelism: number | undefined): this {
     if (parallelism === 0) {
       throw new Error('Parallelism of zero will result in step being omitted');
     }
@@ -215,7 +215,7 @@ export class CommandStep
     return this.setSoftFail(fail);
   }
 
-  setSoftFail(fail: boolean): this {
+  setSoftFail(fail: boolean | undefined): this {
     this.#softFail = fail;
     return this;
   }
@@ -227,7 +227,7 @@ export class CommandStep
     return this.setTimeout(minutes);
   }
 
-  setTimeout(minutes: number): this {
+  setTimeout(minutes: number | undefined): this {
     this.#timeoutInMinutes = minutes;
     return this;
   }
