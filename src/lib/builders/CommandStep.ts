@@ -9,6 +9,7 @@ import {PluginBuilder} from './PluginBuilder';
 import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
 import {isPluginBuilder} from './isPluginBuilder';
 import {AgentsBuilder, AgentsHelper} from './helpers/agents';
+import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env';
 
 export class CommandStep
   implements
@@ -19,7 +20,8 @@ export class CommandStep
     BranchFilterBuilder,
     DependenciesBuilder,
     SkipBuilder,
-    AgentsBuilder
+    AgentsBuilder,
+    EnvironmentBuilder
 {
   #commands?: string[];
   #plugins: Array<PluginSchema | PluginBuilder> = [];
@@ -30,11 +32,11 @@ export class CommandStep
   #dependenciesHelper = new DependenciesHelper();
   #skipHelper = new SkipHelper();
   #agentsHelper = new AgentsHelper();
+  #envHelper = new EnvironmentHelper();
 
   #concurrency?: number;
   #concurrencyGroup?: string;
   #parallelism?: number;
-  #env: Record<string, string | number> = {};
   #softFail?: boolean;
   #timeoutInMinutes?: number;
 
@@ -180,12 +182,12 @@ export class CommandStep
   /**
    * @deprecated Use .addEnv() instead
    */
-  env(name: string, value: string | number): this {
+  env(name: string, value: unknown): this {
     return this.addEnv(name, value);
   }
 
-  addEnv(name: string, value: string | number): this {
-    this.#env[name] = value;
+  addEnv(name: string, value: unknown): this {
+    this.#envHelper.addEnv(name, value);
     return this;
   }
 
@@ -258,7 +260,7 @@ export class CommandStep
       ...(this.#concurrencyGroup
         ? {concurrency_group: this.#concurrencyGroup}
         : {}),
-      ...(Object.keys(this.#env).length ? {env: this.#env} : {}),
+      ...this.#envHelper.build(),
       ...(this.#softFail ? {soft_fail: this.#softFail} : {}),
       ...(this.#timeoutInMinutes
         ? {timeout_in_minutes: this.#timeoutInMinutes}

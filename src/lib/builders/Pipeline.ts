@@ -4,11 +4,18 @@ import {StepBuilder} from './StepBuilder';
 import {StepsBuilder, StepsHelper} from './helpers/steps';
 import {AgentsBuilder, AgentsHelper} from './helpers/agents';
 import {NotifyBuilder, NotificationHelper} from './helpers/notifification';
+import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env';
 
 export class Pipeline
-  implements PipelineBuilder, AgentsBuilder, NotifyBuilder, StepsBuilder
+  implements
+    PipelineBuilder,
+    AgentsBuilder,
+    NotifyBuilder,
+    StepsBuilder,
+    EnvironmentBuilder
 {
   #agentsHelper = new AgentsHelper();
+  #envHelper = new EnvironmentHelper();
   #notifyHelper = new NotificationHelper();
   #stepsHelper = new StepsHelper();
 
@@ -24,6 +31,11 @@ export class Pipeline
    */
   addAgent(tag: string, value: string): this {
     this.#agentsHelper.addAgent(tag, value);
+    return this;
+  }
+
+  addEnv(name: string, value: unknown): this {
+    this.#envHelper.addEnv(name, value);
     return this;
   }
 
@@ -73,6 +85,7 @@ export class Pipeline
       ...this.#agentsHelper.build(),
       ...this.#notifyHelper.build(),
       ...(await this.#stepsHelper.build()),
+      ...this.#envHelper.build(),
     };
     return pipeline;
   }
