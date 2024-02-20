@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.9.0
+
+### Minor Changes
+
+- fc68e9b: Added .addEnv() to Pipeline
+
 ## 3.8.0
 
 ### Minor Changes
