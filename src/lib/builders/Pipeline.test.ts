@@ -25,10 +25,29 @@ describe('Pipeline', () => {
 
     test('has notifications when notifications are setup', async () => {
       const notification = {email: 'james@example.com'};
-      const pipeline = await new Pipeline().notify(notification).build();
+      const pipeline = await new Pipeline()
+        .addNotification(notification)
+        .build();
       expect(pipeline).toHaveProperty(
         'notify',
         expect.arrayContaining([notification]),
+      );
+    });
+  });
+
+  describe('env', () => {
+    test('does not have env when no env are added', async () => {
+      const pipeline = await new Pipeline().build();
+      expect(pipeline).not.toHaveProperty('env');
+    });
+    test('does have env when env are added', async () => {
+      const pipeline = await new Pipeline()
+        .addEnv('FOO', 'bar')
+        .addEnv('BAR', 'foo')
+        .build();
+      expect(pipeline).toHaveProperty(
+        'env',
+        expect.objectContaining({FOO: 'bar', BAR: 'foo'}),
       );
     });
   });
