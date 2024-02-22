@@ -5,7 +5,7 @@ import {PluginBuilder} from '../PluginBuilder';
  * @see https://github.com/buildkite-plugins/artifacts-buildkite-plugin
  */
 export class ArtifactsPlugin implements PluginBuilder {
-  static PLUGIN = 'artifacts#v1.9.2';
+  static PLUGIN = 'artifacts#v1.9.3';
 
   #downloads: string[] = [];
   #uploads: string[] = [];
@@ -26,25 +26,41 @@ export class ArtifactsPlugin implements PluginBuilder {
   }
 
   /**
-   * @deprecated Use .setDownload() instead
+   * @deprecated Use .addDownload() instead
    */
   download(file: string): this {
-    return this.setDownload(file);
+    return this.addDownload(file);
   }
 
+  /**
+   * @deprecated Use .addDownload() instead
+   */
   setDownload(glob: string): this {
+    this.addDownload(glob);
+    return this;
+  }
+
+  addDownload(glob: string): this {
     this.#downloads.push(glob);
     return this;
   }
 
   /**
-   * @deprecated Use .setUpload() instead
+   * @deprecated Use .addUpload() instead
    */
   upload(glob: string): this {
-    return this.setUpload(glob);
+    return this.addUpload(glob);
   }
 
+  /**
+   * @deprecated Use .addUpload() instead
+   */
   setUpload(glob: string): this {
+    this.addUpload(glob);
+    return this;
+  }
+
+  addUpload(glob: string): this {
     this.#uploads.push(glob);
     return this;
   }
@@ -87,11 +103,13 @@ export class ArtifactsPlugin implements PluginBuilder {
 
   build(): PluginSchema | Promise<PluginSchema> {
     if (this.#downloads.length) {
-      this.#options['download'] = this.#downloads;
+      this.#options['download'] =
+        this.#downloads.length === 1 ? this.#downloads[0] : this.#downloads;
     }
 
     if (this.#uploads.length) {
-      this.#options['upload'] = this.#uploads;
+      this.#options['upload'] =
+        this.#uploads.length === 1 ? this.#uploads[0] : this.#uploads;
     }
 
     if (this.#skipOnStatus.length) {
