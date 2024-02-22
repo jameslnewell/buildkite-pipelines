@@ -9,19 +9,30 @@ describe(ArtifactsPlugin.name, () => {
     );
   });
 
-  describe('.download()', () => {
-    test('is not defined when not specified', async () => {
+  describe('.addDownload()', () => {
+    test('is not defined when download not specified', async () => {
       const plugin = new ArtifactsPlugin();
       expect((await plugin.build())[ArtifactsPlugin.PLUGIN]).not.toHaveProperty(
         'download',
       );
     });
-    test('is an array when specified', async () => {
+    test('is a string when a single download is specified', async () => {
       const glob = '*.log';
-      const plugin = new ArtifactsPlugin().download(glob);
+      const plugin = new ArtifactsPlugin().addDownload(glob);
       expect((await plugin.build())[ArtifactsPlugin.PLUGIN]).toHaveProperty(
         'download',
-        [glob],
+        glob,
+      );
+    });
+    test('is an array when more than one download is specified', async () => {
+      const glob1 = '*.log';
+      const glob2 = '*.txt';
+      const plugin = new ArtifactsPlugin()
+        .addDownload(glob1)
+        .addDownload(glob2);
+      expect((await plugin.build())[ArtifactsPlugin.PLUGIN]).toHaveProperty(
+        'download',
+        [glob1, glob2],
       );
     });
   });
@@ -32,12 +43,21 @@ describe(ArtifactsPlugin.name, () => {
         'upload',
       );
     });
-    test('is an array when specified', async () => {
+    test('is a string when a single upload is specified', async () => {
       const glob = '*.log';
-      const plugin = new ArtifactsPlugin().upload(glob);
+      const plugin = new ArtifactsPlugin().addUpload(glob);
       expect((await plugin.build())[ArtifactsPlugin.PLUGIN]).toHaveProperty(
         'upload',
-        [glob],
+        glob,
+      );
+    });
+    test('is an array when more than one upload is specified', async () => {
+      const glob1 = '*.log';
+      const glob2 = '*.txt';
+      const plugin = new ArtifactsPlugin().addUpload(glob1).addUpload(glob2);
+      expect((await plugin.build())[ArtifactsPlugin.PLUGIN]).toHaveProperty(
+        'upload',
+        [glob1, glob2],
       );
     });
   });
