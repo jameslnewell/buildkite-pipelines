@@ -17,7 +17,7 @@ export class WaitStep
     return this.setContinueOnFailure(continueOnFailure);
   }
 
-  setContinueOnFailure(continueOnFailure: boolean): this {
+  setContinueOnFailure(continueOnFailure: boolean | undefined): this {
     this.#continueOnFailure = continueOnFailure;
     return this;
   }
@@ -29,7 +29,7 @@ export class WaitStep
     return this.setCondition(condition);
   }
 
-  setCondition(condition: string): this {
+  setCondition(condition: string | undefined): this {
     this.#conditionHelper.setCondition(condition);
     return this;
   }
@@ -53,7 +53,7 @@ export class WaitStep
     return this.setAllowDependencyFailure(allow);
   }
 
-  setAllowDependencyFailure(allow: boolean): this {
+  setAllowDependencyFailure(allow: boolean | undefined): this {
     this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
