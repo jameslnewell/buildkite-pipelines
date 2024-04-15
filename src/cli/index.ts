@@ -139,7 +139,20 @@ const resolve = (id: string, basedir: string) =>
       // build the pipeline if its a builder
       if (isPipelineBuilder(pipeline)) {
         log('building pipeline');
-        pipeline = await pipeline.build();
+        try {
+          pipeline = await pipeline.build();
+        } catch (error) {
+          console.error();
+          console.error(`💥 ERROR`);
+          console.error();
+          console.error(
+            `An error occurred whilst executing "${file}#${property}()"`,
+          );
+          console.error();
+          console.error(error);
+          process.exitCode = 1;
+          return;
+        }
       }
 
       // validate
