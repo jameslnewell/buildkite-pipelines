@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.10.1
+
+### Patch Changes
+
+- 6447c05: force script name in cli
+
 ## 3.10.0
 
 ### Minor Changes
