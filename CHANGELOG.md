@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.10.2
+
+### Patch Changes
+
+- 68014f7: improve error handling of Pipeline.build()
+
 ## 3.10.1
 
 ### Patch Changes
