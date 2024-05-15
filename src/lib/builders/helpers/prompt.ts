@@ -19,7 +19,7 @@ export class PromptHelper {
   #prompt?: string;
   #fields: Array<Field> = [];
 
-  setPrompt(prompt: string): void {
+  setPrompt(prompt: string | undefined): void {
     this.#prompt = prompt;
   }
 

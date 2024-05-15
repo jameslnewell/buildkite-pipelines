@@ -9,7 +9,7 @@ export interface KeyBuilder {
 export class KeyHelper {
   #key?: string;
 
-  setKey(key: string): void {
+  setKey(key: string | undefined): void {
     this.#key = key;
   }
 

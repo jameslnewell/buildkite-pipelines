@@ -33,7 +33,7 @@ export class BlockStep
     return this;
   }
 
-  setLabel(label: string): this {
+  setLabel(label: string | undefined): this {
     this.#label = label;
     return this;
   }
@@ -45,7 +45,7 @@ export class BlockStep
     return this.setState(state);
   }
 
-  setState(state: 'passed' | 'failed' | 'running'): this {
+  setState(state: 'passed' | 'failed' | 'running' | undefined): this {
     this.#state = state;
     return this;
   }
@@ -58,7 +58,7 @@ export class BlockStep
     return this;
   }
 
-  setKey(key: string): this {
+  setKey(key: string | undefined): this {
     this.#keyHelper.setKey(key);
     return this;
   }
@@ -95,7 +95,7 @@ export class BlockStep
     return this.setAllowDependencyFailure(allow);
   }
 
-  setAllowDependencyFailure(allow: boolean): this {
+  setAllowDependencyFailure(allow: boolean | undefined): this {
     this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
@@ -108,7 +108,7 @@ export class BlockStep
     return this;
   }
 
-  setPrompt(prompt: string): this {
+  setPrompt(prompt: string | undefined): this {
     this.#promptHelper.setPrompt(prompt);
     return this;
   }
@@ -133,7 +133,7 @@ export class BlockStep
     return this.setCondition(condition);
   }
 
-  setCondition(condition: string): this {
+  setCondition(condition: string | undefined): this {
     this.#conditionHelper.setCondition(condition);
     return this;
   }
