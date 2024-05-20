@@ -94,14 +94,22 @@ export class DockerPlugin implements PluginBuilder {
     this.#options['propagate-environment'] = propagate;
     return this;
   }
+
   /**
-   * @deprecated Use .setPropagateAWSAauthTokens() instead
+   * @deprecated Use .setPropagateAWSAuthTokens() instead
    */
   propagateAWSAauthTokens(propagate: boolean = true): this {
-    return this.setPropagateAWSAauthTokens(propagate);
+    return this.setPropagateAWSAuthTokens(propagate);
   }
 
+  /**
+   * @deprecated Use .setPropagateAWSAuthTokens() instead
+   */
   setPropagateAWSAauthTokens(propagate: boolean): this {
+    return this.setPropagateAWSAuthTokens(propagate);
+  }
+
+  setPropagateAWSAuthTokens(propagate: boolean): this {
     this.#options['propagate-aws-auth-tokens'] = propagate;
     return this;
   }
