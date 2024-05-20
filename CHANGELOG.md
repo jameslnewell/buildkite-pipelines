@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.10.3
+
+### Patch Changes
+
+- dbc34f8: fix spelling of propagateAWSAauthTokens
+
 ## 3.10.2
 
 ### Patch Changes
