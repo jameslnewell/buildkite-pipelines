@@ -1,14 +1,26 @@
 import {PluginSchema} from '../../schema';
 import {PluginBuilder} from '../PluginBuilder';
 
+interface DownloadInput {
+  from: string;
+  to: string;
+}
+
+interface UploadInput {
+  from: string;
+  to: string;
+  step?: string | undefined;
+  build?: string | undefined;
+}
+
 /**
  * @see https://github.com/buildkite-plugins/artifacts-buildkite-plugin
  */
 export class ArtifactsPlugin implements PluginBuilder {
   static PLUGIN = 'artifacts#v1.9.3';
 
-  #downloads: string[] = [];
-  #uploads: string[] = [];
+  #downloads: (string | DownloadInput)[] = [];
+  #uploads: (string | UploadInput)[] = [];
   #skipOnStatus: number[] = [];
 
   #options: {[name: string]: unknown} = {};
@@ -28,19 +40,19 @@ export class ArtifactsPlugin implements PluginBuilder {
   /**
    * @deprecated Use .addDownload() instead
    */
-  download(file: string): this {
+  download(file: string | DownloadInput): this {
     return this.addDownload(file);
   }
 
   /**
    * @deprecated Use .addDownload() instead
    */
-  setDownload(glob: string): this {
+  setDownload(glob: string | DownloadInput): this {
     this.addDownload(glob);
     return this;
   }
 
-  addDownload(glob: string): this {
+  addDownload(glob: string | DownloadInput): this {
     this.#downloads.push(glob);
     return this;
   }
@@ -48,19 +60,19 @@ export class ArtifactsPlugin implements PluginBuilder {
   /**
    * @deprecated Use .addUpload() instead
    */
-  upload(glob: string): this {
+  upload(glob: string | UploadInput): this {
     return this.addUpload(glob);
   }
 
   /**
    * @deprecated Use .addUpload() instead
    */
-  setUpload(glob: string): this {
+  setUpload(glob: string | UploadInput): this {
     this.addUpload(glob);
     return this;
   }
 
-  addUpload(glob: string): this {
+  addUpload(glob: string | UploadInput): this {
     this.#uploads.push(glob);
     return this;
   }
