@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.11.0
+
+### Minor Changes
+
+- bf08cb3: Add from,to to addDownload and addUpload methods of ArtifactsPlugin"
+
 ## 3.10.3
 
 ### Patch Changes
