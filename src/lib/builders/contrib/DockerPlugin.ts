@@ -269,6 +269,11 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  setExpandVolumeVars(expand: boolean): this {
+    this.#options['expand-volume-vars'] = expand;
+    return this;
+  }
+
   build(): PluginSchema | Promise<PluginSchema> {
     const object: Record<string, unknown> = {
       ...this.#options,
