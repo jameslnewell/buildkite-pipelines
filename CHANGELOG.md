@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.12.0
+
+### Minor Changes
+
+- 73b4204: Add DockerPlugin.setExpandVolumeVars
+
 ## 3.11.0
 
 ### Minor Changes
