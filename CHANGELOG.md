@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.13.0
+
+### Minor Changes
+
+- a6795f2: update plugin versions
+
 ## 3.12.0
 
 ### Minor Changes
