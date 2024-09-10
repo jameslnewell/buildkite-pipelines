@@ -5,7 +5,7 @@ import {PluginBuilder} from '../PluginBuilder';
  * @see https://github.com/seek-oss/docker-ecr-cache-buildkite-plugin
  */
 export class DockerECRCachePlugin implements PluginBuilder {
-  static PLUGIN = 'seek-oss/docker-ecr-cache#v2.1.0';
+  static PLUGIN = 'seek-oss/docker-ecr-cache#v2.2.0';
 
   #cacheOn: string[] = [];
   #secrets: string[] = [];

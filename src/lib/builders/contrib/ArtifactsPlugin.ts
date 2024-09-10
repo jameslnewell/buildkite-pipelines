@@ -17,7 +17,7 @@ interface UploadInput {
  * @see https://github.com/buildkite-plugins/artifacts-buildkite-plugin
  */
 export class ArtifactsPlugin implements PluginBuilder {
-  static PLUGIN = 'artifacts#v1.9.3';
+  static PLUGIN = 'artifacts#v1.9.4';
 
   #downloads: (string | DownloadInput)[] = [];
   #uploads: (string | UploadInput)[] = [];

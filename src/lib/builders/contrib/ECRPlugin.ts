@@ -5,7 +5,7 @@ import {PluginBuilder} from '../PluginBuilder';
  * @see https://github.com/buildkite-plugins/ecr-buildkite-plugin
  */
 export class ECRPlugin implements PluginBuilder {
-  static PLUGIN = 'ecr#v2.7.0';
+  static PLUGIN = 'ecr#v2.9.0';
 
   #accounts: string[] = [];
   #options: {[name: string]: unknown} = {};
