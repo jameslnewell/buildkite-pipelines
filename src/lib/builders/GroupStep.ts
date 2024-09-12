@@ -30,7 +30,7 @@ export class GroupStep
     return this;
   }
 
-  setLabel(label: string): this {
+  setLabel(label: string | undefined): this {
     this.#labelHelper.setLabel(label);
     return this;
   }
@@ -69,7 +69,7 @@ export class GroupStep
     return this;
   }
 
-  setKey(key: string): this {
+  setKey(key: string | undefined): this {
     this.#keyHelper.setKey(key);
     return this;
   }
@@ -81,7 +81,7 @@ export class GroupStep
     return this.setSkip(skip);
   }
 
-  setSkip(skip: boolean | string): this {
+  setSkip(skip: boolean | string | undefined): this {
     this.#skipHelper.setSkip(skip);
     return this;
   }
@@ -105,7 +105,7 @@ export class GroupStep
     return this.setAllowDependencyFailure(allow);
   }
 
-  setAllowDependencyFailure(allow: boolean): this {
+  setAllowDependencyFailure(allow: boolean | undefined): this {
     this.#dependenciesHelper.setAllowDependencyFailure(allow);
     return this;
   }
