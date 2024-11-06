@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.14.0
+
+### Minor Changes
+
+- 78bb601: Add CommandStep retries via .setManualRetry() and .addAutomaticRetry()
+
 ## 3.13.0
 
 ### Minor Changes
