@@ -10,6 +10,9 @@ import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
 import {isPluginBuilder} from './isPluginBuilder';
 import {AgentsBuilder, AgentsHelper} from './helpers/agents';
 import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env';
+import {AutomaticRetry} from '../schema/schema';
+
+type ManualRetry = Exclude<CommandStepSchema['retry'], undefined>['manual'];
 
 export class CommandStep
   implements
@@ -39,6 +42,9 @@ export class CommandStep
   #parallelism?: number;
   #softFail?: boolean;
   #timeoutInMinutes?: number;
+
+  #automaticRetries: AutomaticRetry[] = [];
+  #manualRetry: ManualRetry;
 
   /**
    * @deprecated Use .addCommand() instead
@@ -246,6 +252,16 @@ export class CommandStep
     return this;
   }
 
+  setManualRetry(retry: ManualRetry): this {
+    this.#manualRetry = retry;
+    return this;
+  }
+
+  addAutomaticRetry(retry: AutomaticRetry): this {
+    this.#automaticRetries.push(retry);
+    return this;
+  }
+
   async build(): Promise<CommandStepSchema> {
     const object: CommandStepSchema = {
       ...{commands: this.#commands},
@@ -267,6 +283,19 @@ export class CommandStep
         : {}),
       ...this.#agentsHelper.build(),
     };
+
+    if (this.#manualRetry !== undefined) {
+      object.retry = {
+        ...object.retry,
+        manual: this.#manualRetry,
+      };
+    }
+    if (this.#automaticRetries.length) {
+      object.retry = {
+        ...object.retry,
+        automatic: this.#automaticRetries,
+      };
+    }
 
     if (this.#plugins.length > 0) {
       object.plugins = await Promise.all(

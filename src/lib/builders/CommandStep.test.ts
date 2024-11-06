@@ -187,4 +187,58 @@ describe(CommandStep.name, () => {
       expect(step).toHaveProperty('agents', {queue: 'arm'});
     });
   });
+
+  describe('retries', () => {
+    test('no retry property when no retries are set', async () => {
+      const step = await new CommandStep().build();
+      expect(step).not.toHaveProperty('retry');
+    });
+
+    test('no manual retry property when only automatic retries are set', async () => {
+      const step = await new CommandStep()
+        .addAutomaticRetry({exit_status: '*'})
+        .build();
+      expect(step).not.toHaveProperty('retry.manual');
+    });
+
+    test('no automatic retry property when only manual retry is set', async () => {
+      const step = await new CommandStep().setManualRetry(true).build();
+      expect(step).not.toHaveProperty('retry.automatic');
+    });
+
+    test('has manual retry property when manual retry is false', async () => {
+      const step = await new CommandStep().setManualRetry(false).build();
+      expect(step).toHaveProperty('retry.manual', false);
+    });
+
+    test('has manual retry property when manual retry is true', async () => {
+      const step = await new CommandStep().setManualRetry(true).build();
+      expect(step).toHaveProperty('retry.manual', true);
+    });
+
+    test('has manual retry property when manual retry is an object', async () => {
+      const step = await new CommandStep()
+        .setManualRetry({
+          permit_on_passed: false,
+          reason: 'Cannot retry a successful deployment',
+        })
+        .build();
+      expect(step).toHaveProperty('retry.manual', {
+        permit_on_passed: false,
+        reason: 'Cannot retry a successful deployment',
+      });
+    });
+
+    test('has automatic retry property when automatic retry is added', async () => {
+      const step = await new CommandStep()
+        .addAutomaticRetry({exit_status: 139, limit: 1})
+        .build();
+      expect(step).toHaveProperty('retry.automatic', [
+        {
+          exit_status: 139,
+          limit: 1,
+        },
+      ]);
+    });
+  });
 });
