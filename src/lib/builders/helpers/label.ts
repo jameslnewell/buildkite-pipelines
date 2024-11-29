@@ -9,7 +9,7 @@ export interface LabelBuilder {
 export class LabelHelper {
   #label?: string;
 
-  setLabel(label: string): void {
+  setLabel(label: string | undefined): void {
     this.#label = label;
   }
 
