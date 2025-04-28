@@ -58,7 +58,7 @@ export class WaitStep
     return this;
   }
 
-  build(): WaitStepSchema | Promise<WaitStepSchema> {
+  build(): WaitStepSchema {
     const object: WaitStepSchema = {
       wait: null,
       ...this.#dependenciesHelper.build(),

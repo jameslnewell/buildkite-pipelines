@@ -71,7 +71,7 @@ describe(CommandStep.name, () => {
     });
     test('can add multiple', async () => {
       const object = await new CommandStep()
-        .command(':')
+        .addCommand(':')
         .addPlugins([new ECRPlugin(), new Plugin(dockerPlugin)])
         .build();
       expect(object).toHaveProperty('plugins.0', {

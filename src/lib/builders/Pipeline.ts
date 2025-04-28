@@ -80,11 +80,11 @@ export class Pipeline
     return this;
   }
 
-  async build(): Promise<PipelineSchema> {
+  build(): PipelineSchema {
     const pipeline: PipelineSchema = {
       ...this.#agentsHelper.build(),
       ...this.#notifyHelper.build(),
-      ...(await this.#stepsHelper.build()),
+      ...this.#stepsHelper.build(),
       ...this.#envHelper.build(),
     };
     return pipeline;

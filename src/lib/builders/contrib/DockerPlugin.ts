@@ -269,7 +269,7 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
-  build(): PluginSchema | Promise<PluginSchema> {
+  build(): PluginSchema {
     const object: Record<string, unknown> = {
       ...this.#options,
     };

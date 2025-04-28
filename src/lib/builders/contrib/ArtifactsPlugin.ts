@@ -113,7 +113,7 @@ export class ArtifactsPlugin implements PluginBuilder {
     return this;
   }
 
-  build(): PluginSchema | Promise<PluginSchema> {
+  build(): PluginSchema {
     if (this.#downloads.length) {
       this.#options['download'] =
         this.#downloads.length === 1 ? this.#downloads[0] : this.#downloads;
