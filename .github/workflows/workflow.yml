@@ -135,7 +135,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
       - run: pnpm run build:pages
-      - uses: actions/upload-pages-artifact@v2
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist/pages
 
