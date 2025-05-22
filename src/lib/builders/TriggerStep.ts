@@ -18,6 +18,7 @@ export class TriggerStep
   #pipeline?: string;
   #async?: boolean;
   #softFail?: boolean;
+  #build?: TriggerStepSchema['build'];
   #labelHelper = new LabelHelper();
   #branchesHelper = new BranchFilterHelper();
   #conditionHelper = new ConditionHelper();
@@ -36,6 +37,11 @@ export class TriggerStep
 
   setSoftFail(fail: boolean): this {
     this.#softFail = fail;
+    return this;
+  }
+
+  setBuild(build: TriggerStepSchema['build']): this {
+    this.#build = build;
     return this;
   }
 
@@ -128,6 +134,10 @@ export class TriggerStep
 
     if (this.#softFail) {
       object.soft_fail = this.#softFail;
+    }
+
+    if (this.#build) {
+      object.build = this.#build;
     }
 
     return object;
