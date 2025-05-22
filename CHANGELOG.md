@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.15.0
+
+### Minor Changes
+
+- 6984ea3: Add keywords to package.json
+
 ## 3.14.0
 
 ### Minor Changes
