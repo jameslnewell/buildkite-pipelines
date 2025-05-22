@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.16.0
+
+### Minor Changes
+
+- 99c0771: added TriggerStep.setBuild()
+
 ## 3.15.0
 
 ### Minor Changes
