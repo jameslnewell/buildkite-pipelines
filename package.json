@@ -8,7 +8,12 @@
     "dist/lib"
   ],
   "author": "James Newell <gday@jameslnewell.dev>",
-  "license": "MIT",
+  "description": "Generate Buildkite pipelines from code.",
+  "keywords": [
+    "buildkite",
+    "pipelines",
+    "sdk"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/jameslnewell/buildkite-pipelines.git"
@@ -75,5 +80,6 @@
     "changeset": "changeset",
     "version": "changeset version",
     "release": "changeset publish"
-  }
+  },
+  "license": "MIT"
 }
