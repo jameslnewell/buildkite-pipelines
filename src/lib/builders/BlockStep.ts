@@ -25,6 +25,10 @@ export class BlockStep
   #promptHelper = new PromptHelper();
   #conditionHelper = new ConditionHelper();
 
+  getLabel(): string | undefined {
+    return this.#label;
+  }
+
   /**
    * @deprecated Use .setLabel() instead
    */

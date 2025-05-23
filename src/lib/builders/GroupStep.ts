@@ -22,6 +22,10 @@ export class GroupStep
   #skipHelper = new SkipHelper();
   #dependenciesHelper = new DependenciesHelper();
 
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
+  }
+
   /**
    * @deprecated Use .setLabel() instead
    */
@@ -33,6 +37,10 @@ export class GroupStep
   setLabel(label: string): this {
     this.#labelHelper.setLabel(label);
     return this;
+  }
+
+  getSteps(): Array<StepSchema | StepBuilder> {
+    return this.#stepsHelper.getSteps();
   }
 
   /**

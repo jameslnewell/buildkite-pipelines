@@ -19,6 +19,11 @@ export interface StepsBuilder {
 export class StepsHelper {
   #steps: Array<StepSchema | StepBuilder> = [];
 
+  getSteps(): Array<StepSchema | StepBuilder> {
+    // 🤔 not sure we want to allow mutation of the steps yet
+    return [...this.#steps];
+  }
+
   addStep(step: StepSchema | StepBuilder): void {
     this.#steps.push(step);
   }
