@@ -22,6 +22,10 @@ export class GroupStep
   #skipHelper = new SkipHelper();
   #dependenciesHelper = new DependenciesHelper();
 
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
+  }
+
   /**
    * @deprecated Use .setLabel() instead
    */
@@ -33,6 +37,10 @@ export class GroupStep
   setLabel(label: string): this {
     this.#labelHelper.setLabel(label);
     return this;
+  }
+
+  getSteps(): Iterable<StepSchema | StepBuilder> {
+    return this.#stepsHelper.getSteps();
   }
 
   /**
@@ -61,6 +69,10 @@ export class GroupStep
     return this;
   }
 
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */
@@ -84,6 +96,10 @@ export class GroupStep
   setSkip(skip: boolean | string): this {
     this.#skipHelper.setSkip(skip);
     return this;
+  }
+
+  getDependencies(): Iterable<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
   }
 
   /**

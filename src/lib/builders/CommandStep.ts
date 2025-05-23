@@ -46,6 +46,10 @@ export class CommandStep
   #automaticRetries: AutomaticRetry[] = [];
   #manualRetry: ManualRetry;
 
+  getCommands(): Iterable<string> {
+    return [...(this.#commands ?? [])];
+  }
+
   /**
    * @deprecated Use .addCommand() instead
    */
@@ -61,6 +65,10 @@ export class CommandStep
     return this;
   }
 
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */
@@ -71,6 +79,10 @@ export class CommandStep
   setKey(key: string): this {
     this.#keyHelper.setKey(key);
     return this;
+  }
+
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
   }
 
   /**
@@ -97,6 +109,10 @@ export class CommandStep
     return this;
   }
 
+  getBranches(): Iterable<string> {
+    return this.#branchesHelper.getBranches();
+  }
+
   /**
    * @deprecated Use .addBranch() instead
    */
@@ -107,6 +123,10 @@ export class CommandStep
   addBranch(branch: string): this {
     this.#branchesHelper.addBranch(branch);
     return this;
+  }
+
+  getDependencies(): Iterable<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
   }
 
   /**
@@ -143,6 +163,11 @@ export class CommandStep
   setSkip(skip: boolean | string): this {
     this.#skipHelper.setSkip(skip);
     return this;
+  }
+
+  getPlugins(): Iterable<PluginSchema | PluginBuilder> {
+    // 🤔 not sure we want to allow mutation of the plugins yet
+    return [...this.#plugins];
   }
 
   /**
@@ -216,6 +241,10 @@ export class CommandStep
     return this;
   }
 
+  getSoftFail(): boolean | undefined {
+    return this.#softFail;
+  }
+
   /**
    * @deprecated Use .setSoftFail() instead
    */
@@ -226,6 +255,10 @@ export class CommandStep
   setSoftFail(fail: boolean): this {
     this.#softFail = fail;
     return this;
+  }
+
+  getTimeout(): number | undefined {
+    return this.#timeoutInMinutes;
   }
 
   /**

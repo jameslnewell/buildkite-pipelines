@@ -1,6 +1,7 @@
 import {CommandStepSchema, StepDependsOn} from '../../schema';
 
 export interface DependenciesBuilder {
+  getDependencies(): Iterable<StepDependsOn>;
   /**
    * @deprecated Use .addDependency() instead
    */
@@ -16,6 +17,10 @@ export interface DependenciesBuilder {
 export class DependenciesHelper {
   dependencies: null | Array<StepDependsOn> = [];
   #allowDependencyFailure?: boolean;
+
+  getDependencies(): Iterable<StepDependsOn> {
+    return [...(this.dependencies ?? [])];
+  }
 
   addDependency(dependency: null | StepDependsOn): void {
     if (this.dependencies === null) {

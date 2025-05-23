@@ -54,6 +54,10 @@ export class Pipeline
     return this;
   }
 
+  getSteps(): Iterable<StepSchema | StepBuilder> {
+    return this.#stepsHelper.getSteps();
+  }
+
   /**
    * @deprecated Use .addStep() instead
    */

@@ -45,6 +45,10 @@ export class TriggerStep
     return this;
   }
 
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
+  }
+
   /**
    * @deprecated Use .setLabel() instead
    */
@@ -56,6 +60,10 @@ export class TriggerStep
   setLabel(label: string): this {
     this.#labelHelper.setLabel(label);
     return this;
+  }
+
+  getBranches(): Iterable<string> {
+    return this.#branchesHelper.getBranches();
   }
 
   /**
@@ -80,6 +88,10 @@ export class TriggerStep
   setCondition(condition: string): this {
     this.#conditionHelper.setCondition(condition);
     return this;
+  }
+
+  getDependencies(): Iterable<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
   }
 
   /**
