@@ -62,6 +62,10 @@ export class TriggerStep
     return this;
   }
 
+  getBranches(): Iterable<string> {
+    return this.#branchesHelper.getBranches();
+  }
+
   /**
    * @deprecated Use .addBranch() instead
    */
@@ -84,6 +88,10 @@ export class TriggerStep
   setCondition(condition: string): this {
     this.#conditionHelper.setCondition(condition);
     return this;
+  }
+
+  getDependencies(): Iterable<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
   }
 
   /**

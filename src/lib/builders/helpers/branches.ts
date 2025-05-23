@@ -1,4 +1,5 @@
 export interface BranchFilterBuilder {
+  getBranches(): Iterable<string>;
   /**
    * @deprecated Use .addBranch() instead
    */
@@ -8,6 +9,10 @@ export interface BranchFilterBuilder {
 
 export class BranchFilterHelper {
   #branches: string[] = [];
+
+  getBranches(): Iterable<string> {
+    return this.#branches;
+  }
 
   addBranch(pattern: string): void {
     this.#branches.push(pattern);
