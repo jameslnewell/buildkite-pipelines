@@ -1,4 +1,5 @@
 export interface LabelBuilder {
+  getLabel(): string | undefined;
   /**
    * @deprecated Use .setLabel() instead
    */

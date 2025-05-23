@@ -54,6 +54,10 @@ export class BlockStep
     return this;
   }
 
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */
@@ -67,6 +71,10 @@ export class BlockStep
     return this;
   }
 
+  getBranches(): Iterable<string> {
+    return this.#branchesHelper.getBranches();
+  }
+
   /**
    * @deprecated Use .addBranch() instead
    */
@@ -78,6 +86,10 @@ export class BlockStep
   addBranch(branch: string): this {
     this.#branchesHelper.addBranch(branch);
     return this;
+  }
+
+  getDependencies(): Iterable<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
   }
 
   /**

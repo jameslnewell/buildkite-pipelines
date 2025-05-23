@@ -46,6 +46,10 @@ export class CommandStep
   #automaticRetries: AutomaticRetry[] = [];
   #manualRetry: ManualRetry;
 
+  getCommands(): Iterable<string> {
+    return [...(this.#commands ?? [])];
+  }
+
   /**
    * @deprecated Use .addCommand() instead
    */
@@ -59,6 +63,10 @@ export class CommandStep
     }
     this.#commands.push(command);
     return this;
+  }
+
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
   }
 
   /**
@@ -101,6 +109,10 @@ export class CommandStep
     return this;
   }
 
+  getBranches(): Iterable<string> {
+    return this.#branchesHelper.getBranches();
+  }
+
   /**
    * @deprecated Use .addBranch() instead
    */
@@ -111,6 +123,10 @@ export class CommandStep
   addBranch(branch: string): this {
     this.#branchesHelper.addBranch(branch);
     return this;
+  }
+
+  getDependencies(): Iterable<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
   }
 
   /**
@@ -225,6 +241,10 @@ export class CommandStep
     return this;
   }
 
+  getSoftFail(): boolean | undefined {
+    return this.#softFail;
+  }
+
   /**
    * @deprecated Use .setSoftFail() instead
    */
@@ -235,6 +255,10 @@ export class CommandStep
   setSoftFail(fail: boolean): this {
     this.#softFail = fail;
     return this;
+  }
+
+  getTimeout(): number | undefined {
+    return this.#timeoutInMinutes;
   }
 
   /**

@@ -34,6 +34,10 @@ export class WaitStep
     return this;
   }
 
+  getDependencies(): Iterable<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
+  }
+
   /**
    * @deprecated Use .addDependency() instead
    */
