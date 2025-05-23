@@ -2,10 +2,15 @@
   "name": "@jameslnewell/buildkite-pipelines",
   "version": "3.17.0",
   "bin": "dist/cli/index.js",
-  "main": "dist/lib/index.js",
+  "main": "./dist/lib/index.js",
+  "exports": {
+    ".": "./dist/lib/index.js",
+    "./__experimental__testing": "./dist/__experimental__testing/index.js"
+  },
   "files": [
     "dist/cli",
-    "dist/lib"
+    "dist/lib",
+    "dist/__experimental__testing"
   ],
   "author": "James Newell <gday@jameslnewell.dev>",
   "description": "Generate Buildkite pipelines from code.",

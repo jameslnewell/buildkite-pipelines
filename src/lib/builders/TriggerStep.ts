@@ -48,6 +48,10 @@ export class TriggerStep
     return this;
   }
 
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */

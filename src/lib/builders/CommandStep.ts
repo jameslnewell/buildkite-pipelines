@@ -73,6 +73,10 @@ export class CommandStep
     return this;
   }
 
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
+  }
+
   /**
    * @deprecated Use .setLabel() instead
    */
@@ -143,6 +147,11 @@ export class CommandStep
   setSkip(skip: boolean | string): this {
     this.#skipHelper.setSkip(skip);
     return this;
+  }
+
+  getPlugins(): Iterable<PluginSchema | PluginBuilder> {
+    // 🤔 not sure we want to allow mutation of the plugins yet
+    return [...this.#plugins];
   }
 
   /**
