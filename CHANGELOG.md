@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.17.0
+
+### Minor Changes
+
+- 0016a8c: Added key to Trigger step
+
 ## 3.16.0
 
 ### Minor Changes
