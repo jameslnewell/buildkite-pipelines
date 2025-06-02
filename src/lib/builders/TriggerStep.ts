@@ -48,6 +48,13 @@ export class TriggerStep
     return this;
   }
 
+  /**
+   * @deprecated Use .setKey() instead
+   */
+  key(key: string): this {
+    return this.setKey(key);
+  }
+
   setKey(key: string): this {
     this.#keyHelper.setKey(key);
     return this;
