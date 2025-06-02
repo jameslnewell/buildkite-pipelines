@@ -3,11 +3,13 @@ import {StepBuilder} from './StepBuilder';
 import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
 import {ConditionBuilder, ConditionHelper} from './helpers/condition';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
+import {KeyBuilder, KeyHelper} from './helpers/key';
 import {LabelBuilder, LabelHelper} from './helpers/label';
 import {SkipBuilder, SkipHelper} from './helpers/skip';
 
 export class TriggerStep
   implements
+    KeyBuilder,
     StepBuilder,
     LabelBuilder,
     BranchFilterBuilder,
@@ -19,6 +21,7 @@ export class TriggerStep
   #async?: boolean;
   #softFail?: boolean;
   #build?: TriggerStepSchema['build'];
+  #keyHelper = new KeyHelper();
   #labelHelper = new LabelHelper();
   #branchesHelper = new BranchFilterHelper();
   #conditionHelper = new ConditionHelper();
@@ -42,6 +45,11 @@ export class TriggerStep
 
   setBuild(build: TriggerStepSchema['build']): this {
     this.#build = build;
+    return this;
+  }
+
+  setKey(key: string): this {
+    this.#keyHelper.setKey(key);
     return this;
   }
 
@@ -121,6 +129,7 @@ export class TriggerStep
   build(): TriggerStepSchema | Promise<TriggerStepSchema> {
     const object: TriggerStepSchema = {
       trigger: this.#pipeline,
+      ...this.#keyHelper.build(),
       ...this.#labelHelper.build(),
       ...this.#branchesHelper.build(),
       ...this.#conditionHelper.build(),
