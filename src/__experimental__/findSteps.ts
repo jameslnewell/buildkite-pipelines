@@ -32,7 +32,7 @@ export function findSteps(
   // if we have a pipeline, get the steps from the pipeline, otherwise get the steps from the iterable
   const stepsArray = Array.from(
     pipelineOrSteps instanceof Pipeline
-      ? pipelineOrSteps.getSteps()
+      ? Array.from(pipelineOrSteps.getSteps())
       : pipelineOrSteps,
   );
 

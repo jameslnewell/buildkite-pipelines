@@ -5,12 +5,12 @@
   "main": "./dist/lib/index.js",
   "exports": {
     ".": "./dist/lib/index.js",
-    "./__experimental__testing": "./dist/__experimental__testing/index.js"
+    "./__experimental__": "./dist/__experimental__/index.js"
   },
   "files": [
     "dist/cli",
     "dist/lib",
-    "dist/__experimental__testing"
+    "dist/__experimental__"
   ],
   "author": "James Newell <gday@jameslnewell.dev>",
   "description": "Generate Buildkite pipelines from code.",
