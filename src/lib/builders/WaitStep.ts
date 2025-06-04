@@ -22,6 +22,10 @@ export class WaitStep
     return this;
   }
 
+  getCondition(): string | undefined {
+    return this.#conditionHelper.getCondition();
+  }
+
   /**
    * @deprecated Use .setCondition() instead
    */
@@ -34,14 +38,18 @@ export class WaitStep
     return this;
   }
 
+  getDependencies(): ReadonlyArray<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
+  }
+
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }

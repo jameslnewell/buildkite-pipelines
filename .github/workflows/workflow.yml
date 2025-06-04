@@ -111,6 +111,7 @@ jobs:
           path: |
             dist/cli
             dist/lib
+            dist/__experimental__
 
   build-pages:
     name: '👷‍♂️📚 Building pages'

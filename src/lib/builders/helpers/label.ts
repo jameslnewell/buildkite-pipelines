@@ -1,4 +1,5 @@
 export interface LabelBuilder {
+  getLabel(): string | undefined;
   /**
    * @deprecated Use .setLabel() instead
    */
@@ -7,7 +8,11 @@ export interface LabelBuilder {
 }
 
 export class LabelHelper {
-  #label?: string;
+  #label?: string | undefined;
+
+  getLabel(): string | undefined {
+    return this.#label;
+  }
 
   setLabel(label: string): void {
     this.#label = label;

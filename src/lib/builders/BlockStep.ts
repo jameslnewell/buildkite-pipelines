@@ -25,6 +25,10 @@ export class BlockStep
   #promptHelper = new PromptHelper();
   #conditionHelper = new ConditionHelper();
 
+  getLabel(): string | undefined {
+    return this.#label;
+  }
+
   /**
    * @deprecated Use .setLabel() instead
    */
@@ -50,6 +54,10 @@ export class BlockStep
     return this;
   }
 
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */
@@ -61,6 +69,10 @@ export class BlockStep
   setKey(key: string): this {
     this.#keyHelper.setKey(key);
     return this;
+  }
+
+  getBranches(): ReadonlyArray<string> {
+    return this.#branchesHelper.getBranches();
   }
 
   /**
@@ -76,14 +88,18 @@ export class BlockStep
     return this;
   }
 
+  getDependencies(): ReadonlyArray<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
+  }
+
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
@@ -124,6 +140,10 @@ export class BlockStep
   addField(field: Field): this {
     this.#promptHelper.addField(field);
     return this;
+  }
+
+  getCondition(): string | undefined {
+    return this.#conditionHelper.getCondition();
   }
 
   /**

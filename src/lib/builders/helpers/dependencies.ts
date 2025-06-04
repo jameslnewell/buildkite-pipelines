@@ -1,6 +1,7 @@
 import {CommandStepSchema, StepDependsOn} from '../../schema';
 
 export interface DependenciesBuilder {
+  getDependencies(): ReadonlyArray<StepDependsOn>;
   /**
    * @deprecated Use .addDependency() instead
    */
@@ -14,16 +15,15 @@ export interface DependenciesBuilder {
 }
 
 export class DependenciesHelper {
-  dependencies: null | Array<StepDependsOn> = [];
+  #dependencies: Array<StepDependsOn> = [];
   #allowDependencyFailure?: boolean;
 
-  addDependency(dependency: null | StepDependsOn): void {
-    if (this.dependencies === null) {
-    } else if (dependency === null) {
-      // TODO:
-    } else {
-      this.dependencies.push(dependency);
-    }
+  getDependencies(): ReadonlyArray<StepDependsOn> {
+    return this.#dependencies;
+  }
+
+  addDependency(dependency: StepDependsOn): void {
+    this.#dependencies.push(dependency);
   }
 
   setAllowDependencyFailure(allow: boolean): void {
@@ -36,8 +36,8 @@ export class DependenciesHelper {
       'depends_on' | 'allow_dependency_failure'
     > = {};
 
-    if (this.dependencies === null || this.dependencies.length > 0) {
-      object.depends_on = this.dependencies;
+    if (this.#dependencies.length > 0) {
+      object.depends_on = this.#dependencies;
     }
 
     if (this.#allowDependencyFailure) {

@@ -3,6 +3,8 @@ import {StepBuilder} from '../StepBuilder';
 import {isStepBuilder} from '../isStepBuilder';
 
 export interface StepsBuilder {
+  getSteps(): ReadonlyArray<StepSchema | StepBuilder>;
+
   /**
    * @deprecated Use .addStep() instead
    */
@@ -18,6 +20,10 @@ export interface StepsBuilder {
 
 export class StepsHelper {
   #steps: Array<StepSchema | StepBuilder> = [];
+
+  getSteps(): ReadonlyArray<StepSchema | StepBuilder> {
+    return this.#steps;
+  }
 
   addStep(step: StepSchema | StepBuilder): void {
     this.#steps.push(step);

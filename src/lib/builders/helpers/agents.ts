@@ -1,6 +1,5 @@
-import {AgentsObject} from '../../schema/schema';
-
 export interface AgentsBuilder {
+  getAgents(): Readonly<Record<string, string>>;
   /**
    * @deprecated Use .addAgent() instead
    */
@@ -9,7 +8,11 @@ export interface AgentsBuilder {
 }
 
 export class AgentsHelper {
-  #agents: AgentsObject = {};
+  #agents: Record<string, string> = {};
+
+  getAgents(): Readonly<Record<string, string>> {
+    return Object.freeze(this.#agents);
+  }
 
   /**
    * @see https://buildkite.com/docs/agent/v3/cli-start#agent-targeting

@@ -46,6 +46,10 @@ export class CommandStep
   #automaticRetries: AutomaticRetry[] = [];
   #manualRetry: ManualRetry;
 
+  getCommands(): Iterable<string> {
+    return [...(this.#commands ?? [])];
+  }
+
   /**
    * @deprecated Use .addCommand() instead
    */
@@ -61,6 +65,10 @@ export class CommandStep
     return this;
   }
 
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */
@@ -71,6 +79,10 @@ export class CommandStep
   setKey(key: string): this {
     this.#keyHelper.setKey(key);
     return this;
+  }
+
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
   }
 
   /**
@@ -85,6 +97,10 @@ export class CommandStep
     return this;
   }
 
+  getCondition(): string | undefined {
+    return this.#conditionHelper.getCondition();
+  }
+
   /**
    * @deprecated Use .setCondition() instead
    */
@@ -95,6 +111,10 @@ export class CommandStep
   setCondition(condition: string): this {
     this.#conditionHelper.setCondition(condition);
     return this;
+  }
+
+  getBranches(): ReadonlyArray<string> {
+    return this.#branchesHelper.getBranches();
   }
 
   /**
@@ -109,14 +129,18 @@ export class CommandStep
     return this;
   }
 
+  getDependencies(): ReadonlyArray<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
+  }
+
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
@@ -143,6 +167,11 @@ export class CommandStep
   setSkip(skip: boolean | string): this {
     this.#skipHelper.setSkip(skip);
     return this;
+  }
+
+  getPlugins(): Iterable<PluginSchema | PluginBuilder> {
+    // 🤔 not sure we want to allow mutation of the plugins yet
+    return [...this.#plugins];
   }
 
   /**
@@ -185,6 +214,10 @@ export class CommandStep
     return this;
   }
 
+  getEnv(): Readonly<Record<string, unknown>> {
+    return this.#envHelper.getEnv();
+  }
+
   /**
    * @deprecated Use .addEnv() instead
    */
@@ -216,6 +249,10 @@ export class CommandStep
     return this;
   }
 
+  getSoftFail(): boolean | undefined {
+    return this.#softFail;
+  }
+
   /**
    * @deprecated Use .setSoftFail() instead
    */
@@ -228,6 +265,10 @@ export class CommandStep
     return this;
   }
 
+  getTimeout(): number | undefined {
+    return this.#timeoutInMinutes;
+  }
+
   /**
    * @deprecated Use .setTimeout() instead
    */
@@ -238,6 +279,10 @@ export class CommandStep
   setTimeout(minutes: number): this {
     this.#timeoutInMinutes = minutes;
     return this;
+  }
+
+  getAgents(): Readonly<Record<string, string>> {
+    return this.#agentsHelper.getAgents();
   }
 
   /**

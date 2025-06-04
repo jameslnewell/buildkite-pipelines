@@ -22,6 +22,10 @@ export class GroupStep
   #skipHelper = new SkipHelper();
   #dependenciesHelper = new DependenciesHelper();
 
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
+  }
+
   /**
    * @deprecated Use .setLabel() instead
    */
@@ -33,6 +37,10 @@ export class GroupStep
   setLabel(label: string): this {
     this.#labelHelper.setLabel(label);
     return this;
+  }
+
+  getSteps(): ReadonlyArray<StepSchema | StepBuilder> {
+    return this.#stepsHelper.getSteps();
   }
 
   /**
@@ -61,6 +69,10 @@ export class GroupStep
     return this;
   }
 
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */
@@ -86,14 +98,18 @@ export class GroupStep
     return this;
   }
 
+  getDependencies(): ReadonlyArray<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
+  }
+
   /**
    * @deprecated Use .setKey() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
