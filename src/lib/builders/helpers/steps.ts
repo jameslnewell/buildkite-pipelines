@@ -22,7 +22,6 @@ export class StepsHelper {
   #steps: Array<StepSchema | StepBuilder> = [];
 
   getSteps(): ReadonlyArray<StepSchema | StepBuilder> {
-    // 🤔 not sure we want to allow mutation of the steps yet
     return this.#steps;
   }
 
