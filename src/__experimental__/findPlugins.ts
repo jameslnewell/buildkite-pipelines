@@ -17,7 +17,7 @@ export function findPlugins(
   stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
   predicate: FindPluginsPredicate,
   _options: FindPluginsOptions = {},
-): Array<PluginSchema | PluginBuilder> {
+): ReadonlyArray<PluginSchema | PluginBuilder> {
   // if we have a step, get the plugins from the step, otherwise get the plugins from the iterable
   const stepsArray = Array.from(
     stepOrPlugins instanceof CommandStep

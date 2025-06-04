@@ -28,7 +28,7 @@ export function findSteps(
   pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsPredicate,
   {recursive = true}: FindStepsOptions = {},
-): Array<StepSchema | StepBuilder> {
+): ReadonlyArray<StepSchema | StepBuilder> {
   // if we have a pipeline, get the steps from the pipeline, otherwise get the steps from the iterable
   const stepsArray = Array.from(
     pipelineOrSteps instanceof Pipeline
