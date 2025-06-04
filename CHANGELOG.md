@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.19.0
+
+### Minor Changes
+
+- 7519e70: add experimental `findFirstStep` and `findFirstPlugin` utility methods
+
 ## 3.18.0
 
 ### Minor Changes
