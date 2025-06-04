@@ -11,7 +11,7 @@ export interface FindPluginsPredicate {
 export interface FindPluginsOptions {}
 
 /**
- * Find plugins that match the predicate within a step
+ * Finds all the plugins that match the predicate within a step
  */
 export function findPlugins(
   stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
@@ -31,4 +31,16 @@ export function findPlugins(
   );
 
   return filteredPluginsArray;
+}
+
+/**
+ * Finds the first plugin that matches the predicate within a step
+ */
+export function findFirstPlugin(
+  stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
+  predicate: FindPluginsPredicate,
+  options: FindPluginsOptions = {},
+): PluginSchema | PluginBuilder | undefined {
+  const plugins = findPlugins(stepOrPlugins, predicate, options);
+  return plugins[0];
 }

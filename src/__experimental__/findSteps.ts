@@ -22,7 +22,7 @@ export interface FindStepsOptions {
 }
 
 /**
- * Find steps that match the predicate within a pipeline
+ * Finds all the steps that match the predicate within a pipeline
  */
 export function findSteps(
   pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
@@ -64,4 +64,16 @@ function isGroupSchema(
   step: StepSchema | StepBuilder,
 ): step is GroupStepSchema {
   return (step as any).group || (step as any).steps;
+}
+
+/**
+ * Finds the first step that matches the predicate within a pipeline
+ */
+export function findFirstStep(
+  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  predicate: FindStepsPredicate,
+  options: FindStepsOptions = {},
+): StepSchema | StepBuilder | undefined {
+  const steps = findSteps(pipelineOrSteps, predicate, options);
+  return steps[0];
 }
