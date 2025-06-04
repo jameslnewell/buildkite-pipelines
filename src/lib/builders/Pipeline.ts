@@ -19,6 +19,10 @@ export class Pipeline
   #notifyHelper = new NotificationHelper();
   #stepsHelper = new StepsHelper();
 
+  getAgents(): Readonly<Record<string, string>> {
+    return this.#agentsHelper.getAgents();
+  }
+
   /**
    * @deprecated Use .addAgent() instead
    */
@@ -32,6 +36,10 @@ export class Pipeline
   addAgent(tag: string, value: string): this {
     this.#agentsHelper.addAgent(tag, value);
     return this;
+  }
+
+  getEnv(): Readonly<Record<string, unknown>> {
+    return this.#envHelper.getEnv();
   }
 
   addEnv(name: string, value: unknown): this {
@@ -54,7 +62,7 @@ export class Pipeline
     return this;
   }
 
-  getSteps(): Iterable<StepSchema | StepBuilder> {
+  getSteps(): ReadonlyArray<StepSchema | StepBuilder> {
     return this.#stepsHelper.getSteps();
   }
 

@@ -1,5 +1,5 @@
 export interface BranchFilterBuilder {
-  getBranches(): Iterable<string>;
+  getBranches(): ReadonlyArray<string>;
   /**
    * @deprecated Use .addBranch() instead
    */
@@ -10,7 +10,7 @@ export interface BranchFilterBuilder {
 export class BranchFilterHelper {
   #branches: string[] = [];
 
-  getBranches(): Iterable<string> {
+  getBranches(): ReadonlyArray<string> {
     return this.#branches;
   }
 

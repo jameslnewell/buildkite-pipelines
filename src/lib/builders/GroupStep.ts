@@ -39,7 +39,7 @@ export class GroupStep
     return this;
   }
 
-  getSteps(): Iterable<StepSchema | StepBuilder> {
+  getSteps(): ReadonlyArray<StepSchema | StepBuilder> {
     return this.#stepsHelper.getSteps();
   }
 
@@ -98,18 +98,18 @@ export class GroupStep
     return this;
   }
 
-  getDependencies(): Iterable<StepDependsOn> {
+  getDependencies(): ReadonlyArray<StepDependsOn> {
     return this.#dependenciesHelper.getDependencies();
   }
 
   /**
    * @deprecated Use .setKey() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }

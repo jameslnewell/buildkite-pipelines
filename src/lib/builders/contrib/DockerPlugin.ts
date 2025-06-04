@@ -12,6 +12,10 @@ export class DockerPlugin implements PluginBuilder {
   #envvars: string[] = [];
   #volumes: string[] = [];
 
+  getImage(): string | undefined {
+    return this.#options['image'] as string | undefined;
+  }
+
   /**
    * @deprecated Use .setImage() instead
    */
@@ -22,6 +26,10 @@ export class DockerPlugin implements PluginBuilder {
   setImage(image: string) {
     this.#options['image'] = image;
     return this;
+  }
+
+  getAlwaysPull(): boolean | undefined {
+    return this.#options['always-pull'] as boolean | undefined;
   }
 
   /**
@@ -36,6 +44,10 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  getCommands(): ReadonlyArray<string> {
+    return this.#commands;
+  }
+
   /**
    * @deprecated Use .addCommand() instead
    */
@@ -46,6 +58,10 @@ export class DockerPlugin implements PluginBuilder {
   addCommand(command: string): this {
     this.#commands.push(command);
     return this;
+  }
+
+  getDebug(): boolean | undefined {
+    return this.#options['debug'] as boolean | undefined;
   }
 
   /**
@@ -60,6 +76,10 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  getEntrypoint(): string | undefined {
+    return this.#options['entrypoint'] as string | undefined;
+  }
+
   /**
    * @deprecated Use .addCommand() instead
    */
@@ -70,6 +90,10 @@ export class DockerPlugin implements PluginBuilder {
   setEntrypoint(entrypoint: string): this {
     this.#options['entrypoint'] = entrypoint;
     return this;
+  }
+
+  getEnvironment(): ReadonlyArray<string> {
+    return this.#envvars;
   }
 
   /**
@@ -83,6 +107,11 @@ export class DockerPlugin implements PluginBuilder {
     this.#envvars.push(environment);
     return this;
   }
+
+  getPropagateEnvironment(): boolean | undefined {
+    return this.#options['propagate-environment'] as boolean | undefined;
+  }
+
   /**
    * @deprecated Use .setPropagateEnvironment() instead
    */
@@ -95,10 +124,14 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  getPropagateAWSAauthTokens(): boolean | undefined {
+    return this.#options['propagate-aws-auth-tokens'] as boolean | undefined;
+  }
+
   /**
    * @deprecated Use .setPropagateAWSAuthTokens() instead
    */
-  propagateAWSAauthTokens(propagate: boolean = true): this {
+  propagateAWSAuthTokens(propagate: boolean = true): this {
     return this.setPropagateAWSAuthTokens(propagate);
   }
 
@@ -114,6 +147,10 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  getMountCheckout(): boolean | undefined {
+    return this.#options['mount-checkout'] as boolean | undefined;
+  }
+
   /**
    * @deprecated Use .setMountCheckout() instead
    */
@@ -125,6 +162,11 @@ export class DockerPlugin implements PluginBuilder {
     this.#options['mount-checkout'] = mount;
     return this;
   }
+
+  getMountBuildkiteAgent(): boolean | undefined {
+    return this.#options['mount-buildkite-agent'] as boolean | undefined;
+  }
+
   /**
    * @deprecated Use .setMountBuildkiteAgent() instead
    */
@@ -135,6 +177,10 @@ export class DockerPlugin implements PluginBuilder {
   setMountBuildkiteAgent(mount: boolean): this {
     this.#options['mount-buildkite-agent'] = mount;
     return this;
+  }
+
+  getMountSSHAgent(): boolean | undefined {
+    return this.#options['mount-ssh-agent'] as boolean | undefined;
   }
 
   /**
@@ -149,6 +195,10 @@ export class DockerPlugin implements PluginBuilder {
     return this;
   }
 
+  getPlatform(): string | undefined {
+    return this.#options['platform'] as string | undefined;
+  }
+
   /**
    * @deprecated Use .setPlatform() instead
    */
@@ -159,6 +209,10 @@ export class DockerPlugin implements PluginBuilder {
   setPlatform(platform: string): this {
     this.#options['platform'] = platform;
     return this;
+  }
+
+  getShell(): string[] | undefined {
+    return this.#options['shell'] as string[] | undefined;
   }
 
   /**
@@ -195,6 +249,10 @@ export class DockerPlugin implements PluginBuilder {
   setUserns(namespace: string): this {
     this.#options['userns'] = namespace;
     return this;
+  }
+
+  getVolumes(): ReadonlyArray<string> {
+    return this.#volumes;
   }
 
   /**

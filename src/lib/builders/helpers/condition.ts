@@ -1,4 +1,5 @@
 export interface ConditionBuilder {
+  getCondition(): string | undefined;
   /**
    * @deprecated Use .setCondition() instead
    */
@@ -8,6 +9,10 @@ export interface ConditionBuilder {
 
 export class ConditionHelper {
   #condition?: string;
+
+  getCondition(): string | undefined {
+    return this.#condition;
+  }
 
   setCondition(condition: string): void {
     this.#condition = condition;

@@ -97,6 +97,10 @@ export class CommandStep
     return this;
   }
 
+  getCondition(): string | undefined {
+    return this.#conditionHelper.getCondition();
+  }
+
   /**
    * @deprecated Use .setCondition() instead
    */
@@ -109,7 +113,7 @@ export class CommandStep
     return this;
   }
 
-  getBranches(): Iterable<string> {
+  getBranches(): ReadonlyArray<string> {
     return this.#branchesHelper.getBranches();
   }
 
@@ -125,18 +129,18 @@ export class CommandStep
     return this;
   }
 
-  getDependencies(): Iterable<StepDependsOn> {
+  getDependencies(): ReadonlyArray<StepDependsOn> {
     return this.#dependenciesHelper.getDependencies();
   }
 
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
@@ -210,6 +214,10 @@ export class CommandStep
     return this;
   }
 
+  getEnv(): Readonly<Record<string, unknown>> {
+    return this.#envHelper.getEnv();
+  }
+
   /**
    * @deprecated Use .addEnv() instead
    */
@@ -271,6 +279,10 @@ export class CommandStep
   setTimeout(minutes: number): this {
     this.#timeoutInMinutes = minutes;
     return this;
+  }
+
+  getAgents(): Readonly<Record<string, string>> {
+    return this.#agentsHelper.getAgents();
   }
 
   /**

@@ -48,8 +48,8 @@ export class TriggerStep
     return this;
   }
 
-  getLabel(): string | undefined {
-    return this.#labelHelper.getLabel();
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
   }
 
   /**
@@ -62,6 +62,10 @@ export class TriggerStep
   setKey(key: string): this {
     this.#keyHelper.setKey(key);
     return this;
+  }
+
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
   }
 
   /**
@@ -77,7 +81,7 @@ export class TriggerStep
     return this;
   }
 
-  getBranches(): Iterable<string> {
+  getBranches(): ReadonlyArray<string> {
     return this.#branchesHelper.getBranches();
   }
 
@@ -93,6 +97,11 @@ export class TriggerStep
     this.#branchesHelper.addBranch(branch);
     return this;
   }
+
+  getCondition(): string | undefined {
+    return this.#conditionHelper.getCondition();
+  }
+
   /**
    * @deprecated Use .setCondition() instead
    */
@@ -105,18 +114,18 @@ export class TriggerStep
     return this;
   }
 
-  getDependencies(): Iterable<StepDependsOn> {
+  getDependencies(): ReadonlyArray<StepDependsOn> {
     return this.#dependenciesHelper.getDependencies();
   }
 
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }

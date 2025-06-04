@@ -3,7 +3,7 @@ import {StepBuilder} from '../StepBuilder';
 import {isStepBuilder} from '../isStepBuilder';
 
 export interface StepsBuilder {
-  getSteps(): Iterable<StepSchema | StepBuilder>;
+  getSteps(): ReadonlyArray<StepSchema | StepBuilder>;
 
   /**
    * @deprecated Use .addStep() instead
@@ -21,9 +21,9 @@ export interface StepsBuilder {
 export class StepsHelper {
   #steps: Array<StepSchema | StepBuilder> = [];
 
-  getSteps(): Iterable<StepSchema | StepBuilder> {
+  getSteps(): ReadonlyArray<StepSchema | StepBuilder> {
     // 🤔 not sure we want to allow mutation of the steps yet
-    return [...this.#steps];
+    return this.#steps;
   }
 
   addStep(step: StepSchema | StepBuilder): void {

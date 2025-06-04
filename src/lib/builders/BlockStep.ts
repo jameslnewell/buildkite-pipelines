@@ -71,7 +71,7 @@ export class BlockStep
     return this;
   }
 
-  getBranches(): Iterable<string> {
+  getBranches(): ReadonlyArray<string> {
     return this.#branchesHelper.getBranches();
   }
 
@@ -88,18 +88,18 @@ export class BlockStep
     return this;
   }
 
-  getDependencies(): Iterable<StepDependsOn> {
+  getDependencies(): ReadonlyArray<StepDependsOn> {
     return this.#dependenciesHelper.getDependencies();
   }
 
   /**
    * @deprecated Use .addDependency() instead
    */
-  dependOn(dependency: null | StepDependsOn): this {
+  dependOn(dependency: StepDependsOn): this {
     return this.addDependency(dependency);
   }
 
-  addDependency(dependency: null | StepDependsOn): this {
+  addDependency(dependency: StepDependsOn): this {
     this.#dependenciesHelper.addDependency(dependency);
     return this;
   }
@@ -140,6 +140,10 @@ export class BlockStep
   addField(field: Field): this {
     this.#promptHelper.addField(field);
     return this;
+  }
+
+  getCondition(): string | undefined {
+    return this.#conditionHelper.getCondition();
   }
 
   /**
