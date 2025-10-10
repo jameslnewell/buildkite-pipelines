@@ -1,5 +1,12 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.20.0
+
+### Minor Changes
+
+- f32fb1e: Added `.get*` methods to make inspecting `CommandStep`s easier during testing.
+  Added overrides to `find*` which make inspecting found steps easier
+
 ## 3.19.0
 
 ### Minor Changes
