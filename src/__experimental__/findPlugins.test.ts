@@ -9,7 +9,7 @@ const step = new CommandStep().addPlugin(dockerPlugin);
 
 describe(findPlugins, () => {
   test('finds plugins which match the predicate', () => {
-    const plugins = findPlugins(step, (plugin) => {
+    const plugins = findPlugins(step, (plugin): plugin is DockerPlugin => {
       return plugin instanceof DockerPlugin;
     });
 
@@ -17,7 +17,7 @@ describe(findPlugins, () => {
   });
 
   test('does not find plugins which do not match the predicate', () => {
-    const plugins = findPlugins(step, (plugin) => {
+    const plugins = findPlugins(step, (plugin): plugin is ArtifactsPlugin => {
       return plugin instanceof ArtifactsPlugin;
     });
 
@@ -27,16 +27,19 @@ describe(findPlugins, () => {
 
 describe(findFirstPlugin, () => {
   test('finds the first plugin which matches the predicate', () => {
-    const plugin = findFirstPlugin(step, (plugin) => {
+    const plugin = findFirstPlugin(step, (plugin): plugin is DockerPlugin => {
       return plugin instanceof DockerPlugin;
     });
     expect(plugin).toEqual(dockerPlugin);
   });
 
   test('does not find plugins which do not match the predicate', () => {
-    const plugin = findFirstPlugin(step, (plugin) => {
-      return plugin instanceof ArtifactsPlugin;
-    });
+    const plugin = findFirstPlugin(
+      step,
+      (plugin): plugin is ArtifactsPlugin => {
+        return plugin instanceof ArtifactsPlugin;
+      },
+    );
 
     expect(plugin).toBeUndefined();
   });

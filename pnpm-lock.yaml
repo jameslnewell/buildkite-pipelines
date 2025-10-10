@@ -2022,10 +2022,10 @@ packages:
       }
     engines: {node: '>=8'}
 
-  /ansi-sequence-parser@1.1.1:
+  /ansi-sequence-parser@1.1.3:
     resolution:
       {
-        integrity: sha512-vJXt3yiaUL4UU546s3rPXlsry/RnM730G1+HkpKE012AN0sx1eOrxSu95oKDIonskeLTijMgqWZ3uDEe3NFvyg==,
+        integrity: sha512-+fksAx9eG3Ab6LDnLs3ZqZa8KVJ/jYnX+D4Qe1azX+LFGFAXqynCQLOdLpNYN/l9e7l6hMWwZbrnctqr6eSQSw==,
       }
     dev: true
 
@@ -5625,10 +5625,10 @@ packages:
       brace-expansion: 1.1.11
     dev: true
 
-  /minimatch@9.0.3:
+  /minimatch@9.0.5:
     resolution:
       {
-        integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==,
+        integrity: sha512-G6T0ZX48xgozx7587koeX9Ys2NYy6Gmv//P89sEte9V9whIapMNF4idKxnW2QtCcLiTWlb/wfCabAtAFWhhBow==,
       }
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
@@ -6582,13 +6582,13 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /shiki@0.14.3:
+  /shiki@0.14.7:
     resolution:
       {
-        integrity: sha512-U3S/a+b0KS+UkTyMjoNojvTgrBHjgp7L6ovhFVZsXmBGnVdQ4K4U9oK0z63w538S91ATngv1vXigHCSWOwnr+g==,
+        integrity: sha512-dNPAPrxSc87ua2sKJ3H5dQ/6ZaY8RNnaAqK+t0eG7p0Soi2ydiqbGOTaZCqaYvA/uZYfS1LJnemt3Q+mSfcPCg==,
       }
     dependencies:
-      ansi-sequence-parser: 1.1.1
+      ansi-sequence-parser: 1.1.3
       jsonc-parser: 3.2.0
       vscode-oniguruma: 1.7.0
       vscode-textmate: 8.0.0
@@ -7274,8 +7274,8 @@ packages:
     dependencies:
       lunr: 2.3.9
       marked: 4.3.0
-      minimatch: 9.0.3
-      shiki: 0.14.3
+      minimatch: 9.0.5
+      shiki: 0.14.7
       typescript: 5.1.6
     dev: true
 

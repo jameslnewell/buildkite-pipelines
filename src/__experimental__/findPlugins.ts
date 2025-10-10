@@ -8,11 +8,31 @@ export interface FindPluginsPredicate {
   ): boolean;
 }
 
+export interface FindPluginsPredicateNarrow<
+  S extends PluginSchema | PluginBuilder,
+> {
+  (
+    plugin: PluginSchema | PluginBuilder,
+    index: number,
+    plugins: Array<PluginSchema | PluginBuilder>,
+  ): plugin is S;
+}
+
 export interface FindPluginsOptions {}
 
 /**
  * Finds all the plugins that match the predicate within a step
  */
+export function findPlugins<S extends PluginSchema | PluginBuilder>(
+  stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
+  predicate: FindPluginsPredicateNarrow<S>,
+  options?: FindPluginsOptions,
+): ReadonlyArray<S>;
+export function findPlugins(
+  stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
+  predicate: FindPluginsPredicate,
+  options?: FindPluginsOptions,
+): ReadonlyArray<PluginSchema | PluginBuilder>;
 export function findPlugins(
   stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
   predicate: FindPluginsPredicate,
@@ -36,6 +56,16 @@ export function findPlugins(
 /**
  * Finds the first plugin that matches the predicate within a step
  */
+export function findFirstPlugin<S extends PluginSchema | PluginBuilder>(
+  stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
+  predicate: FindPluginsPredicateNarrow<S>,
+  options?: FindPluginsOptions,
+): S | undefined;
+export function findFirstPlugin(
+  stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
+  predicate: FindPluginsPredicate,
+  options?: FindPluginsOptions,
+): PluginSchema | PluginBuilder | undefined;
 export function findFirstPlugin(
   stepOrPlugins: CommandStep | Iterable<PluginSchema | PluginBuilder>,
   predicate: FindPluginsPredicate,
