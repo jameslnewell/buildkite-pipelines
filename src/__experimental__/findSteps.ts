@@ -14,6 +14,14 @@ export interface FindStepsPredicate {
   ): boolean;
 }
 
+export interface FindStepsNarrowPredicate<S extends StepSchema | StepBuilder> {
+  (
+    step: StepSchema | StepBuilder,
+    index: number,
+    steps: Array<StepSchema | StepBuilder>,
+  ): step is S;
+}
+
 export interface FindStepsOptions {
   /**
    * Whether to search recursively within GroupSteps
@@ -21,9 +29,21 @@ export interface FindStepsOptions {
   recursive?: boolean | undefined;
 }
 
+// filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
+
 /**
  * Finds all the steps that match the predicate within a pipeline
  */
+export function findSteps<S extends StepSchema | StepBuilder>(
+  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  predicate: FindStepsNarrowPredicate<S>,
+  options?: FindStepsOptions,
+): ReadonlyArray<S>;
+export function findSteps(
+  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  predicate: FindStepsPredicate,
+  options?: FindStepsOptions,
+): ReadonlyArray<StepSchema | StepBuilder>;
 export function findSteps(
   pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsPredicate,
@@ -69,6 +89,16 @@ function isGroupSchema(
 /**
  * Finds the first step that matches the predicate within a pipeline
  */
+export function findFirstStep<S extends StepSchema | StepBuilder>(
+  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  predicate: FindStepsNarrowPredicate<S>,
+  options?: FindStepsOptions,
+): S | undefined;
+export function findFirstStep(
+  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  predicate: FindStepsPredicate,
+  options?: FindStepsOptions,
+): StepSchema | StepBuilder | undefined;
 export function findFirstStep(
   pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsPredicate,

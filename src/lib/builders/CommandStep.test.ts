@@ -241,4 +241,233 @@ describe(CommandStep.name, () => {
       ]);
     });
   });
+
+  describe('getCommands', () => {
+    test('returns empty array when no commands added', () => {
+      const step = new CommandStep();
+      expect([...step.getCommands()]).toEqual([]);
+    });
+
+    test('returns commands when commands added', () => {
+      const step = new CommandStep()
+        .addCommand(installCommand)
+        .addCommand(buildCommand);
+      expect([...step.getCommands()]).toEqual([installCommand, buildCommand]);
+    });
+  });
+
+  describe('getKey', () => {
+    test('returns undefined when no key set', () => {
+      const step = new CommandStep();
+      expect(step.getKey()).toBeUndefined();
+    });
+
+    test('returns key when key set', () => {
+      const step = new CommandStep().setKey('test-key');
+      expect(step.getKey()).toBe('test-key');
+    });
+  });
+
+  describe('getLabel', () => {
+    test('returns undefined when no label set', () => {
+      const step = new CommandStep();
+      expect(step.getLabel()).toBeUndefined();
+    });
+
+    test('returns label when label set', () => {
+      const step = new CommandStep().setLabel('Test Label');
+      expect(step.getLabel()).toBe('Test Label');
+    });
+  });
+
+  describe('getCondition', () => {
+    test('returns undefined when no condition set', () => {
+      const step = new CommandStep();
+      expect(step.getCondition()).toBeUndefined();
+    });
+
+    test('returns condition when condition set', () => {
+      const step = new CommandStep().setCondition('build.branch == "main"');
+      expect(step.getCondition()).toBe('build.branch == "main"');
+    });
+  });
+
+  describe('getBranches', () => {
+    test('returns empty array when no branches added', () => {
+      const step = new CommandStep();
+      expect(step.getBranches()).toEqual([]);
+    });
+
+    test('returns branches when branches added', () => {
+      const step = new CommandStep().addBranch('main').addBranch('develop');
+      expect(step.getBranches()).toEqual(['main', 'develop']);
+    });
+  });
+
+  describe('getDependencies', () => {
+    test('returns empty array when no dependencies added', () => {
+      const step = new CommandStep();
+      expect(step.getDependencies()).toEqual([]);
+    });
+
+    test('returns dependencies when dependencies added', () => {
+      const step = new CommandStep()
+        .addDependency('step1')
+        .addDependency({step: 'step2', allow_failure: true});
+      expect(step.getDependencies()).toEqual([
+        'step1',
+        {step: 'step2', allow_failure: true},
+      ]);
+    });
+  });
+
+  describe('getSkip', () => {
+    test('returns undefined when no skip set', () => {
+      const step = new CommandStep();
+      expect(step.getSkip()).toBeUndefined();
+    });
+
+    test('returns skip when skip set to boolean', () => {
+      const step = new CommandStep().setSkip(true);
+      expect(step.getSkip()).toBe(true);
+    });
+
+    test('returns skip when skip set to string', () => {
+      const step = new CommandStep().setSkip('build.branch != "main"');
+      expect(step.getSkip()).toBe('build.branch != "main"');
+    });
+  });
+
+  describe('getPlugins', () => {
+    test('returns empty array when no plugins added', () => {
+      const step = new CommandStep();
+      expect([...step.getPlugins()]).toEqual([]);
+    });
+
+    test('returns plugins when plugins added', () => {
+      const plugin1 = {[dockerPlugin]: null};
+      const plugin2 = new Plugin().setName('test-plugin');
+      const step = new CommandStep().addPlugin(plugin1).addPlugin(plugin2);
+      expect([...step.getPlugins()]).toEqual([plugin1, plugin2]);
+    });
+  });
+
+  describe('getParallelism', () => {
+    test('returns undefined when no parallelism set', () => {
+      const step = new CommandStep();
+      expect(step.getParallelism()).toBeUndefined();
+    });
+
+    test('returns parallelism when parallelism set', () => {
+      const step = new CommandStep().setParallelism(3);
+      expect(step.getParallelism()).toBe(3);
+    });
+  });
+
+  describe('getEnv', () => {
+    test('returns empty object when no env variables added', () => {
+      const step = new CommandStep();
+      expect(step.getEnv()).toEqual({});
+    });
+
+    test('returns env variables when env variables added', () => {
+      const step = new CommandStep()
+        .addEnv('NODE_ENV', 'production')
+        .addEnv('DEBUG', 'true');
+      expect(step.getEnv()).toEqual({
+        NODE_ENV: 'production',
+        DEBUG: 'true',
+      });
+    });
+  });
+
+  describe('getConcurrency', () => {
+    test('returns undefined when no concurrency set', () => {
+      const step = new CommandStep();
+      expect(step.getConcurrency()).toBeUndefined();
+    });
+
+    test('returns concurrency when concurrency set', () => {
+      const step = new CommandStep().setConcurrency('deploy', 1);
+      expect(step.getConcurrency()).toBe(1);
+    });
+  });
+
+  describe('getSoftFail', () => {
+    test('returns undefined when no soft fail set', () => {
+      const step = new CommandStep();
+      expect(step.getSoftFail()).toBeUndefined();
+    });
+
+    test('returns soft fail when soft fail set', () => {
+      const step = new CommandStep().setSoftFail(true);
+      expect(step.getSoftFail()).toBe(true);
+    });
+  });
+
+  describe('getTimeout', () => {
+    test('returns undefined when no timeout set', () => {
+      const step = new CommandStep();
+      expect(step.getTimeout()).toBeUndefined();
+    });
+
+    test('returns timeout when timeout set', () => {
+      const step = new CommandStep().setTimeout(30);
+      expect(step.getTimeout()).toBe(30);
+    });
+  });
+
+  describe('getAgents', () => {
+    test('returns empty object when no agents added', () => {
+      const step = new CommandStep();
+      expect(step.getAgents()).toEqual({});
+    });
+
+    test('returns agents when agents added', () => {
+      const step = new CommandStep()
+        .addAgent('queue', 'default')
+        .addAgent('os', 'linux');
+      expect(step.getAgents()).toEqual({
+        queue: 'default',
+        os: 'linux',
+      });
+    });
+  });
+
+  describe('getManualRetry', () => {
+    test('returns undefined when no manual retry set', () => {
+      const step = new CommandStep();
+      expect(step.getManualRetry()).toBeUndefined();
+    });
+
+    test('returns manual retry when manual retry set to boolean', () => {
+      const step = new CommandStep().setManualRetry(true);
+      expect(step.getManualRetry()).toBe(true);
+    });
+
+    test('returns manual retry when manual retry set to object', () => {
+      const retryConfig = {
+        permit_on_passed: false,
+        reason: 'Cannot retry successful deployment',
+      };
+      const step = new CommandStep().setManualRetry(retryConfig);
+      expect(step.getManualRetry()).toEqual(retryConfig);
+    });
+  });
+
+  describe('getAutomaticRetries', () => {
+    test('returns empty array when no automatic retries added', () => {
+      const step = new CommandStep();
+      expect(step.getAutomaticRetries()).toEqual([]);
+    });
+
+    test('returns automatic retries when automatic retries added', () => {
+      const retry1 = {exit_status: 139, limit: 1};
+      const retry2 = {exit_status: '*' as const, limit: 2};
+      const step = new CommandStep()
+        .addAutomaticRetry(retry1)
+        .addAutomaticRetry(retry2);
+      expect(step.getAutomaticRetries()).toEqual([retry1, retry2]);
+    });
+  });
 });

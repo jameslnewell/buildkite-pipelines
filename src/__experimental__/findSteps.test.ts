@@ -30,23 +30,29 @@ const nestedPipeline = new Pipeline().addSteps([
 
 describe(findSteps, () => {
   test('finds steps which match the predicate', () => {
-    const steps = findSteps(simpleBuildAndDeployPipeline, (step) => {
-      return (
-        step instanceof CommandStep &&
-        step.getLabel()?.startsWith('Deploying') === true
-      );
-    });
+    const steps = findSteps(
+      simpleBuildAndDeployPipeline,
+      (step): step is CommandStep => {
+        return (
+          step instanceof CommandStep &&
+          step.getLabel()?.startsWith('Deploying') === true
+        );
+      },
+    );
 
     expect(steps).toEqual([deployAppAStep, deployAppBStep]);
   });
 
   test('does not find steps which do not match the predicate', () => {
-    const steps = findSteps(simpleBuildAndDeployPipeline, (step) => {
-      return (
-        step instanceof CommandStep &&
-        step.getLabel()?.startsWith('Publishing package') === true
-      );
-    });
+    const steps = findSteps(
+      simpleBuildAndDeployPipeline,
+      (step): step is CommandStep => {
+        return (
+          step instanceof CommandStep &&
+          step.getLabel()?.startsWith('Publishing package') === true
+        );
+      },
+    );
 
     expect(steps).toEqual([]);
   });
@@ -54,7 +60,7 @@ describe(findSteps, () => {
   test('recursively finds nested steps which match the predicate when recursive=true', () => {
     const steps = findSteps(
       nestedPipeline,
-      (step) => {
+      (step): step is CommandStep => {
         return (
           step instanceof CommandStep &&
           step.getLabel()?.startsWith('Deploying') === true
@@ -69,7 +75,7 @@ describe(findSteps, () => {
   test('does not find nested steps which match the predicate when recursive=false', () => {
     const steps = findSteps(
       nestedPipeline,
-      (step) => {
+      (step): step is CommandStep => {
         return (
           step instanceof CommandStep &&
           step.getLabel()?.startsWith('Deploying') === true
@@ -84,22 +90,28 @@ describe(findSteps, () => {
 
 describe(findFirstStep, () => {
   test('finds the first step which matches the predicate', () => {
-    const step = findFirstStep(simpleBuildAndDeployPipeline, (step) => {
-      return (
-        step instanceof CommandStep &&
-        step.getLabel()?.startsWith('Deploying') === true
-      );
-    });
+    const step = findFirstStep(
+      simpleBuildAndDeployPipeline,
+      (step): step is CommandStep => {
+        return (
+          step instanceof CommandStep &&
+          step.getLabel()?.startsWith('Deploying') === true
+        );
+      },
+    );
 
     expect(step).toEqual(deployAppAStep);
   });
   test('does not find a step which do not match the predicate', () => {
-    const step = findFirstStep(simpleBuildAndDeployPipeline, (step) => {
-      return (
-        step instanceof CommandStep &&
-        step.getLabel()?.startsWith('Publishing package') === true
-      );
-    });
+    const step = findFirstStep(
+      simpleBuildAndDeployPipeline,
+      (step): step is CommandStep => {
+        return (
+          step instanceof CommandStep &&
+          step.getLabel()?.startsWith('Publishing package') === true
+        );
+      },
+    );
 
     expect(step).toBeUndefined();
   });
@@ -107,7 +119,7 @@ describe(findFirstStep, () => {
   test('recursively finds nested steps which match the predicate when recursive=true', () => {
     const step = findFirstStep(
       nestedPipeline,
-      (step) => {
+      (step): step is CommandStep => {
         return (
           step instanceof CommandStep &&
           step.getLabel()?.startsWith('Deploying') === true
@@ -122,7 +134,7 @@ describe(findFirstStep, () => {
   test('does not find nested steps which match the predicate when recursive=false', () => {
     const step = findFirstStep(
       nestedPipeline,
-      (step) => {
+      (step): step is CommandStep => {
         return (
           step instanceof CommandStep &&
           step.getLabel()?.startsWith('Deploying') === true

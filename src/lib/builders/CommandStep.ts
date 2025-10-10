@@ -157,6 +157,10 @@ export class CommandStep
     return this;
   }
 
+  getSkip(): boolean | string | undefined {
+    return this.#skipHelper.getSkip();
+  }
+
   /**
    * @deprecated Use .setSkip() instead
    */
@@ -198,6 +202,10 @@ export class CommandStep
     return this;
   }
 
+  getParallelism(): number | undefined {
+    return this.#parallelism;
+  }
+
   /**
    * @deprecated Use .setParallelism() instead
    */
@@ -209,7 +217,6 @@ export class CommandStep
     if (parallelism === 0) {
       throw new Error('Parallelism of zero will result in step being omitted');
     }
-
     this.#parallelism = parallelism;
     return this;
   }
@@ -230,6 +237,10 @@ export class CommandStep
     return this;
   }
 
+  getConcurrency(): number | undefined {
+    return this.#concurrency;
+  }
+
   /**
    * @deprecated Use .setConcurrency() instead
    */
@@ -243,7 +254,6 @@ export class CommandStep
         'Concurrency of zero will result in step which never starts',
       );
     }
-
     this.#concurrency = jobs;
     this.#concurrencyGroup = group;
     return this;
@@ -297,9 +307,17 @@ export class CommandStep
     return this;
   }
 
+  getManualRetry(): ManualRetry {
+    return this.#manualRetry;
+  }
+
   setManualRetry(retry: ManualRetry): this {
     this.#manualRetry = retry;
     return this;
+  }
+
+  getAutomaticRetries(): AutomaticRetry[] {
+    return this.#automaticRetries;
   }
 
   addAutomaticRetry(retry: AutomaticRetry): this {
