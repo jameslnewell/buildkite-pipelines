@@ -118,31 +118,52 @@ describe(CommandStep.name, () => {
     });
   });
 
-  describe('concurrency', () => {
-    test('undefined by default', async () => {
-      const step = await new CommandStep().addCommand(':').build();
-      expect(step).not.toHaveProperty('concurrency');
+  describe('getConcurrency', () => {
+    test('returns undefined when no concurrency set', () => {
+      const step = new CommandStep();
+      expect(step.getConcurrency()).toBeUndefined();
     });
-    test('defined when 1', async () => {
-      const step = await new CommandStep()
-        .addCommand(':')
-        .concurrency('test', 1)
-        .build();
-      expect(step).toHaveProperty('concurrency', 1);
+
+    test('returns concurrency when set via deprecated concurrency method', () => {
+      const step = new CommandStep().concurrency('test-group', 2);
+      expect(step.getConcurrency()).toBe(2);
+    });
+
+    test('returns concurrency when set via setConcurrency with group and jobs', () => {
+      const step = new CommandStep().setConcurrency('test-group', 3);
+      expect(step.getConcurrency()).toBe(3);
+    });
+
+    test('returns concurrency when set via setConcurrency with number only', () => {
+      const step = new CommandStep().setConcurrency(5);
+      expect(step.getConcurrency()).toBe(5);
     });
   });
 
-  describe('concurrency_group', () => {
-    test('undefined by default', async () => {
-      const step = await new CommandStep().addCommand(':').build();
-      expect(step).not.toHaveProperty('concurrency_group');
+  describe('getConcurrencyGroup', () => {
+    test('returns undefined when no concurrency group set', () => {
+      const step = new CommandStep();
+      expect(step.getConcurrencyGroup()).toBeUndefined();
     });
-    test('defined when 1', async () => {
-      const step = await new CommandStep()
-        .addCommand(':')
-        .concurrency('test', 1)
-        .build();
-      expect(step).toHaveProperty('concurrency_group', 'test');
+
+    test('returns concurrency group when set via deprecated concurrency method', () => {
+      const step = new CommandStep().concurrency('deploy-group', 1);
+      expect(step.getConcurrencyGroup()).toBe('deploy-group');
+    });
+
+    test('returns concurrency group when set via setConcurrency with group and jobs', () => {
+      const step = new CommandStep().setConcurrency('test-group', 2);
+      expect(step.getConcurrencyGroup()).toBe('test-group');
+    });
+
+    test('returns concurrency group when set via setConcurrencyGroup', () => {
+      const step = new CommandStep().setConcurrencyGroup('my-group');
+      expect(step.getConcurrencyGroup()).toBe('my-group');
+    });
+
+    test('returns undefined when concurrency set with number only', () => {
+      const step = new CommandStep().setConcurrency(3);
+      expect(step.getConcurrencyGroup()).toBeUndefined();
     });
   });
 
