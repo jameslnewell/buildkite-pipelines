@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.21.0
+
+### Minor Changes
+
+- bd73a3f: Add concurrency methods, deprecate setConcurrency(group, limit)
+
 ## 3.20.0
 
 ### Minor Changes
