@@ -237,6 +237,9 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-limits
+   */
   getConcurrency(): number | undefined {
     return this.#concurrency;
   }
@@ -248,13 +251,52 @@ export class CommandStep
     return this.setConcurrency(group, jobs);
   }
 
-  setConcurrency(group: string, jobs: number): this {
-    if (jobs === 0) {
-      throw new Error(
-        'Concurrency of zero will result in step which never starts',
-      );
+  /**
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-limits
+   */
+  setConcurrency(concurrency: number): this;
+  /** @deprecated Use .setConcurrency() and .setConcurrencyGroup() instead */
+  setConcurrency(group: string, jobs: number): this;
+  setConcurrency(
+    concurrencyGroupOrConcurrency: string | number,
+    concurrency?: number,
+  ): this {
+    if (
+      typeof concurrencyGroupOrConcurrency === 'string' &&
+      typeof concurrency === 'number'
+    ) {
+      if (concurrency === 0) {
+        throw new Error(
+          'Concurrency of zero will result in step which never starts',
+        );
+      }
+      this.#concurrencyGroup = concurrencyGroupOrConcurrency;
+      this.#concurrency = concurrency;
+    } else if (typeof concurrencyGroupOrConcurrency === 'number') {
+      if (concurrencyGroupOrConcurrency === 0) {
+        throw new Error(
+          'Concurrency of zero will result in step which never starts',
+        );
+      }
+      this.#concurrency = concurrencyGroupOrConcurrency;
+    } else {
+      throw new Error('Invalid arguments for setConcurrency');
     }
-    this.#concurrency = jobs;
+    return this;
+  }
+
+  /**
+   *
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-groups
+   */
+  getConcurrencyGroup(): string | undefined {
+    return this.#concurrencyGroup;
+  }
+
+  /**
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-groups
+   */
+  setConcurrencyGroup(group: string): this {
     this.#concurrencyGroup = group;
     return this;
   }
