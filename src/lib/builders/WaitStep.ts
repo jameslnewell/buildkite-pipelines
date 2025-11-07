@@ -2,13 +2,15 @@ import {StepDependsOn, WaitStepSchema} from '../schema';
 import {StepBuilder} from './StepBuilder';
 import {ConditionBuilder, ConditionHelper} from './helpers/condition';
 import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
+import {KeyBuilder, KeyHelper} from './helpers/key';
 
 export class WaitStep
-  implements StepBuilder, ConditionBuilder, DependenciesBuilder
+  implements StepBuilder, ConditionBuilder, DependenciesBuilder, KeyBuilder
 {
   #continueOnFailure: boolean | undefined;
   #conditionHelper = new ConditionHelper();
   #dependenciesHelper = new DependenciesHelper();
+  #keyHelper = new KeyHelper();
 
   /**
    * @deprecated Use .setContinueOnFailure() instead
@@ -66,10 +68,28 @@ export class WaitStep
     return this;
   }
 
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
+  /**
+   * @deprecated Use .setKey() instead
+   */
+  key(key: string): this {
+    this.setKey(key);
+    return this;
+  }
+
+  setKey(key: string): this {
+    this.#keyHelper.setKey(key);
+    return this;
+  }
+
   build(): WaitStepSchema | Promise<WaitStepSchema> {
     const object: WaitStepSchema = {
       wait: null,
       ...this.#dependenciesHelper.build(),
+      ...this.#keyHelper.build(),
     };
 
     if (this.#continueOnFailure !== undefined) {

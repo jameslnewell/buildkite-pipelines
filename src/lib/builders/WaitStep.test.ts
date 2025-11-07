@@ -25,4 +25,9 @@ describe(WaitStep.name, () => {
       );
     });
   });
+  test('has key', async () => {
+    const key = 'main';
+    const wait = new WaitStep().setKey(key);
+    expect((await wait.build()).key).toEqual(key);
+  });
 });
