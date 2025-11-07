@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.22.0
+
+### Minor Changes
+
+- faed148: Add support for keys on WaitStep
+
 ## 3.21.0
 
 ### Minor Changes
