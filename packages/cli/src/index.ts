@@ -2,8 +2,11 @@
 import yargs from 'yargs';
 import resolveCallback from 'resolve';
 import debug from 'debug';
-import {stringify, validate} from '../lib';
-import {isPipelineBuilder} from '../lib/builders/isPipelineBuilder';
+import {
+  stringify,
+  validate,
+  isPipelineBuilder,
+} from '@jameslnewell/buildkite-pipelines';
 
 const log = debug('buildkite-pipelines');
 

@@ -1,4 +1,8 @@
-import {ArtifactsPlugin, CommandStep, DockerPlugin} from '../lib';
+import {
+  ArtifactsPlugin,
+  CommandStep,
+  DockerPlugin,
+} from '@jameslnewell/buildkite-pipelines';
 import {findFirstPlugin, findPlugins} from './findPlugins';
 
 const dockerPlugin = new DockerPlugin()

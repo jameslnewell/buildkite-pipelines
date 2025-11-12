@@ -1,4 +1,8 @@
-import {CommandStep, GroupStep, Pipeline} from '../lib';
+import {
+  CommandStep,
+  GroupStep,
+  Pipeline,
+} from '@jameslnewell/buildkite-pipelines';
 import {findFirstStep, findSteps} from './findSteps';
 
 const buildAppAStep = new CommandStep()

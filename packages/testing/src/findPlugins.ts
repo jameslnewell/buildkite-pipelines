@@ -1,4 +1,8 @@
-import {CommandStep, PluginBuilder, PluginSchema} from '../lib';
+import {
+  CommandStep,
+  PluginBuilder,
+  PluginSchema,
+} from '@jameslnewell/buildkite-pipelines';
 
 export interface FindPluginsPredicate {
   (

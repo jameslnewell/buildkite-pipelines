@@ -1,0 +1,50 @@
+{
+  "name": "@jameslnewell/buildkite-pipelines-testing",
+  "version": "3.22.0",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "author": "James Newell <gday@jameslnewell.dev>",
+  "description": "Testing utilities for Buildkite pipelines",
+  "keywords": [
+    "buildkite",
+    "pipelines",
+    "testing"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jameslnewell/buildkite-pipelines.git",
+    "directory": "packages/testing"
+  },
+  "bugs": {
+    "url": "https://github.com/jameslnewell/buildkite-pipelines/issues"
+  },
+  "homepage": "https://github.com/jameslnewell/buildkite-pipelines",
+  "dependencies": {
+    "@jameslnewell/buildkite-pipelines": "workspace:*"
+  },
+  "devDependencies": {
+    "@jameslnewell/jest-preset": "^3.0.0",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.163",
+    "@swc/jest": "^0.2.20",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.14",
+    "jest": "^27.5.1",
+    "jest-pnp-resolver": "^1.2.2",
+    "typescript": "^5.1.6"
+  },
+  "jest": {
+    "preset": "@jameslnewell/jest-preset",
+    "resolver": "jest-pnp-resolver"
+  },
+  "scripts": {
+    "check:typing": "tsc --noEmit",
+    "build": "pnpm run build:types && pnpm run build:transpile",
+    "build:types": "tsc --declaration --emitDeclarationOnly",
+    "build:transpile": "swc src --out-dir dist --source-maps --copy-files",
+    "test": "jest --maxWorkers=1"
+  },
+  "license": "MIT"
+}

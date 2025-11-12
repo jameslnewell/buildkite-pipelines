@@ -4,7 +4,7 @@ import {
   Pipeline,
   StepBuilder,
   StepSchema,
-} from '../lib';
+} from '@jameslnewell/buildkite-pipelines';
 
 export interface FindStepsPredicate {
   (
