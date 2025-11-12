@@ -30,8 +30,8 @@
   "devDependencies": {
     "@jameslnewell/jest-preset": "^3.0.0",
     "@jameslnewell/prettier-config": "^1.1.0",
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.163",
+    "@swc/cli": "^0.1.65",
+    "@swc/core": "^1.15.1",
     "@swc/jest": "^0.2.20",
     "@types/debug": "^4",
     "@types/jest": "^27.4.1",
@@ -46,15 +46,20 @@
   },
   "jest": {
     "preset": "@jameslnewell/jest-preset",
-    "resolver": "jest-pnp-resolver"
+    "resolver": "jest-pnp-resolver",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
   },
   "prettier": "@jameslnewell/prettier-config",
   "scripts": {
     "check:typing": "tsc --noEmit",
     "codegen": "json2ts src/schema/schema.json src/schema/schema.ts",
-    "build": "pnpm run build:types && pnpm run build:transpile",
+    "build": "pnpm run build:types && pnpm run build:transpile && pnpm run build:files",
     "build:types": "tsc --declaration --emitDeclarationOnly",
-    "build:transpile": "swc src --out-dir dist --source-maps --copy-files",
+    "build:transpile": "swc src --out-dir dist --source-maps --ignore '**/*.test.ts'",
+    "build:files": "cpx 'src/**/*.{json,md}' dist",
     "build:pages": "typedoc",
     "test": "jest --maxWorkers=1"
   },

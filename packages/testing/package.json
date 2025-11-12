@@ -26,8 +26,8 @@
   },
   "devDependencies": {
     "@jameslnewell/jest-preset": "^3.0.0",
-    "@swc/cli": "^0.1.57",
-    "@swc/core": "^1.2.163",
+    "@swc/cli": "^0.1.65",
+    "@swc/core": "^1.15.1",
     "@swc/jest": "^0.2.20",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.14",
@@ -37,13 +37,18 @@
   },
   "jest": {
     "preset": "@jameslnewell/jest-preset",
-    "resolver": "jest-pnp-resolver"
+    "resolver": "jest-pnp-resolver",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
   },
   "scripts": {
     "check:typing": "tsc --noEmit",
-    "build": "pnpm run build:types && pnpm run build:transpile",
+    "build": "pnpm run build:types && pnpm run build:transpile && pnpm run build:files",
     "build:types": "tsc --declaration --emitDeclarationOnly",
-    "build:transpile": "swc src --out-dir dist --source-maps --copy-files",
+    "build:transpile": "swc src --out-dir dist --source-maps --ignore '**/*.test.ts'",
+    "build:files": "cpx 'src/**/*.{json,md}' dist",
     "test": "jest --maxWorkers=1"
   },
   "license": "MIT"
