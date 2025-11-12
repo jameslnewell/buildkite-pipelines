@@ -154,7 +154,7 @@ export class TriggerStep
     return this;
   }
 
-  build(): TriggerStepSchema | Promise<TriggerStepSchema> {
+  build(): TriggerStepSchema {
     const object: TriggerStepSchema = {
       trigger: this.#pipeline,
       ...this.#keyHelper.build(),
