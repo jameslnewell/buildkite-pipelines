@@ -39,6 +39,7 @@
     "json-schema-to-typescript": "^13.0.2",
     "pretty-quick": "^3.1.3",
     "ts-node": "^10.7.0",
+    "turbo": "^2.6.1",
     "typedoc": "^0.24.8",
     "typescript": "^5.1.6"
   },
@@ -55,11 +56,11 @@
     "fix:formatting": "prettier --write .",
     "check": "pnpm run check:formatting && pnpm run check:typing",
     "check:formatting": "prettier --check .",
-    "check:typing": "pnpm -r --parallel run check:typing",
+    "check:typing": "turbo run check:typing",
     "prepare": "husky install",
-    "build": "pnpm -r run build",
-    "build:pages": "pnpm --filter @jameslnewell/buildkite-pipelines run build:pages",
-    "test": "pnpm -r run test",
+    "build": "turbo run build",
+    "build:pages": "turbo run build:pages",
+    "test": "turbo run test",
     "changeset": "changeset",
     "version": "changeset version",
     "release": "changeset publish"
