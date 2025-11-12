@@ -67,7 +67,7 @@ export class DockerLoginPlugin implements PluginBuilder {
     return this;
   }
 
-  build(): PluginSchema | Promise<PluginSchema> {
+  build(): PluginSchema {
     return {
       'docker-login#v2.1.0': {
         username: this.#username,
