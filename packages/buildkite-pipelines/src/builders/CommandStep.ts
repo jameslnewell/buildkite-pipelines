@@ -1,0 +1,413 @@
+import {StepBuilder} from './StepBuilder';
+import {KeyBuilder, KeyHelper} from './helpers/key';
+import {LabelBuilder, LabelHelper} from './helpers/label';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
+import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
+import {SkipBuilder, SkipHelper} from './helpers/skip';
+import {PluginBuilder} from './PluginBuilder';
+import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
+import {isPluginBuilder} from './isPluginBuilder';
+import {AgentsBuilder, AgentsHelper} from './helpers/agents';
+import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env';
+import {AutomaticRetry} from '../schema/schema';
+
+type ManualRetry = Exclude<CommandStepSchema['retry'], undefined>['manual'];
+
+export class CommandStep
+  implements
+    StepBuilder,
+    KeyBuilder,
+    LabelBuilder,
+    ConditionBuilder,
+    BranchFilterBuilder,
+    DependenciesBuilder,
+    SkipBuilder,
+    AgentsBuilder,
+    EnvironmentBuilder
+{
+  #commands?: string[];
+  #plugins: Array<PluginSchema | PluginBuilder> = [];
+  #keyHelper = new KeyHelper();
+  #labelHelper = new LabelHelper();
+  #conditionHelper = new ConditionHelper();
+  #branchesHelper = new BranchFilterHelper();
+  #dependenciesHelper = new DependenciesHelper();
+  #skipHelper = new SkipHelper();
+  #agentsHelper = new AgentsHelper();
+  #envHelper = new EnvironmentHelper();
+
+  #concurrency?: number;
+  #concurrencyGroup?: string;
+  #parallelism?: number;
+  #softFail?: boolean;
+  #timeoutInMinutes?: number;
+
+  #automaticRetries: AutomaticRetry[] = [];
+  #manualRetry: ManualRetry;
+
+  getCommands(): Iterable<string> {
+    return [...(this.#commands ?? [])];
+  }
+
+  /**
+   * @deprecated Use .addCommand() instead
+   */
+  command(command: string): this {
+    return this.addCommand(command);
+  }
+
+  addCommand(command: string): this {
+    if (!this.#commands) {
+      this.#commands = [];
+    }
+    this.#commands.push(command);
+    return this;
+  }
+
+  getKey(): string | undefined {
+    return this.#keyHelper.getKey();
+  }
+
+  /**
+   * @deprecated Use .setKey() instead
+   */
+  key(key: string): this {
+    return this.setKey(key);
+  }
+
+  setKey(key: string): this {
+    this.#keyHelper.setKey(key);
+    return this;
+  }
+
+  getLabel(): string | undefined {
+    return this.#labelHelper.getLabel();
+  }
+
+  /**
+   * @deprecated Use .setLabel() instead
+   */
+  label(label: string): this {
+    return this.setLabel(label);
+  }
+
+  setLabel(label: string): this {
+    this.#labelHelper.setLabel(label);
+    return this;
+  }
+
+  getCondition(): string | undefined {
+    return this.#conditionHelper.getCondition();
+  }
+
+  /**
+   * @deprecated Use .setCondition() instead
+   */
+  condition(condition: string): this {
+    return this.setCondition(condition);
+  }
+
+  setCondition(condition: string): this {
+    this.#conditionHelper.setCondition(condition);
+    return this;
+  }
+
+  getBranches(): ReadonlyArray<string> {
+    return this.#branchesHelper.getBranches();
+  }
+
+  /**
+   * @deprecated Use .addBranch() instead
+   */
+  branch(branch: string): this {
+    return this.addBranch(branch);
+  }
+
+  addBranch(branch: string): this {
+    this.#branchesHelper.addBranch(branch);
+    return this;
+  }
+
+  getDependencies(): ReadonlyArray<StepDependsOn> {
+    return this.#dependenciesHelper.getDependencies();
+  }
+
+  /**
+   * @deprecated Use .addDependency() instead
+   */
+  dependOn(dependency: StepDependsOn): this {
+    return this.addDependency(dependency);
+  }
+
+  addDependency(dependency: StepDependsOn): this {
+    this.#dependenciesHelper.addDependency(dependency);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addDependency() instead
+   */
+  allowDependencyFailure(allow: boolean): this {
+    return this.setAllowDependencyFailure(allow);
+  }
+
+  setAllowDependencyFailure(allow: boolean): this {
+    this.#dependenciesHelper.setAllowDependencyFailure(allow);
+    return this;
+  }
+
+  getSkip(): boolean | string | undefined {
+    return this.#skipHelper.getSkip();
+  }
+
+  /**
+   * @deprecated Use .setSkip() instead
+   */
+  skip(skip: boolean | string): this {
+    return this.setSkip(skip);
+  }
+
+  setSkip(skip: boolean | string): this {
+    this.#skipHelper.setSkip(skip);
+    return this;
+  }
+
+  getPlugins(): Iterable<PluginSchema | PluginBuilder> {
+    // 🤔 not sure we want to allow mutation of the plugins yet
+    return [...this.#plugins];
+  }
+
+  /**
+   * @deprecated Use .addPlugin() instead
+   */
+  plugin(plugin: PluginSchema | PluginBuilder): this {
+    return this.addPlugin(plugin);
+  }
+
+  addPlugin(plugin: PluginSchema | PluginBuilder): this {
+    this.#plugins.push(plugin);
+    return this;
+  }
+
+  /**
+   * @deprecated Use .addPlugins() instead
+   */
+  plugins(plugins: Iterable<PluginSchema | PluginBuilder>): this {
+    return this.addPlugins(plugins);
+  }
+
+  addPlugins(plugins: Iterable<PluginSchema | PluginBuilder>): this {
+    this.#plugins.push(...plugins);
+    return this;
+  }
+
+  getParallelism(): number | undefined {
+    return this.#parallelism;
+  }
+
+  /**
+   * @deprecated Use .setParallelism() instead
+   */
+  parallelism(parallelism: number): this {
+    return this.setParallelism(parallelism);
+  }
+
+  setParallelism(parallelism: number): this {
+    if (parallelism === 0) {
+      throw new Error('Parallelism of zero will result in step being omitted');
+    }
+    this.#parallelism = parallelism;
+    return this;
+  }
+
+  getEnv(): Readonly<Record<string, unknown>> {
+    return this.#envHelper.getEnv();
+  }
+
+  /**
+   * @deprecated Use .addEnv() instead
+   */
+  env(name: string, value: unknown): this {
+    return this.addEnv(name, value);
+  }
+
+  addEnv(name: string, value: unknown): this {
+    this.#envHelper.addEnv(name, value);
+    return this;
+  }
+
+  /**
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-limits
+   */
+  getConcurrency(): number | undefined {
+    return this.#concurrency;
+  }
+
+  /**
+   * @deprecated Use .setConcurrency() instead
+   */
+  concurrency(group: string, jobs: number): this {
+    return this.setConcurrency(group, jobs);
+  }
+
+  /**
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-limits
+   */
+  setConcurrency(concurrency: number): this;
+  /** @deprecated Use .setConcurrency() and .setConcurrencyGroup() instead */
+  setConcurrency(group: string, jobs: number): this;
+  setConcurrency(
+    concurrencyGroupOrConcurrency: string | number,
+    concurrency?: number,
+  ): this {
+    if (
+      typeof concurrencyGroupOrConcurrency === 'string' &&
+      typeof concurrency === 'number'
+    ) {
+      if (concurrency === 0) {
+        throw new Error(
+          'Concurrency of zero will result in step which never starts',
+        );
+      }
+      this.#concurrencyGroup = concurrencyGroupOrConcurrency;
+      this.#concurrency = concurrency;
+    } else if (typeof concurrencyGroupOrConcurrency === 'number') {
+      if (concurrencyGroupOrConcurrency === 0) {
+        throw new Error(
+          'Concurrency of zero will result in step which never starts',
+        );
+      }
+      this.#concurrency = concurrencyGroupOrConcurrency;
+    } else {
+      throw new Error('Invalid arguments for setConcurrency');
+    }
+    return this;
+  }
+
+  /**
+   *
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-groups
+   */
+  getConcurrencyGroup(): string | undefined {
+    return this.#concurrencyGroup;
+  }
+
+  /**
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-groups
+   */
+  setConcurrencyGroup(group: string): this {
+    this.#concurrencyGroup = group;
+    return this;
+  }
+
+  getSoftFail(): boolean | undefined {
+    return this.#softFail;
+  }
+
+  /**
+   * @deprecated Use .setSoftFail() instead
+   */
+  softFail(fail: boolean = true): this {
+    return this.setSoftFail(fail);
+  }
+
+  setSoftFail(fail: boolean): this {
+    this.#softFail = fail;
+    return this;
+  }
+
+  getTimeout(): number | undefined {
+    return this.#timeoutInMinutes;
+  }
+
+  /**
+   * @deprecated Use .setTimeout() instead
+   */
+  timeout(minutes: number): this {
+    return this.setTimeout(minutes);
+  }
+
+  setTimeout(minutes: number): this {
+    this.#timeoutInMinutes = minutes;
+    return this;
+  }
+
+  getAgents(): Readonly<Record<string, string>> {
+    return this.#agentsHelper.getAgents();
+  }
+
+  /**
+   * @deprecated Use .addAgent() instead
+   */
+  agent(tag: string, value: string): this {
+    return this.addAgent(tag, value);
+  }
+
+  addAgent(tag: string, value: string): this {
+    this.#agentsHelper.addAgent(tag, value);
+    return this;
+  }
+
+  getManualRetry(): ManualRetry {
+    return this.#manualRetry;
+  }
+
+  setManualRetry(retry: ManualRetry): this {
+    this.#manualRetry = retry;
+    return this;
+  }
+
+  getAutomaticRetries(): AutomaticRetry[] {
+    return this.#automaticRetries;
+  }
+
+  addAutomaticRetry(retry: AutomaticRetry): this {
+    this.#automaticRetries.push(retry);
+    return this;
+  }
+
+  build(): CommandStepSchema {
+    const object: CommandStepSchema = {
+      ...{commands: this.#commands},
+      ...this.#keyHelper.build(),
+      ...this.#labelHelper.build(),
+      ...this.#conditionHelper.build(),
+      ...this.#branchesHelper.build(),
+      ...this.#dependenciesHelper.build(),
+      ...this.#skipHelper.build(),
+      ...(this.#parallelism ? {parallelism: this.#parallelism} : {}),
+      ...(this.#concurrency ? {concurrency: this.#concurrency} : {}),
+      ...(this.#concurrencyGroup
+        ? {concurrency_group: this.#concurrencyGroup}
+        : {}),
+      ...this.#envHelper.build(),
+      ...(this.#softFail ? {soft_fail: this.#softFail} : {}),
+      ...(this.#timeoutInMinutes
+        ? {timeout_in_minutes: this.#timeoutInMinutes}
+        : {}),
+      ...this.#agentsHelper.build(),
+    };
+
+    if (this.#manualRetry !== undefined) {
+      object.retry = {
+        ...object.retry,
+        manual: this.#manualRetry,
+      };
+    }
+    if (this.#automaticRetries.length) {
+      object.retry = {
+        ...object.retry,
+        automatic: this.#automaticRetries,
+      };
+    }
+
+    if (this.#plugins.length > 0) {
+      object.plugins = this.#plugins.map((plugin) =>
+        isPluginBuilder(plugin) ? plugin.build() : plugin,
+      );
+    }
+
+    return object;
+  }
+}

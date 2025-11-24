@@ -3,3 +3,6 @@ node_modules
 # generated files
 src/lib/schema/schema.ts
 dist
+
+.turbo
+
