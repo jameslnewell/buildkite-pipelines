@@ -7,10 +7,7 @@ describe(WaitStep.name, () => {
   });
   describe('.continue_on_failure', () => {
     test('defaults to undefined', () => {
-      expect(new WaitStep().build()).toHaveProperty(
-        'continue_on_failure',
-        undefined,
-      );
+      expect(new WaitStep().build()).not.toHaveProperty('continue_on_failure');
     });
     test('set to true when set on the object', () => {
       expect(new WaitStep().setContinueOnFailure(true).build()).toHaveProperty(

@@ -4,7 +4,7 @@ describe(DockerPlugin.name, () => {
   test('nested under name/version', async () => {
     const plugin = new DockerPlugin();
     expect(await plugin.build()).toHaveProperty(
-      DockerPlugin.PLUGIN,
+      [DockerPlugin.PLUGIN],
       expect.objectContaining({}),
     );
   });

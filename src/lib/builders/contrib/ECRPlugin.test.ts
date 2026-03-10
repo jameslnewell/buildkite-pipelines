@@ -4,7 +4,7 @@ describe(ECRPlugin.name, () => {
   test('nested under name/version', async () => {
     const plugin = new ECRPlugin();
     expect(await plugin.build()).toHaveProperty(
-      ECRPlugin.PLUGIN,
+      [ECRPlugin.PLUGIN],
       expect.objectContaining({}),
     );
   });

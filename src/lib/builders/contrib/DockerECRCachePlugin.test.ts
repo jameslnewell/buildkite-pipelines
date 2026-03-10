@@ -4,7 +4,7 @@ describe(DockerECRCachePlugin.name, () => {
   test('nested under name/version', async () => {
     const plugin = new DockerECRCachePlugin();
     expect(await plugin.build()).toHaveProperty(
-      DockerECRCachePlugin.PLUGIN,
+      [DockerECRCachePlugin.PLUGIN],
       expect.objectContaining({}),
     );
   });

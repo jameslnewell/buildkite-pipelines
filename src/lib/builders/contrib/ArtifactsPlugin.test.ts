@@ -4,7 +4,7 @@ describe(ArtifactsPlugin.name, () => {
   test('nested under name/version', async () => {
     const plugin = new ArtifactsPlugin();
     expect(await plugin.build()).toHaveProperty(
-      ArtifactsPlugin.PLUGIN,
+      [ArtifactsPlugin.PLUGIN],
       expect.objectContaining({}),
     );
   });
