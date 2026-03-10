@@ -189,9 +189,7 @@ jobs:
         shell: bash {0} # opt-out of exit on error
       - run: git push
       - run: git push --follow-tags
-      - run: pnpm dlx publish-if-not-published
-        env:
-          NPM_CONFIG_PROVENANCE: 'true'
+      - run: pnpm dlx publish-if-not-published -- --provenance
 
   docker-push:
     name: '⬆️🐳 Publishing to DockerHub'
