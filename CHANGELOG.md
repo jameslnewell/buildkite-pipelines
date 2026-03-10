@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.22.1
+
+### Patch Changes
+
+- 6d6ba22: Updated ajv and js-yaml to fix vulnerabilities
+
 ## 3.22.0
 
 ### Minor Changes
