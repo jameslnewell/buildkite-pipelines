@@ -4,7 +4,7 @@ describe(SecretsManagerPlugin.name, () => {
   test('nested under name/version', async () => {
     const plugin = new SecretsManagerPlugin();
     expect(await plugin.build()).toHaveProperty(
-      SecretsManagerPlugin.PLUGIN,
+      [SecretsManagerPlugin.PLUGIN],
       expect.objectContaining({}),
     );
   });
