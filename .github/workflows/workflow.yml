@@ -160,6 +160,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+          registry-url: 'https://registry.npmjs.org'
       - uses: pnpm/action-setup@v2
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -182,16 +183,15 @@ jobs:
       - run: pnpm run changeset version
       - id: version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
-      - run: git config --global user.email "github-actions[bot]"
-      - run: git config --global user.name github-actions[bot]@users.noreply.github.com
+      - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - run: git config --global user.name "github-actions[bot]"
       - run: git commit -am "Bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
         shell: bash {0} # opt-out of exit on error
       - run: git push
       - run: git push --follow-tags
-      - run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: pnpm dlx publish-if-not-published
+        env:
+          NPM_CONFIG_PROVENANCE: 'true'
 
   docker-push:
     name: '⬆️🐳 Publishing to DockerHub'
