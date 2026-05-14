@@ -169,6 +169,7 @@ export class BlockStep
       ...this.#branchesHelper.build(),
       ...this.#dependenciesHelper.build(),
       ...this.#promptHelper.build(),
+      ...this.#conditionHelper.build(),
     };
 
     if (this.#state) {

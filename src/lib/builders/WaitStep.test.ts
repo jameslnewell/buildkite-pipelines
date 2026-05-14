@@ -27,4 +27,9 @@ describe(WaitStep.name, () => {
     const wait = new WaitStep().setKey(key);
     expect((await wait.build()).key).toEqual(key);
   });
+  test('has condition', async () => {
+    const condition = 'build.branch == "main"';
+    const wait = new WaitStep().setCondition(condition);
+    expect((await wait.build()).if).toEqual(condition);
+  });
 });
