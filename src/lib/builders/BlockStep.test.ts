@@ -47,4 +47,10 @@ describe(BlockStep.name, () => {
     const step = new BlockStep().setLabel(label).addField(field);
     expect((await step.build()).fields).toContain(field);
   });
+
+  test('has condition', async () => {
+    const condition = 'build.branch == "main"';
+    const step = new BlockStep().setLabel(label).setCondition(condition);
+    expect((await step.build()).if).toEqual(condition);
+  });
 });

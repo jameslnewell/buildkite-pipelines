@@ -90,6 +90,7 @@ export class WaitStep
       wait: null,
       ...this.#dependenciesHelper.build(),
       ...this.#keyHelper.build(),
+      ...this.#conditionHelper.build(),
     };
 
     if (this.#continueOnFailure !== undefined) {
