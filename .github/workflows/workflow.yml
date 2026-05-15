@@ -186,15 +186,33 @@ jobs:
           name: package-dist
           path: dist
       - run: pnpm run changeset version
-      - id: version
+      - id: bump
+        # Skip the rest of the publish job when `changeset version` had no
+        # pending changesets to apply — otherwise `npm publish` is run with
+        # the already-published version and fails with
+        # `You cannot publish over the previously published versions`.
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "No pending changesets — skipping publish."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.bump.outputs.skip != 'true'
+        id: version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
-      - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
-      - run: git config --global user.name "github-actions[bot]"
-      - run: git commit -am "Bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
-        shell: bash {0} # opt-out of exit on error
-      - run: git push
-      - run: git push --follow-tags
-      - run: npm publish
+      - if: steps.bump.outputs.skip != 'true'
+        run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      - if: steps.bump.outputs.skip != 'true'
+        run: git config --global user.name "github-actions[bot]"
+      - if: steps.bump.outputs.skip != 'true'
+        run: git commit -am "Bumped package versions 📦"
+      - if: steps.bump.outputs.skip != 'true'
+        run: git push
+      - if: steps.bump.outputs.skip != 'true'
+        run: git push --follow-tags
+      - if: steps.bump.outputs.skip != 'true'
+        run: npm publish
 
   docker-push:
     name: '⬆️🐳 Publishing to DockerHub'
