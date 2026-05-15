@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.22.3
+
+### Patch Changes
+
+- 823fc79: CI now requires every PR to include a changeset (Dependabot exempted).
+
 ## 3.22.2
 
 ### Patch Changes
