@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.22.4
+
+### Patch Changes
+
+- 0fa84c2: Stop the publish job's PAT push from cascading into a second `🤖 CI/CD` run that fails at `npm publish` (no pending changeset to consume).
+
 ## 3.22.3
 
 ### Patch Changes
