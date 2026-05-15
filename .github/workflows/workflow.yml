@@ -186,11 +186,20 @@ jobs:
           name: package-dist
           path: dist
       - run: pnpm run changeset version
+      # Format the files `changeset version` writes (CHANGELOG.md, package.json)
+      # so the bump commit always passes prettier — important because the
+      # commit lands on main with [skip ci], so the formatting check doesn't
+      # run on it directly; without this, format drift here would surface as
+      # a red `check:formatting` on the next PR.
+      - run: pnpm run fix:formatting
       - id: version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
       - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - run: git config --global user.name "github-actions[bot]"
-      - run: git commit -am "Bumped package versions 📦" || echo "Versions not updated. Nothing to commit."
+      # [skip ci] stops the PAT-driven push from cascading into a second
+      # `🤖 CI/CD` run (no pending changeset → npm publish errors with
+      # "cannot publish over the previously published versions").
+      - run: git commit -am "Bumped package versions 📦 [skip ci]" || echo "Versions not updated. Nothing to commit."
         shell: bash {0} # opt-out of exit on error
       - run: git push
       - run: git push --follow-tags
