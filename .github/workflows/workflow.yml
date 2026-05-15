@@ -212,7 +212,7 @@ jobs:
 
       - id: pushed
         run: echo "::set-output name=pushed::$(docker manifest inspect jameslnewell/buildkite-pipelines:${{ steps.publish-package.outputs.version }} > /dev/null)"
-      - uses: docker/build-push-action@v2
+      - uses: docker/build-push-action@v7
         if: ${{ steps.version.outputs.pushed }} == 1
         with:
           push: true
