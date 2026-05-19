@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.22.5
+
+### Patch Changes
+
+- 51740cc: CLI now redirects any stdout written from the imported pipeline file (and any function it executes — factories, builders) to stderr so it doesn't get interleaved with the generated YAML on stdout.
+
 ## 3.22.4
 
 ### Patch Changes
