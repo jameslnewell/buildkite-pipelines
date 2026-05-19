@@ -46,6 +46,14 @@ const resolve = (id: string, basedir: string) =>
     async (argv) => {
       const {file, require, cwd} = argv;
 
+      // redirect any stdout writes from the imported pipeline (and any
+      // functions it executes) to stderr so they don't get interleaved
+      // with the generated YAML on stdout
+      const originalStdoutWrite = process.stdout.write.bind(process.stdout);
+      process.stdout.write = process.stderr.write.bind(
+        process.stderr,
+      ) as typeof process.stdout.write;
+
       // change the current working directory
       const basedir = process.cwd();
       if (cwd) process.chdir(cwd);
@@ -172,7 +180,13 @@ const resolve = (id: string, basedir: string) =>
       }
 
       log('stringifying pipeline');
-      console.log(await stringify(pipeline));
+      const yaml = await stringify(pipeline);
+
+      // write the generated YAML to the original stdout
+      originalStdoutWrite(`${yaml}\n`);
+
+      // restore stdout
+      process.stdout.write = originalStdoutWrite;
     },
   ).argv;
 })();
