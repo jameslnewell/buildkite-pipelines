@@ -182,9 +182,11 @@ const resolve = (id: string, basedir: string) =>
       log('stringifying pipeline');
       const yaml = await stringify(pipeline);
 
-      // restore stdout so the generated YAML is written to stdout
+      // write the generated YAML to the original stdout
+      originalStdoutWrite(`${yaml}\n`);
+
+      // restore stdout
       process.stdout.write = originalStdoutWrite;
-      console.log(yaml);
     },
   ).argv;
 })();
