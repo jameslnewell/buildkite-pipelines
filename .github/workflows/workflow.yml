@@ -5,7 +5,7 @@ on:
 
 jobs:
   check-formatting:
-    name: '💅 Check formatting'
+    name: "💅 Check formatting"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -29,7 +29,7 @@ jobs:
       - run: pnpm run check:formatting
 
   check-typing:
-    name: '👮‍♂️ Check typing'
+    name: "👮‍♂️ Check typing"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -53,7 +53,7 @@ jobs:
       - run: pnpm run check:typing
 
   test:
-    name: '🧪 Run tests'
+    name: "🧪 Run tests"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -83,7 +83,7 @@ jobs:
       - run: pnpm run test
 
   build-package:
-    name: '👷‍♂️📦 Building package'
+    name: "👷‍♂️📦 Building package"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -104,17 +104,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
-      - run: pnpm run build:types && pnpm build:transpile
+      - run: pnpm run build:types && pnpm run build:transpile
+      # Tar every package's dist so the artifact preserves the
+      # `packages/<name>/dist` layout regardless of how many packages exist.
+      - run: tar -czf package-dist.tar.gz packages/*/dist
       - uses: actions/upload-artifact@v4
         with:
           name: package-dist
-          path: |
-            dist/cli
-            dist/lib
-            dist/__experimental__
+          path: package-dist.tar.gz
 
   build-pages:
-    name: '👷‍♂️📚 Building pages'
+    name: "👷‍♂️📚 Building pages"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -138,10 +138,10 @@ jobs:
       - run: pnpm run build:pages
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist/pages
+          path: ./packages/buildkite-pipelines/dist/pages
 
   publish-package:
-    name: '⬆️📦 Publishing to NPM'
+    name: "⬆️📦 Publishing to NPM"
     runs-on: ubuntu-latest
     permissions:
       contents: write # to push version bump commits and tags
@@ -165,7 +165,7 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 24
-          registry-url: 'https://registry.npmjs.org'
+          registry-url: "https://registry.npmjs.org"
       - uses: pnpm/action-setup@v2
       - name: Get pnpm store directory
         id: pnpm-cache
@@ -184,7 +184,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: package-dist
-          path: dist
+      - run: tar -xzf package-dist.tar.gz
+      # Unshallow and fetch tags so `changeset publish` can tell which package
+      # versions are already released and tag the new ones correctly.
+      - run: git fetch --unshallow --tags || git fetch --tags
       - run: pnpm run changeset version
       # Format the files `changeset version` writes (CHANGELOG.md, package.json)
       # so the bump commit always passes prettier — important because the
@@ -193,20 +196,25 @@ jobs:
       # a red `check:formatting` on the next PR.
       - run: pnpm run fix:formatting
       - id: version
-        run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
+        run: echo "version=$(jq -r .version packages/buildkite-pipelines/package.json)" >> $GITHUB_OUTPUT
       - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - run: git config --global user.name "github-actions[bot]"
       # [skip ci] stops the PAT-driven push from cascading into a second
-      # `🤖 CI/CD` run (no pending changeset → npm publish errors with
-      # "cannot publish over the previously published versions").
+      # `🤖 CI/CD` run.
       - run: git commit -am "Bumped package versions 📦 [skip ci]" || echo "Versions not updated. Nothing to commit."
         shell: bash {0} # opt-out of exit on error
       - run: git push
+      # Publish every workspace package whose version isn't yet on npm, and tag
+      # each release. `changeset publish` shells out to `npm publish`, so OIDC
+      # trusted publishing still applies (no token set); provenance is enabled
+      # via NPM_CONFIG_PROVENANCE.
+      - run: pnpm run release
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
       - run: git push --follow-tags
-      - run: npm publish
 
   docker-push:
-    name: '⬆️🐳 Publishing to DockerHub'
+    name: "⬆️🐳 Publishing to DockerHub"
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs:
@@ -241,7 +249,7 @@ jobs:
       #     readme-filepath: docker/README.md
 
   pages-upload:
-    name: '⬆️🕸️ Publishing to Github Pages'
+    name: "⬆️🕸️ Publishing to Github Pages"
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs:

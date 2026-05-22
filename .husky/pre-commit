@@ -1,1 +1,3 @@
-pnpm exec pretty-quick --staged
+# Formatting tooling lives per-package; this root script fans out to run
+# pretty-quick against staged files in each workspace package.
+pnpm run fix:formatting:staged
