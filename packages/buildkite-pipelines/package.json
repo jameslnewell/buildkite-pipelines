@@ -1,6 +1,6 @@
 {
   "name": "@jameslnewell/buildkite-pipelines",
-  "version": "3.22.5",
+  "version": "3.22.6",
   "bin": "dist/cli/index.js",
   "main": "./dist/lib/index.js",
   "exports": {
