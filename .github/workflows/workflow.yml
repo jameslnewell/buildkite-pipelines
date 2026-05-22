@@ -232,10 +232,22 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - id: pushed
-        run: echo "::set-output name=pushed::$(docker manifest inspect jameslnewell/buildkite-pipelines:${{ steps.publish-package.outputs.version }} > /dev/null)"
+      # Skip the build when the image for this version is already on DockerHub
+      # (`docker manifest inspect` exits 0 when the tag exists). The version is
+      # the buildkite-pipelines package version published by `publish-package`,
+      # since the image bundles that CLI.
+      - id: image
+        env:
+          VERSION: ${{ needs.publish-package.outputs.version }}
+        run: |
+          if docker manifest inspect "jameslnewell/buildkite-pipelines:$VERSION" > /dev/null 2>&1; then
+            echo "Image jameslnewell/buildkite-pipelines:$VERSION already exists — skipping build."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
       - uses: docker/build-push-action@v2
-        if: ${{ steps.version.outputs.pushed }} == 1
+        if: steps.image.outputs.exists == 'false'
         with:
           push: true
           context: .
