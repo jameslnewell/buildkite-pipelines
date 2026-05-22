@@ -69,7 +69,7 @@
   "prettier": "@jameslnewell/prettier-config",
   "scripts": {
     "fix:formatting": "prettier --write .",
-    "check": "pnpm run check:formatting && pnpm run check:types",
+    "check": "pnpm run check:formatting && pnpm run check:typing",
     "check:formatting": "prettier --check .",
     "check:typing": "tsc --noEmit",
     "prepare": "husky && pnpm run codegen",
