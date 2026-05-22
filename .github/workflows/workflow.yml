@@ -105,13 +105,13 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - run: pnpm install
       - run: pnpm run build:types && pnpm run build:transpile
+      # Tar every package's dist so the artifact preserves the
+      # `packages/<name>/dist` layout regardless of how many packages exist.
+      - run: tar -czf package-dist.tar.gz packages/*/dist
       - uses: actions/upload-artifact@v4
         with:
           name: package-dist
-          path: |
-            packages/buildkite-pipelines/dist/cli
-            packages/buildkite-pipelines/dist/lib
-            packages/buildkite-pipelines/dist/__experimental__
+          path: package-dist.tar.gz
 
   build-pages:
     name: "👷‍♂️📚 Building pages"
@@ -184,7 +184,10 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: package-dist
-          path: packages/buildkite-pipelines/dist
+      - run: tar -xzf package-dist.tar.gz
+      # Unshallow and fetch tags so `changeset publish` can tell which package
+      # versions are already released and tag the new ones correctly.
+      - run: git fetch --unshallow --tags || git fetch --tags
       - run: pnpm run changeset version
       # Format the files `changeset version` writes (CHANGELOG.md, package.json)
       # so the bump commit always passes prettier — important because the
@@ -197,17 +200,18 @@ jobs:
       - run: git config --global user.email "github-actions[bot]@users.noreply.github.com"
       - run: git config --global user.name "github-actions[bot]"
       # [skip ci] stops the PAT-driven push from cascading into a second
-      # `🤖 CI/CD` run (no pending changeset → npm publish errors with
-      # "cannot publish over the previously published versions").
+      # `🤖 CI/CD` run.
       - run: git commit -am "Bumped package versions 📦 [skip ci]" || echo "Versions not updated. Nothing to commit."
         shell: bash {0} # opt-out of exit on error
       - run: git push
+      # Publish every workspace package whose version isn't yet on npm, and tag
+      # each release. `changeset publish` shells out to `npm publish`, so OIDC
+      # trusted publishing still applies (no token set); provenance is enabled
+      # via NPM_CONFIG_PROVENANCE.
+      - run: pnpm run release
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
       - run: git push --follow-tags
-      # Publish from the package directory so npm publishes
-      # @jameslnewell/buildkite-pipelines (not the private root). OIDC trusted
-      # publishing keys off the workflow + repo, so it works from the subdir.
-      - run: npm publish
-        working-directory: packages/buildkite-pipelines
 
   docker-push:
     name: "⬆️🐳 Publishing to DockerHub"
