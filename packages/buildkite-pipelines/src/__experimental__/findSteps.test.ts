@@ -86,6 +86,19 @@ describe(findSteps, () => {
 
     expect(steps).toEqual([]);
   });
+
+  test('finds the child steps when given a group directly', () => {
+    const group = new GroupStep()
+      .setLabel('Deploying')
+      .addSteps([deployAppAStep, deployAppBStep]);
+
+    const steps = findSteps(
+      group,
+      (step): step is CommandStep => step instanceof CommandStep,
+    );
+
+    expect(steps).toEqual([deployAppAStep, deployAppBStep]);
+  });
 });
 
 describe(findFirstStep, () => {
@@ -144,5 +157,18 @@ describe(findFirstStep, () => {
     );
 
     expect(step).toBeUndefined();
+  });
+
+  test('finds the first child step when given a group directly', () => {
+    const group = new GroupStep()
+      .setLabel('Deploying')
+      .addSteps([deployAppAStep, deployAppBStep]);
+
+    const step = findFirstStep(
+      group,
+      (step): step is CommandStep => step instanceof CommandStep,
+    );
+
+    expect(step).toEqual(deployAppAStep);
   });
 });

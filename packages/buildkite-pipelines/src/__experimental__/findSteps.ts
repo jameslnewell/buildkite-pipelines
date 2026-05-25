@@ -32,28 +32,39 @@ export interface FindStepsOptions {
 // filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];
 
 /**
- * Finds all the steps that match the predicate within a pipeline
+ * Finds all the steps that match the predicate within a pipeline, group, or
+ * iterable of steps
  */
 export function findSteps<S extends StepSchema | StepBuilder>(
-  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  pipelineGroupOrSteps:
+    | Pipeline
+    | GroupStep
+    | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsNarrowPredicate<S>,
   options?: FindStepsOptions,
 ): ReadonlyArray<S>;
 export function findSteps(
-  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  pipelineGroupOrSteps:
+    | Pipeline
+    | GroupStep
+    | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsPredicate,
   options?: FindStepsOptions,
 ): ReadonlyArray<StepSchema | StepBuilder>;
 export function findSteps(
-  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  pipelineGroupOrSteps:
+    | Pipeline
+    | GroupStep
+    | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsPredicate,
   {recursive = true}: FindStepsOptions = {},
 ): ReadonlyArray<StepSchema | StepBuilder> {
-  // if we have a pipeline, get the steps from the pipeline, otherwise get the steps from the iterable
+  // if we have a pipeline or a group, get its child steps; otherwise get the steps from the iterable
   const stepsArray = Array.from(
-    pipelineOrSteps instanceof Pipeline
-      ? Array.from(pipelineOrSteps.getSteps())
-      : pipelineOrSteps,
+    pipelineGroupOrSteps instanceof Pipeline ||
+      pipelineGroupOrSteps instanceof GroupStep
+      ? Array.from(pipelineGroupOrSteps.getSteps())
+      : pipelineGroupOrSteps,
   );
 
   // if recursive=true, add the child steps of any GroupSteps to the array
@@ -87,23 +98,33 @@ function isGroupSchema(
 }
 
 /**
- * Finds the first step that matches the predicate within a pipeline
+ * Finds the first step that matches the predicate within a pipeline, group, or
+ * iterable of steps
  */
 export function findFirstStep<S extends StepSchema | StepBuilder>(
-  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  pipelineGroupOrSteps:
+    | Pipeline
+    | GroupStep
+    | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsNarrowPredicate<S>,
   options?: FindStepsOptions,
 ): S | undefined;
 export function findFirstStep(
-  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  pipelineGroupOrSteps:
+    | Pipeline
+    | GroupStep
+    | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsPredicate,
   options?: FindStepsOptions,
 ): StepSchema | StepBuilder | undefined;
 export function findFirstStep(
-  pipelineOrSteps: Pipeline | Iterable<StepSchema | StepBuilder>,
+  pipelineGroupOrSteps:
+    | Pipeline
+    | GroupStep
+    | Iterable<StepSchema | StepBuilder>,
   predicate: FindStepsPredicate,
   options: FindStepsOptions = {},
 ): StepSchema | StepBuilder | undefined {
-  const steps = findSteps(pipelineOrSteps, predicate, options);
+  const steps = findSteps(pipelineGroupOrSteps, predicate, options);
   return steps[0];
 }
