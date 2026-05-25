@@ -1,10 +1,14 @@
-import {PipelineNotification, PipelineSchema, StepSchema} from '../schema';
-import {PipelineBuilder} from './PipelineBuilder';
-import {StepBuilder} from './StepBuilder';
-import {StepsBuilder, StepsHelper} from './helpers/steps';
-import {AgentsBuilder, AgentsHelper} from './helpers/agents';
-import {NotifyBuilder, NotificationHelper} from './helpers/notifification';
-import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env';
+import {
+  PipelineNotification,
+  PipelineSchema,
+  StepSchema,
+} from '../schema/index.js';
+import {PipelineBuilder} from './PipelineBuilder.js';
+import {StepBuilder} from './StepBuilder.js';
+import {StepsBuilder, StepsHelper} from './helpers/steps.js';
+import {AgentsBuilder, AgentsHelper} from './helpers/agents.js';
+import {NotifyBuilder, NotificationHelper} from './helpers/notifification.js';
+import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env.js';
 
 export class Pipeline
   implements

@@ -1,4 +1,4 @@
-import {} from '../../schema';
+import {} from '../../schema/index.js';
 
 export interface EnvironmentBuilder {
   getEnv(): Readonly<Record<string, unknown>>;

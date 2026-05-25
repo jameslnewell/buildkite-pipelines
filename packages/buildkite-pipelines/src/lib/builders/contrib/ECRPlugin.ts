@@ -1,5 +1,5 @@
-import {PluginSchema} from '../../schema';
-import {PluginBuilder} from '../PluginBuilder';
+import {PluginSchema} from '../../schema/index.js';
+import {PluginBuilder} from '../PluginBuilder.js';
 
 /**
  * @see https://github.com/buildkite-plugins/ecr-buildkite-plugin

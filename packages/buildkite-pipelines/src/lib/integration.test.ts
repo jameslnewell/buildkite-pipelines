@@ -1,8 +1,8 @@
-import {stringify, validate} from '.';
-import {CommandStep, GroupStep, WaitStep} from './builders';
-import {BlockStep} from './builders/BlockStep';
-import {Pipeline} from './builders/Pipeline';
-import {DockerPlugin} from './builders/contrib';
+import {stringify, validate} from './index.js';
+import {CommandStep, GroupStep, WaitStep} from './builders/index.js';
+import {BlockStep} from './builders/BlockStep.js';
+import {Pipeline} from './builders/Pipeline.js';
+import {DockerPlugin} from './builders/contrib/index.js';
 
 describe('integration', () => {
   test('matches snapshot', async () => {
