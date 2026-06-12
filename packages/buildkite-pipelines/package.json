@@ -41,7 +41,7 @@
     "@jameslnewell/jest-preset": "^3.0.0",
     "@jameslnewell/prettier-config": "^1.1.0",
     "@swc/cli": "^0.8.1",
-    "@swc/core": "^1.15.40",
+    "@swc/core": "^1.15.41",
     "@swc/jest": "^0.2.39",
     "@swc/register": "^0.1.10",
     "@types/debug": "^4",
