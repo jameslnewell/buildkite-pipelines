@@ -1,4 +1,4 @@
-import {DockerPlugin} from './DockerPlugin';
+import {DockerPlugin} from './DockerPlugin.js';
 
 describe(DockerPlugin.name, () => {
   test('nested under name/version', async () => {

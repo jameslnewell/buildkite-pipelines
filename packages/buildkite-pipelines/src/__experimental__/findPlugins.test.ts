@@ -1,5 +1,5 @@
-import {ArtifactsPlugin, CommandStep, DockerPlugin} from '../lib';
-import {findFirstPlugin, findPlugins} from './findPlugins';
+import {ArtifactsPlugin, CommandStep, DockerPlugin} from '../lib/index.js';
+import {findFirstPlugin, findPlugins} from './findPlugins.js';
 
 const dockerPlugin = new DockerPlugin()
   .setImage('node:22')

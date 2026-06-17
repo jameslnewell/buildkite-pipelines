@@ -1,5 +1,5 @@
-import {Pipeline} from './Pipeline';
-import {CommandStep} from './CommandStep';
+import {Pipeline} from './Pipeline.js';
+import {CommandStep} from './CommandStep.js';
 
 describe('Pipeline', () => {
   describe('agents', () => {

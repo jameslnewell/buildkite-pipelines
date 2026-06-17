@@ -1,5 +1,5 @@
-import {CommandStep, GroupStep, Pipeline} from '../lib';
-import {findFirstStep, findSteps} from './findSteps';
+import {CommandStep, GroupStep, Pipeline} from '../lib/index.js';
+import {findFirstStep, findSteps} from './findSteps.js';
 
 const buildAppAStep = new CommandStep()
   .setLabel('Building A')

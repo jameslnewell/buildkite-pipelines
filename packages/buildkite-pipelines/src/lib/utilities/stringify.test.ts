@@ -1,4 +1,4 @@
-import {stringify} from './stringify';
+import {stringify} from './stringify.js';
 
 describe('stringify()', () => {
   test('outputs a yaml string', async () => {

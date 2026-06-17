@@ -1,11 +1,14 @@
-import {StepDependsOn, TriggerStepSchema} from '../schema';
-import {StepBuilder} from './StepBuilder';
-import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
-import {ConditionBuilder, ConditionHelper} from './helpers/condition';
-import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
-import {KeyBuilder, KeyHelper} from './helpers/key';
-import {LabelBuilder, LabelHelper} from './helpers/label';
-import {SkipBuilder, SkipHelper} from './helpers/skip';
+import {StepDependsOn, TriggerStepSchema} from '../schema/index.js';
+import {StepBuilder} from './StepBuilder.js';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches.js';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition.js';
+import {
+  DependenciesBuilder,
+  DependenciesHelper,
+} from './helpers/dependencies.js';
+import {KeyBuilder, KeyHelper} from './helpers/key.js';
+import {LabelBuilder, LabelHelper} from './helpers/label.js';
+import {SkipBuilder, SkipHelper} from './helpers/skip.js';
 
 export class TriggerStep
   implements

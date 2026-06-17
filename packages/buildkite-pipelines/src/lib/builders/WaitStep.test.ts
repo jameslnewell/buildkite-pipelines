@@ -1,4 +1,4 @@
-import {WaitStep} from './WaitStep';
+import {WaitStep} from './WaitStep.js';
 
 describe(WaitStep.name, () => {
   describe('.wait', () => {

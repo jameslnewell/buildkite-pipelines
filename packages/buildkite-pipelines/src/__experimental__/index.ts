@@ -1,2 +1,2 @@
-export * from './findSteps';
-export * from './findPlugins';
+export * from './findSteps.js';
+export * from './findPlugins.js';

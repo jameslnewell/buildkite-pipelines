@@ -1,5 +1,5 @@
-import {Field} from '../../schema';
-import {InputStep} from '../../schema/schema';
+import {Field} from '../../schema/index.js';
+import {InputStep} from '../../schema/schema.js';
 
 export interface PromptBuilder {
   /**
