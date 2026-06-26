@@ -27,8 +27,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       prettier:
-        specifier: ^2.5.1
-        version: 2.8.8
+        specifier: ^3.8.5
+        version: 3.8.5
       resolve:
         specifier: ^1.22.12
         version: 1.22.12
@@ -44,7 +44,7 @@ importers:
         version: 3.0.0(jest@30.4.2)
       '@jameslnewell/prettier-config':
         specifier: ^1.1.0
-        version: 1.1.0(prettier@2.8.8)
+        version: 1.1.0(prettier@3.8.5)
       '@swc/cli':
         specifier: ^0.8.1
         version: 0.8.1(@swc/core@1.15.43)(chokidar@5.0.0)
@@ -98,7 +98,7 @@ importers:
         version: 15.0.4
       pretty-quick:
         specifier: ^4.2.2
-        version: 4.2.2(prettier@2.8.8)
+        version: 4.2.2(prettier@3.8.5)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.15.43)(@types/node@22.0.0)(typescript@5.9.3)
@@ -828,12 +828,12 @@ packages:
       - '@swc/helpers'
     dev: true
 
-  /@jameslnewell/prettier-config@1.1.0(prettier@2.8.8):
+  /@jameslnewell/prettier-config@1.1.0(prettier@3.8.5):
     resolution: {integrity: sha512-CYpGhhkhVG1FpbzWOW9PGMFs+TeGU4ZNs0Ch/pys6rUQ36OCcBQ1gXC+t6HsDblYyhrrsJ/eMka1X7R4ek9R2Q==}
     peerDependencies:
       prettier: ^2.4.1
     dependencies:
-      prettier: 2.8.8
+      prettier: 3.8.5
     dev: true
 
   /@jest/console@30.4.1:
@@ -3995,7 +3995,7 @@ packages:
       js-yaml: 4.2.0
       lodash: 4.17.21
       minimist: 1.2.8
-      prettier: 3.8.1
+      prettier: 3.8.5
       tinyglobby: 0.2.15
     dev: true
 
@@ -4500,12 +4500,12 @@ packages:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
+    dev: true
 
-  /prettier@3.8.1:
-    resolution: {integrity: sha512-UOnG6LftzbdaHZcKoPFtOcCKztrQ57WkHDeRD9t/PTQtmT0NHSeWWepj6pS0z/N7+08BHFDQVUrfmfMRcZwbMg==}
+  /prettier@3.8.5:
+    resolution: {integrity: sha512-zxcTTCedNGJM4R8sj/Cq/F0W/c4iE0afWBcBwMTRtw4WHYP9TWkYjdiH3npPRUYsXQCPR0hTU9yjovOu+E6EQA==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /pretty-format@30.3.0:
     resolution: {integrity: sha512-oG4T3wCbfeuvljnyAzhBvpN45E8iOTXCU/TD3zXW80HA3dQ4ahdqMkWGiPWZvjpQwlbyHrPTWUAqUzGzv4l1JQ==}
@@ -4533,7 +4533,7 @@ packages:
       parse-ms: 4.0.0
     dev: true
 
-  /pretty-quick@4.2.2(prettier@2.8.8):
+  /pretty-quick@4.2.2(prettier@3.8.5):
     resolution: {integrity: sha512-uAh96tBW1SsD34VhhDmWuEmqbpfYc/B3j++5MC/6b3Cb8Ow7NJsvKFhg0eoGu2xXX+o9RkahkTK6sUdd8E7g5w==}
     engines: {node: '>=14'}
     hasBin: true
@@ -4545,7 +4545,7 @@ packages:
       mri: 1.2.0
       picocolors: 1.1.1
       picomatch: 4.0.4
-      prettier: 2.8.8
+      prettier: 3.8.5
       tinyexec: 0.3.2
       tslib: 2.8.1
     dev: true
