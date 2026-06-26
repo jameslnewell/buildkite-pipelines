@@ -43,8 +43,8 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(jest@30.4.2)
       '@jameslnewell/prettier-config':
-        specifier: ^1.1.0
-        version: 1.1.0(prettier@2.8.8)
+        specifier: ^2.0.0
+        version: 2.0.0(prettier@2.8.8)
       '@swc/cli':
         specifier: ^0.8.1
         version: 0.8.1(@swc/core@1.15.43)(chokidar@5.0.0)
@@ -828,10 +828,10 @@ packages:
       - '@swc/helpers'
     dev: true
 
-  /@jameslnewell/prettier-config@1.1.0(prettier@2.8.8):
-    resolution: {integrity: sha512-CYpGhhkhVG1FpbzWOW9PGMFs+TeGU4ZNs0Ch/pys6rUQ36OCcBQ1gXC+t6HsDblYyhrrsJ/eMka1X7R4ek9R2Q==}
+  /@jameslnewell/prettier-config@2.0.0(prettier@2.8.8):
+    resolution: {integrity: sha512-q7tS7Axe7v7MB7vS1VP6TTAccBIRHB847vMsPD7C0bzj2dP20UE5r124UnK5FcwmWqToWSBPzR10Rg7+e7Fakw==}
     peerDependencies:
-      prettier: ^2.4.1
+      prettier: ^3.0.0
     dependencies:
       prettier: 2.8.8
     dev: true
