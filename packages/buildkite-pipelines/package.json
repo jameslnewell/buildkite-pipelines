@@ -59,7 +59,7 @@
     "json-schema-to-typescript": "^15.0.4",
     "pretty-quick": "^4.2.2",
     "ts-node": "^10.9.2",
-    "typedoc": "^0.28.19",
+    "typedoc": "^0.28.20",
     "typescript": "^5.9.3"
   },
   "jest": {
