@@ -1,6 +1,6 @@
-import {CommandStep} from './CommandStep';
-import {Plugin} from './Plugin';
-import {ECRPlugin} from './contrib';
+import {CommandStep} from './CommandStep.js';
+import {Plugin} from './Plugin.js';
+import {ECRPlugin} from './contrib/index.js';
 
 const installCommand = 'yarn install';
 const buildCommand = 'yarn run build';

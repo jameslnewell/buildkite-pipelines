@@ -1,4 +1,4 @@
-import {CommandStepSchema, StepDependsOn} from '../../schema';
+import {CommandStepSchema, StepDependsOn} from '../../schema/index.js';
 
 export interface DependenciesBuilder {
   getDependencies(): ReadonlyArray<StepDependsOn>;

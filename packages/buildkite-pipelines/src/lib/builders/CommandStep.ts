@@ -1,16 +1,23 @@
-import {StepBuilder} from './StepBuilder';
-import {KeyBuilder, KeyHelper} from './helpers/key';
-import {LabelBuilder, LabelHelper} from './helpers/label';
-import {ConditionBuilder, ConditionHelper} from './helpers/condition';
-import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
-import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
-import {SkipBuilder, SkipHelper} from './helpers/skip';
-import {PluginBuilder} from './PluginBuilder';
-import {CommandStepSchema, PluginSchema, StepDependsOn} from '../schema';
-import {isPluginBuilder} from './isPluginBuilder';
-import {AgentsBuilder, AgentsHelper} from './helpers/agents';
-import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env';
-import {AutomaticRetry} from '../schema/schema';
+import {StepBuilder} from './StepBuilder.js';
+import {KeyBuilder, KeyHelper} from './helpers/key.js';
+import {LabelBuilder, LabelHelper} from './helpers/label.js';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition.js';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches.js';
+import {
+  DependenciesBuilder,
+  DependenciesHelper,
+} from './helpers/dependencies.js';
+import {SkipBuilder, SkipHelper} from './helpers/skip.js';
+import {PluginBuilder} from './PluginBuilder.js';
+import {
+  CommandStepSchema,
+  PluginSchema,
+  StepDependsOn,
+} from '../schema/index.js';
+import {isPluginBuilder} from './isPluginBuilder.js';
+import {AgentsBuilder, AgentsHelper} from './helpers/agents.js';
+import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env.js';
+import {AutomaticRetry} from '../schema/schema.js';
 
 type ManualRetry = Exclude<CommandStepSchema['retry'], undefined>['manual'];
 

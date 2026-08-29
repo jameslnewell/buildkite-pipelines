@@ -1,4 +1,4 @@
-import {SecretsManagerPlugin} from './SecretsManagerPlugin';
+import {SecretsManagerPlugin} from './SecretsManagerPlugin.js';
 
 describe(SecretsManagerPlugin.name, () => {
   test('nested under name/version', async () => {

@@ -1,4 +1,4 @@
-import {validate} from './validate';
+import {validate} from './validate.js';
 
 describe(validate.name, () => {
   test('returns 0 errors when valid', async () => {

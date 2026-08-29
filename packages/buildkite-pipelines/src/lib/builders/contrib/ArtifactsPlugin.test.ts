@@ -1,4 +1,4 @@
-import {ArtifactsPlugin} from './ArtifactsPlugin';
+import {ArtifactsPlugin} from './ArtifactsPlugin.js';
 
 describe(ArtifactsPlugin.name, () => {
   test('nested under name/version', async () => {

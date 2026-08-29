@@ -1,10 +1,13 @@
-import {GroupStepSchema, StepDependsOn, StepSchema} from '../schema';
-import {StepBuilder} from './StepBuilder';
-import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
-import {KeyBuilder, KeyHelper} from './helpers/key';
-import {LabelBuilder, LabelHelper} from './helpers/label';
-import {SkipBuilder, SkipHelper} from './helpers/skip';
-import {StepsBuilder, StepsHelper} from './helpers/steps';
+import {GroupStepSchema, StepDependsOn, StepSchema} from '../schema/index.js';
+import {StepBuilder} from './StepBuilder.js';
+import {
+  DependenciesBuilder,
+  DependenciesHelper,
+} from './helpers/dependencies.js';
+import {KeyBuilder, KeyHelper} from './helpers/key.js';
+import {LabelBuilder, LabelHelper} from './helpers/label.js';
+import {SkipBuilder, SkipHelper} from './helpers/skip.js';
+import {StepsBuilder, StepsHelper} from './helpers/steps.js';
 
 export class GroupStep
   implements

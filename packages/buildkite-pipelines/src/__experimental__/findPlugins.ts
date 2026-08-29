@@ -1,4 +1,4 @@
-import {CommandStep, PluginBuilder, PluginSchema} from '../lib';
+import {CommandStep, PluginBuilder, PluginSchema} from '../lib/index.js';
 
 export interface FindPluginsPredicate {
   (

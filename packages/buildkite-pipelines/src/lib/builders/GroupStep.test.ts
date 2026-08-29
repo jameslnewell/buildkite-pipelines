@@ -1,5 +1,5 @@
-import {CommandStep} from './CommandStep';
-import {GroupStep} from './GroupStep';
+import {CommandStep} from './CommandStep.js';
+import {GroupStep} from './GroupStep.js';
 
 describe(GroupStep.name, () => {
   const label = 'Testing Steps';

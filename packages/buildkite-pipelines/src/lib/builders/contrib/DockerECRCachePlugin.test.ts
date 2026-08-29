@@ -1,4 +1,4 @@
-import {DockerECRCachePlugin} from './DockerECRCachePlugin';
+import {DockerECRCachePlugin} from './DockerECRCachePlugin.js';
 
 describe(DockerECRCachePlugin.name, () => {
   test('nested under name/version', async () => {

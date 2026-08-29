@@ -1,11 +1,14 @@
-import {BlockStepSchema, Field, StepDependsOn} from '../schema';
-import {StepBuilder} from './StepBuilder';
-import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches';
-import {ConditionBuilder, ConditionHelper} from './helpers/condition';
-import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
-import {KeyBuilder, KeyHelper} from './helpers/key';
-import {LabelBuilder} from './helpers/label';
-import {PromptBuilder, PromptHelper} from './helpers/prompt';
+import {BlockStepSchema, Field, StepDependsOn} from '../schema/index.js';
+import {StepBuilder} from './StepBuilder.js';
+import {BranchFilterBuilder, BranchFilterHelper} from './helpers/branches.js';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition.js';
+import {
+  DependenciesBuilder,
+  DependenciesHelper,
+} from './helpers/dependencies.js';
+import {KeyBuilder, KeyHelper} from './helpers/key.js';
+import {LabelBuilder} from './helpers/label.js';
+import {PromptBuilder, PromptHelper} from './helpers/prompt.js';
 
 export class BlockStep
   implements

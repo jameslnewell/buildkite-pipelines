@@ -1,6 +1,6 @@
-import {StepSchema} from '../../schema';
-import {StepBuilder} from '../StepBuilder';
-import {isStepBuilder} from '../isStepBuilder';
+import {StepSchema} from '../../schema/index.js';
+import {StepBuilder} from '../StepBuilder.js';
+import {isStepBuilder} from '../isStepBuilder.js';
 
 export interface StepsBuilder {
   getSteps(): ReadonlyArray<StepSchema | StepBuilder>;

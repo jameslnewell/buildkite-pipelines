@@ -1,8 +1,11 @@
-import {StepDependsOn, WaitStepSchema} from '../schema';
-import {StepBuilder} from './StepBuilder';
-import {ConditionBuilder, ConditionHelper} from './helpers/condition';
-import {DependenciesBuilder, DependenciesHelper} from './helpers/dependencies';
-import {KeyBuilder, KeyHelper} from './helpers/key';
+import {StepDependsOn, WaitStepSchema} from '../schema/index.js';
+import {StepBuilder} from './StepBuilder.js';
+import {ConditionBuilder, ConditionHelper} from './helpers/condition.js';
+import {
+  DependenciesBuilder,
+  DependenciesHelper,
+} from './helpers/dependencies.js';
+import {KeyBuilder, KeyHelper} from './helpers/key.js';
 
 export class WaitStep
   implements StepBuilder, ConditionBuilder, DependenciesBuilder, KeyBuilder

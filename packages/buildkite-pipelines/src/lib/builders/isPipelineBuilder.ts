@@ -1,5 +1,5 @@
-import {PipelineSchema} from '../schema';
-import {PipelineBuilder} from './PipelineBuilder';
+import {PipelineSchema} from '../schema/index.js';
+import {PipelineBuilder} from './PipelineBuilder.js';
 
 export function isPipelineBuilder(
   pipeline: PipelineSchema | PipelineBuilder,

@@ -1,5 +1,5 @@
-import {StepSchema} from '../schema';
-import {StepBuilder} from './StepBuilder';
+import {StepSchema} from '../schema/index.js';
+import {StepBuilder} from './StepBuilder.js';
 
 export function isStepBuilder(
   step: StepSchema | StepBuilder,
