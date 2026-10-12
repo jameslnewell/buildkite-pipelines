@@ -246,7 +246,7 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
-      - uses: docker/build-push-action@v2
+      - uses: docker/build-push-action@v7
         if: steps.image.outputs.exists == 'false'
         with:
           push: true
