@@ -1,5 +1,5 @@
-import {Field} from '../schema';
-import {BlockStep} from './BlockStep';
+import {Field} from '../schema/index.js';
+import {BlockStep} from './BlockStep.js';
 
 describe(BlockStep.name, () => {
   const label = 'Release';

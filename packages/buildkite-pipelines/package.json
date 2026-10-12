@@ -1,6 +1,7 @@
 {
   "name": "@jameslnewell/buildkite-pipelines",
   "version": "3.24.0",
+  "type": "module",
   "bin": "dist/cli/index.js",
   "main": "./dist/lib/index.js",
   "exports": {
@@ -64,7 +65,10 @@
   },
   "jest": {
     "preset": "@jameslnewell/jest-preset",
-    "resolver": "jest-pnp-resolver"
+    "resolver": "jest-pnp-resolver",
+    "moduleNameMapper": {
+      "^(\\.{1,2}/.*)\\.js$": "$1"
+    }
   },
   "prettier": "@jameslnewell/prettier-config",
   "scripts": {
@@ -74,11 +78,12 @@
     "check:typing": "tsc --noEmit",
     "prepare": "husky && pnpm run codegen",
     "codegen": "json2ts src/lib/schema/schema.json src/lib/schema/schema.ts",
-    "develop": "pnpm run build:transpile --watch",
+    "develop": "tsc --watch",
     "build": "pnpm run build:types && pnpm run build:transpile && pnpm run build:pages",
     "build:pages": "typedoc",
     "build:types": "tsc --declaration --emitDeclarationOnly",
-    "build:transpile": "tsc",
+    "build:transpile": "tsc && pnpm run copy:assets",
+    "copy:assets": "node -e \"const fs=require('fs');fs.mkdirSync('dist/lib/schema',{recursive:true});fs.copyFileSync('src/lib/schema/schema.json','dist/lib/schema/schema.json')\"",
     "test": "jest --maxWorkers=1",
     "changeset": "changeset",
     "version": "changeset version",

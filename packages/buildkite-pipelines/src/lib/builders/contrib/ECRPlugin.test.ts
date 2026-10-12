@@ -1,4 +1,4 @@
-import {ECRPlugin} from './ECRPlugin';
+import {ECRPlugin} from './ECRPlugin.js';
 
 describe(ECRPlugin.name, () => {
   test('nested under name/version', async () => {

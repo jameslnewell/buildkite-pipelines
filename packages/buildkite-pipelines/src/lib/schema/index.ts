@@ -1,4 +1,4 @@
-import {
+import type {
   JSONSchemaForBuildkitePipelineConfigurationFiles,
   BlockStep,
   CommandStep,
@@ -8,9 +8,9 @@ import {
   WaitStep,
   Fields,
   BuildNotify,
-} from './schema';
+} from './schema.js';
 
-export {
+export type {
   BlockStep as BlockStepSchema,
   CommandStep as CommandStepSchema,
   GroupStep as GroupStepSchema,

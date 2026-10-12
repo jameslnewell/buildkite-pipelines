@@ -4,7 +4,7 @@ import {
   Pipeline,
   StepBuilder,
   StepSchema,
-} from '../lib';
+} from '../lib/index.js';
 
 export interface FindStepsPredicate {
   (
