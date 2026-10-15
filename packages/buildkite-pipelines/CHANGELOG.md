@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.25.0
+
+### Minor Changes
+
+- abf68ed: `CommandStep` now supports `concurrency_method` via `.setConcurrencyMethod('ordered' | 'eager')` and `.getConcurrencyMethod()`. The field is only emitted when set. Buildkite requires a concurrency limit and group alongside it, so pair it with `.setConcurrency()` and `.setConcurrencyGroup()`.
+
 ## 3.24.0
 
 ### Minor Changes
