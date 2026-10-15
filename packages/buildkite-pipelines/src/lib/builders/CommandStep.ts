@@ -13,6 +13,7 @@ import {EnvironmentBuilder, EnvironmentHelper} from './helpers/env';
 import {AutomaticRetry} from '../schema/schema';
 
 type ManualRetry = Exclude<CommandStepSchema['retry'], undefined>['manual'];
+type ConcurrencyMethod = CommandStepSchema['concurrency_method'];
 
 export class CommandStep
   implements
@@ -39,6 +40,7 @@ export class CommandStep
 
   #concurrency?: number;
   #concurrencyGroup?: string;
+  #concurrencyMethod: ConcurrencyMethod;
   #parallelism?: number;
   #softFail?: boolean;
   #timeoutInMinutes?: number;
@@ -301,6 +303,25 @@ export class CommandStep
     return this;
   }
 
+  /**
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-and-parallelism-controlling-command-order
+   */
+  getConcurrencyMethod(): ConcurrencyMethod {
+    return this.#concurrencyMethod;
+  }
+
+  /**
+   * Sets the order in which jobs in the concurrency group run. Buildkite defaults to `ordered`, while `eager` lets ready jobs bypass earlier jobs that are not ready yet.
+   *
+   * Buildkite requires a concurrency limit and group to also be set (see `.setConcurrency()` and `.setConcurrencyGroup()`).
+   *
+   * @see https://buildkite.com/docs/pipelines/configure/workflows/controlling-concurrency#concurrency-and-parallelism-controlling-command-order
+   */
+  setConcurrencyMethod(method: ConcurrencyMethod): this {
+    this.#concurrencyMethod = method;
+    return this;
+  }
+
   getSoftFail(): boolean | undefined {
     return this.#softFail;
   }
@@ -380,6 +401,9 @@ export class CommandStep
       ...(this.#concurrency ? {concurrency: this.#concurrency} : {}),
       ...(this.#concurrencyGroup
         ? {concurrency_group: this.#concurrencyGroup}
+        : {}),
+      ...(this.#concurrencyMethod
+        ? {concurrency_method: this.#concurrencyMethod}
         : {}),
       ...this.#envHelper.build(),
       ...(this.#softFail ? {soft_fail: this.#softFail} : {}),
