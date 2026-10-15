@@ -167,6 +167,64 @@ describe(CommandStep.name, () => {
     });
   });
 
+  describe('getConcurrencyMethod', () => {
+    test('returns undefined when no concurrency method set', () => {
+      const step = new CommandStep();
+      expect(step.getConcurrencyMethod()).toBeUndefined();
+    });
+
+    test('returns concurrency method when set', () => {
+      const step = new CommandStep().setConcurrencyMethod('eager');
+      expect(step.getConcurrencyMethod()).toBe('eager');
+    });
+
+    test('returns undefined when reset to undefined', () => {
+      const step = new CommandStep()
+        .setConcurrencyMethod('eager')
+        .setConcurrencyMethod(undefined);
+      expect(step.getConcurrencyMethod()).toBeUndefined();
+    });
+  });
+
+  describe('concurrency_method', () => {
+    test('undefined by default', async () => {
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setConcurrency(1)
+        .setConcurrencyGroup('my-group')
+        .build();
+      expect(step).not.toHaveProperty('concurrency_method');
+    });
+
+    test('defined when eager', async () => {
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setConcurrency(1)
+        .setConcurrencyGroup('my-group')
+        .setConcurrencyMethod('eager')
+        .build();
+      expect(step).toHaveProperty('concurrency_method', 'eager');
+    });
+
+    test('defined when ordered', async () => {
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setConcurrency(1)
+        .setConcurrencyGroup('my-group')
+        .setConcurrencyMethod('ordered')
+        .build();
+      expect(step).toHaveProperty('concurrency_method', 'ordered');
+    });
+
+    test('defined without a concurrency limit or group, leaving that requirement to Buildkite', async () => {
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setConcurrencyMethod('eager')
+        .build();
+      expect(step).toHaveProperty('concurrency_method', 'eager');
+    });
+  });
+
   describe('soft_fail', () => {
     test('undefined by default', async () => {
       const step = await new CommandStep().addCommand(':').build();
