@@ -14,6 +14,7 @@ import {AutomaticRetry} from '../schema/schema';
 
 type ManualRetry = Exclude<CommandStepSchema['retry'], undefined>['manual'];
 type ConcurrencyMethod = CommandStepSchema['concurrency_method'];
+type SoftFail = Exclude<CommandStepSchema['soft_fail'], undefined>;
 
 export class CommandStep
   implements
@@ -42,7 +43,7 @@ export class CommandStep
   #concurrencyGroup?: string;
   #concurrencyMethod: ConcurrencyMethod;
   #parallelism?: number;
-  #softFail?: boolean;
+  #softFail?: SoftFail;
   #timeoutInMinutes?: number;
 
   #automaticRetries: AutomaticRetry[] = [];
@@ -322,7 +323,7 @@ export class CommandStep
     return this;
   }
 
-  getSoftFail(): boolean | undefined {
+  getSoftFail(): SoftFail | undefined {
     return this.#softFail;
   }
 
@@ -333,7 +334,12 @@ export class CommandStep
     return this.setSoftFail(fail);
   }
 
-  setSoftFail(fail: boolean): this {
+  /**
+   * Marks the step as soft-failed when it fails, or only when it exits with one
+   * of the given statuses, e.g. `[{exit_status: 97}]`.
+   * @see https://buildkite.com/docs/pipelines/configure/step-types/command-step#soft-fail-attributes
+   */
+  setSoftFail(fail: SoftFail): this {
     this.#softFail = fail;
     return this;
   }
