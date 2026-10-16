@@ -238,6 +238,21 @@ describe(CommandStep.name, () => {
         .build();
       expect(step).toHaveProperty('soft_fail', true);
     });
+
+    test('defined when given exit statuses', async () => {
+      const step = await new CommandStep()
+        .addCommand(':')
+        .setSoftFail([{exit_status: 97}])
+        .build();
+      expect(step).toHaveProperty('soft_fail', [{exit_status: 97}]);
+    });
+  });
+
+  describe('getSoftFail', () => {
+    test('returns exit statuses when set', () => {
+      const step = new CommandStep().setSoftFail([{exit_status: 97}]);
+      expect(step.getSoftFail()).toEqual([{exit_status: 97}]);
+    });
   });
 
   describe('timeout_in_minutes', () => {
