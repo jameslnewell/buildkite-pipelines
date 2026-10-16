@@ -1,5 +1,11 @@
 # @jameslnewell/buildkite-pipelines
 
+## 3.26.0
+
+### Minor Changes
+
+- 9f71d1b: `CommandStep.setSoftFail()` now also accepts exit statuses, e.g. `.setSoftFail([{exit_status: 97}])`, so a step can soft-fail on specific statuses only. `.getSoftFail()` returns whichever was set.
+
 ## 3.25.0
 
 ### Minor Changes
